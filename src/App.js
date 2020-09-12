@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import GeoDisplay from './components/GeoDisplay';
-import { getData } from './services/geoCodeService'
+import { getByCoordinates } from './services/dataService'
 
 function App() {
   const [lat, setLat] = useState(0)
@@ -11,8 +11,8 @@ function App() {
   useEffect(() => {
     if (clicked) {
       const loadData = async () => {
-        const res = await getData(lat, lon)
-        setGeoData(res.data)
+        const res = await getByCoordinates(lat, lon)
+        setGeoData(res)
       }
       loadData()
       setClicked(false)
