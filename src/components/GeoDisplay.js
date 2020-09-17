@@ -4,18 +4,16 @@ const GeoDisplay = ({ geoData }) => {
   console.log(geoData)
   return (
     <div>
-      {geoData ?
-        <div>
+      {geoData ? geoData.map(d =>
+        <div key={d.name}>
           <p>
-            City: {geoData.location.city_name}<br />
-            Country: {geoData.location.country_name}<br />
+            Name: {d.name}<br />
           </p>
-          {geoData.popularity.top_cuisines ?
-            <ul>Top Cuisines: {geoData.popularity.top_cuisines.map(c => <li key={c}>{c}</li>)}
-            </ul>
-            : null
-          }
+          <p>
+            Location: {d.vicinity}
+          </p>
         </div>
+      )
         : null
       }
     </div>

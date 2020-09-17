@@ -6,41 +6,34 @@ function App() {
   const [lat, setLat] = useState(0)
   const [lon, setLon] = useState(0)
   const [geoData, setGeoData] = useState(null)
-  const [clicked, setClicked] = useState(false)
+  console.log('lat', lat)
+  console.log('lon', lon)
 
   useEffect(() => {
-    if (clicked) {
-      const loadData = async () => {
-        const res = await getByCoordinates(lat, lon)
-        setGeoData(res)
-      }
-      loadData()
-      setClicked(false)
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        setLat(position.coords.latitude)
+        setLon(position.coords.longitude)
+        const loadData = async () => {
+          const res = await getByCoordinates(lat, lon)
+          console.log(res)
+          setGeoData(res.results)
+        }
+        loadData()
+      })
     }
-  }, [lat, lon, clicked])
+  }, [lat, lon])
 
-
-  const loadData = (event) => {
-    event.preventDefault()
-    setClicked(true)
-  }
-  const handleChangeLat = (event) => {
-    setLat(event.target.value)
-  }
-  const handleChangeLon = (event) => {
-    setLon(event.target.value)
-  }
+  // const handleChangeLat = (event) => {
+  //   setLat(event.target.value)
+  // }
+  // const handleChangeLon = (event) => {
+  //   setLon(event.target.value)
+  // }
 
 
   return (
     <div className="App">
-      <div>
-        <form onSubmit={(event) => loadData(event)}>
-          latitude <input type='text' onChange={handleChangeLat} value={lat} /><br />
-          longitude <input type='text' onChange={handleChangeLon} value={lon} /><br />
-          <button type='submit'>Submit</button>
-        </form>
-      </div>
       <GeoDisplay geoData={geoData} />
     </div>
   );
