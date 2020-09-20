@@ -14,8 +14,8 @@ function App() {
   const [useTextSearch, setUseTextSearch] = useState(false)
   const [textSearchResults, setTextSearchResults] = useState([])
 
-  console.log("asp", autoSearchPredictions)
-  console.log('tsr', textSearchResults)
+  // console.log("asp", autoSearchPredictions)
+  // console.log('tsr', textSearchResults)
 
 
   useEffect(() => {
