@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
+import SignUp from './pages/SignUp';
 
 function App() {
 
@@ -8,9 +9,10 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
-          <Route path='/'>
+          <Route exact path='/'>
             <LandingPage />
           </Route>
+          <Route path='/signup' component={SignUp} />
         </Switch>
       </div>
     </Router>
