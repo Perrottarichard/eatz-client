@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { isAuthenticated } from '../reducers/activeUserReducer'
+import { getAtDashboard } from '../reducers/activeUserReducer'
+
+
 
 const Dashboard = () => {
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(isAuthenticated())
+    dispatch(getAtDashboard())
   }, [dispatch])
 
   return (

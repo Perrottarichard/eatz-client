@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons'
 import pizzapizza from '../assets/pizzapizza100.png'
 import pizzaBackground from '../assets/pizzapizzalarge.jpg'
+import { isAuthenticated } from '../reducers/activeUserReducer'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -49,10 +50,12 @@ const useStyles = makeStyles((theme) => ({
 export default function LandingPage() {
   const classes = useStyles();
 
+  const dispatch = useDispatch()
 
-  // Authenticate using via passport api in the backend
-  // Open Twitter login page
-  // Upon successful login, a cookie session will be stored in the client
+  useEffect(() => {
+    dispatch(isAuthenticated())
+  }, [dispatch])
+
   const authWithGoogle = () => {
     window.open("http://localhost:3001/auth/google", "_self");
   }

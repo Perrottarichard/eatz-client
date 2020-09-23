@@ -9,7 +9,6 @@ const activeUserReducer = (state = initialState, action) => {
     case 'USER_LOGOUT':
       return action.data
     case 'GET_USER':
-      console.log('GetU reducer', action.data)
       return { ...state, user: action.data }
     default:
       return state
@@ -19,10 +18,22 @@ export const isAuthenticated = () => {
   return async dispatch => {
     try {
       let res = await userService.getUser()
-      console.log('reducerRes', res)
       dispatch({
         type: 'GET_USER',
-        data: res
+        data: res.user
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+export const getAtDashboard = () => {
+  return async dispatch => {
+    try {
+      let res = await userService.getUserFromDash()
+      dispatch({
+        type: 'GET_USER',
+        data: res.user
       })
     } catch (error) {
       console.log(error)
