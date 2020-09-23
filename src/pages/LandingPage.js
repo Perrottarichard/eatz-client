@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux'
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -8,16 +9,18 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons'
 import pizzapizza from '../assets/pizzapizza100.png'
-import { userLoginFacebook } from '../services/loginService'
-import { userLoginGoogle } from '../services/loginService'
+import pizzaBackground from '../assets/pizzapizzalarge.jpg'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(https://hdwallsource.com/img/2014/7/free-pizza-wallpaper-20435-20946-hd-wallpapers.jpg)',
+    backgroundImage: `url(${pizzaBackground})`,
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -39,13 +42,23 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(2, 0, 0.5),
   },
 }));
 
 export default function LandingPage() {
   const classes = useStyles();
 
+
+  // Authenticate using via passport api in the backend
+  // Open Twitter login page
+  // Upon successful login, a cookie session will be stored in the client
+  const authWithGoogle = () => {
+    window.open("http://localhost:3001/auth/google", "_self");
+  }
+  const authWithFacebook = () => {
+    window.open("http://localhost:3001/auth/facebook", "_self");
+  }
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -57,7 +70,25 @@ export default function LandingPage() {
             Sign in
           </Typography>
           <form className={classes.form} noValidate>
-            <TextField
+            <Button
+              onClick={authWithGoogle}
+              fullWidth
+              variant="contained"
+              className={classes.submit}
+              style={{ backgroundColor: '#de5246', color: 'white', height: 60 }}
+            >
+              <FontAwesomeIcon icon={faGoogle} style={{ fontSize: 30, marginRight: 20, color: 'white' }} />Continue with Google
+            </Button>
+            <Button
+              onClick={authWithFacebook}
+              fullWidth
+              variant="contained"
+              style={{ backgroundColor: '#3b5998', color: 'white', height: 60 }}
+              className={classes.submit}
+            >
+              <FontAwesomeIcon icon={faFacebook} style={{ fontSize: 30, marginRight: 20 }} />Continue with Facebook
+            </Button>
+            {/* <TextField
               variant="outlined"
               margin="normal"
               required
@@ -87,29 +118,8 @@ export default function LandingPage() {
               className={classes.submit}
             >
               Sign In
-            </Button>
-            <Button
-              href='/auth/google'
-              fullWidth
-              variant="contained"
-              className={classes.submit}
-            >
-              Sign in with Google
-            </Button>
-            <Button
-              href='/auth/facebook'
-              fullWidth
-              variant="contained"
-              className={classes.submit}
-            >
-              Sign in with Facebook
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
+            </Button> */}
+            {/* <Grid container>
               <Grid item>
                 <Link href="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
@@ -117,7 +127,7 @@ export default function LandingPage() {
               </Grid>
             </Grid>
             <Box mt={5}>
-            </Box>
+            </Box> */}
           </form>
         </div>
       </Grid>

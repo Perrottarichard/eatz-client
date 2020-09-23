@@ -1,9 +1,16 @@
 import axios from 'axios'
-const baseUrl = '/api/users'
+const baseUrl = 'http://localhost:3001'
 
-const registerUser = async user => {
-  const response = await axios.post(`${baseUrl}/register`, user)
+const getUser = async () => {
+  const response = await axios.get(`${baseUrl}/authhelpers/login/success`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true
+    }
+  })
+  console.log(response.data)
   return response.data
 }
 
-export default { registerUser }
+export default { getUser }
