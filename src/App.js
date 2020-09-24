@@ -1,20 +1,33 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { useSelector } from 'react-redux'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import Navbar from './components/Navbar'
 import LandingPage from './pages/LandingPage';
-import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard'
 
 function App() {
+
+  const user = useSelector(state => state.activeUser.user)
 
   return (
     <Router>
       <div className="App">
         <Switch>
-          <Route exact path='/'>
-            <LandingPage />
+          <Route path='/dashboard'>
+            {!user ? <Redirect to='/' />
+              :
+              <div>
+                <Navbar />
+                <Dashboard user={user} />
+              </div>
+            }
           </Route>
-          <Route path='/signup' component={SignUp} />
-          <Route path='/dashboard' component={Dashboard} />
+          <Route exact path='/'>
+            {user ? <Redirect to='/dashboard' />
+              :
+              <LandingPage />
+            }
+          </Route>
         </Switch>
       </div>
     </Router>

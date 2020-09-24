@@ -2,19 +2,18 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { getAtDashboard } from '../reducers/activeUserReducer'
 
-
-
-const Dashboard = () => {
+const Dashboard = ({ user }) => {
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getAtDashboard())
-  }, [dispatch])
+    if (user === null)
+      dispatch(getAtDashboard())
+  }, [dispatch, user])
 
   return (
     <div>
-      This is your dashboard
+      {user.firstName.concat("'s")} Dashboard
     </div>
   )
 }

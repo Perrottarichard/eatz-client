@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux'
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons'
-import pizzapizza from '../assets/pizzapizza100.png'
+import pizzapizza from '../assets/pizzapizza200.png'
 import pizzaBackground from '../assets/pizzapizzalarge.jpg'
 import { isAuthenticated } from '../reducers/activeUserReducer'
 
@@ -88,8 +85,10 @@ export default function LandingPage() {
               variant="contained"
               style={{ backgroundColor: '#3b5998', color: 'white', height: 60 }}
               className={classes.submit}
+              disabled={true}
             >
-              <FontAwesomeIcon icon={faFacebook} style={{ fontSize: 30, marginRight: 20 }} />Continue with Facebook
+              <FontAwesomeIcon icon={faFacebook} style={{ fontSize: 30, marginRight: 20 }} />
+              <small style={{ fontSize: 9 }}>under construction</small>
             </Button>
             {/* <TextField
               variant="outlined"

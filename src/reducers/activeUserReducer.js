@@ -1,13 +1,13 @@
 import userService from "../services/userService"
 
 const initialState = {
-  user: null
+  user: undefined
 }
 
 const activeUserReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'USER_LOGOUT':
-      return action.data
+      return initialState
     case 'GET_USER':
       return { ...state, user: action.data }
     default:
@@ -41,9 +41,16 @@ export const getAtDashboard = () => {
   }
 }
 export const clearUser = () => {
-  return {
-    type: 'USER_LOGOUT',
-    data: null
+  return async dispatch => {
+    try {
+      await userService.logoutUser()
+      dispatch({
+        type: 'USER_LOGOUT',
+        data: null
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 

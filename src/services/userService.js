@@ -11,7 +11,6 @@ const getUser = async () => {
     },
 
   })
-  console.log(response.data)
   return response.data
 }
 
@@ -28,6 +27,18 @@ const getUserFromDash = async () => {
   console.log(response.data)
   return response.data
 }
+const logoutUser = async () => {
+  const response = await axios.get(`${baseUrl}/authhelpers/logout`, {
+    withCredentials: true,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true
+    },
+  })
+  console.log(response.data)
+  return response.data
+}
 
 
-export default { getUser, getUserFromDash }
+export default { getUser, getUserFromDash, logoutUser }
