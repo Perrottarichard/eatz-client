@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import GeoDisplay from '../components/GeoDisplay'
 import { getAtDashboard } from '../reducers/activeUserReducer'
 
 const Dashboard = ({ user }) => {
@@ -13,7 +14,7 @@ const Dashboard = ({ user }) => {
 
   return (
     <div>
-      {user.firstName.concat("'s")} Dashboard
+      <GeoDisplay user={user} />
     </div>
   )
 }
