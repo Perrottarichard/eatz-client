@@ -3,8 +3,10 @@ import { getByCoordinates } from '../services/dataService'
 import GoogleMapReact from 'google-map-react'
 import MapMarker from './MapMarker'
 import HomeMarker from './HomeMarker'
+import LoadingMap from './LoadingMap'
+import GeoDataList from './GeoDataList'
 
-const GeoDisplay = ({ user }) => {
+const GeoDisplay = () => {
   const [lat, setLat] = useState(0)
   const [lon, setLon] = useState(0)
   const [geoData, setGeoData] = useState(null)
@@ -38,30 +40,35 @@ const GeoDisplay = ({ user }) => {
 
 
   return (
-    <div style={{ height: '75vh', width: '75%' }}>
+    <div style={{ height: '100%', width: '100%' }}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: key }}
+        // bootstrapURLKeys={{ key: key }}
         defaultCenter={dCent}
         defaultZoom={zoom}
         center={center}>
-        <HomeMarker
-          lat={lat}
-          lng={lon}
-          name='Me' />
+        {geoData && geoData.length !== 0 ?
+          <HomeMarker
+            lat={lat}
+            lng={lon}
+            name='Me' />
+          : null
+        }
+
         {
-          geoData ? geoData.map(place =>
+          geoData && geoData.length !== 0 ?
 
-            <MapMarker key={place.place_id}
-              lat={place.geometry.location.lat}
-              lng={place.geometry.location.lng}
-              name={place.name}
-              color='white'
-            />
-          )
+            geoData.map(place =>
+              <MapMarker key={place.place_id}
+                lat={place.geometry.location.lat}
+                lng={place.geometry.location.lng}
+                name={place.name}
+                place_id={place.place_id}
+                color='white'
+              />
+            )
             :
-            null}
+            <LoadingMap />}
       </GoogleMapReact>
-
     </div >
   )
 }

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import Navbar from './components/Navbar'
 import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard'
+import DashMui from './pages/DashMui'
 
 function App() {
 
@@ -17,8 +18,8 @@ function App() {
             {!user ? <Redirect to='/' />
               :
               <div>
-                <Navbar />
-                <Dashboard user={user} />
+                {/* <Navbar /> */}
+                <DashMui user={user} />
               </div>
             }
           </Route>
