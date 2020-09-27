@@ -20,6 +20,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems } from '../components/ListItems';
 import GeoDisplay from '../components/GeoDisplay';
+import { useSelector } from 'react-redux'
 // import Chart from './Chart';
 // import Deposits from './Deposits';
 // import Orders from './Orders';
@@ -95,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(4),
   },
   paper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
@@ -108,6 +109,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Dashboard() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };

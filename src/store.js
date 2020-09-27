@@ -5,13 +5,14 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import activeUserReducer from './reducers/activeUserReducer'
 import cartReducer from './reducers/cartReducer'
-// import contactReducer from './reducers/contactReducer'
+import placesReducer from './reducers/placesReducer'
 // import userInfoForAdminReducer from './reducers/userInfoForAdminReducer'
 
 
 const appReducer = combineReducers({
   cart: cartReducer,
   activeUser: activeUserReducer,
+  placesReducer: placesReducer
 })
 const rootReducer = (state, action) => {
   if (action.type === 'USER_LOGOUT') {

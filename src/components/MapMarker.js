@@ -1,15 +1,15 @@
 import React from 'react';
-import logo from '../assets/pizzapizza20trans.png'
-// import './Marker.css';
+import { faPizzaSlice } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const MapMarker = (props) => {
-  const { color, name, place_id } = props;
+  const { name, place_id } = props;
   return (
     <div className="marker"
-      style={{ backgroundColor: color, cursor: 'pointer', width: 25, height: 25, borderStyle: "solid", borderWidth: 0.5, borderColor: 'red', borderRadius: '50%', textAlign: 'center', padding: 3, lineHeight: 3.5 }}
+      style={{ fontSize: 25 }}
       title={name}>
       <a href={place_id}>
-        <img src={logo} alt='logo'></img>
+        <FontAwesomeIcon icon={faPizzaSlice} style={{ color: 'red' }} />
       </a>
     </div>
   );

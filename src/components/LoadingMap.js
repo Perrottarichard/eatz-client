@@ -2,8 +2,8 @@ import React from 'react'
 
 const LoadingMap = () => {
   return (
-    <div>
-      <h4>Pizza locations loading...</h4>
+    <div style={{ display: 'block', textAlign: 'center' }}>
+      <h2>Pizza locations loading...</h2>
     </div>
   )
 }
