@@ -3,3 +3,9 @@ FB blue:
 
 Google red:
 #de5246
+
+dashboard grey:
+#575551
+
+pizza map marker orange:
+#f77943

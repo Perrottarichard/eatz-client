@@ -3,9 +3,7 @@ import { getByCoordinates } from '../services/dataService'
 import GoogleMapReact from 'google-map-react'
 import MapMarker from './MapMarker'
 import HomeMarker from './HomeMarker'
-import LoadingMap from './LoadingMap'
-import GeoDataList from './GeoDataList'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setPlaces } from '../reducers/placesReducer'
 import { Button } from '@material-ui/core'
 import stockMap from '../assets/stockmap.jpg'
@@ -13,13 +11,12 @@ import stockMap from '../assets/stockmap.jpg'
 const GeoDisplay = () => {
   const [lat, setLat] = useState(0)
   const [lon, setLon] = useState(0)
-  const [useMyLocation, setUseMyLocation] = useState(true)
-  const [geoData, setGeoData] = useState(undefined)
+  const geoData = useSelector(state => state.placesReducer.nearbyPlaces)
   const [showMap, setShowMap] = useState(false)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (navigator.geolocation && useMyLocation) {
+    if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function (position) {
         setLat(position.coords.latitude)
         setLon(position.coords.longitude)
@@ -28,13 +25,12 @@ const GeoDisplay = () => {
             const res = await getByCoordinates(lat, lon)
             console.log(res)
             dispatch(setPlaces(res.results))
-            setGeoData(res.results)
           }
         }
         loadData()
       })
     }
-  }, [dispatch, lat, lon, useMyLocation, showMap])
+  }, [dispatch, lat, lon, showMap])
 
   const center = {
     lat: lat,
@@ -79,7 +75,7 @@ const GeoDisplay = () => {
         </GoogleMapReact>
         :
         <div style={{ height: '100%', width: '100%', margin: 'auto', textAlign: 'center', backgroundImage: `url(${stockMap}` }}>
-          <Button style={{ width: '100%', height: '100%', margin: 'auto' }} onClick={() => setShowMap(true)}>Show me restaurants nearby</Button>
+          <Button style={{ width: '100%', height: '100%', margin: 'auto' }} onClick={() => setShowMap(true)}>Show me on the map</Button>
         </div>}
     </div >
   )

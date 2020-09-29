@@ -3,33 +3,32 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import Avatar from '@material-ui/core/Avatar'
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems } from '../components/ListItems';
 import GeoDisplay from '../components/GeoDisplay';
-import { useSelector } from 'react-redux'
-// import Chart from './Chart';
-// import Deposits from './Deposits';
-// import Orders from './Orders';
+import { useSelector, useDispatch } from 'react-redux'
+import GeoDataList from '../components/GeoDataList';
+import logo from '../assets/pizzapizza50trans.png'
+import { clearUser } from '../reducers/activeUserReducer'
+
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    backgroundColor: '#575551'
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -43,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: 'white',
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBarShift: {
     marginLeft: drawerWidth,
+    backgroundColor: 'white',
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -64,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    textAlign: 'center'
   },
   drawerPaper: {
     position: 'relative',
@@ -108,7 +110,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const dispatch = useDispatch()
+  const [open, setOpen] = React.useState(false);
+  const user = useSelector(state => state.activeUser.user)
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -116,6 +120,10 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const logout = () => {
+    dispatch(clearUser())
+  }
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
@@ -125,20 +133,26 @@ export default function Dashboard() {
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
-            color="inherit"
+            color="default"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
           >
             <MenuIcon />
           </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
-          </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
+          <div className={classes.title}>
+            <img src={logo} alt='logo'></img>
+          </div>
+          <IconButton color="inherit" edge='end' style={{ width: 150 }}>
+            {user ?
+              <div>
+                <span>
+                  <Avatar style={{ float: 'left' }} src={user.image} alt='user'></Avatar>
+                  <MenuItem style={{ color: 'black', float: 'right' }} onClick={logout}>Logout</MenuItem>
+                </span>
+              </div>
+              :
+              null}
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -163,10 +177,9 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            {/* Chart */}
             <Grid item xs={12} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
-
+                <GeoDataList />
               </Paper>
             </Grid>
             {/* Recent Deposits */}
@@ -177,7 +190,7 @@ export default function Dashboard() {
             </Grid>
             {/* Recent Orders */}
             <Grid item xs={12}>
-              <Paper className={classes.paper}>
+              <Paper className={fixedHeightPaper}>
                 {/* <Orders /> */}
               </Paper>
             </Grid>

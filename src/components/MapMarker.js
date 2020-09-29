@@ -9,7 +9,7 @@ const MapMarker = (props) => {
       style={{ fontSize: 25 }}
       title={name}>
       <a href={place_id}>
-        <FontAwesomeIcon icon={faPizzaSlice} style={{ color: 'red' }} />
+        <FontAwesomeIcon icon={faPizzaSlice} style={{ color: '#f77943' }} />
       </a>
     </div>
   );
