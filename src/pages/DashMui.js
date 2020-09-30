@@ -21,6 +21,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import GeoDataList from '../components/GeoDataList';
 import logo from '../assets/pizzapizza50trans.png'
 import { clearUser } from '../reducers/activeUserReducer'
+import RequestPartnerForm from '../components/RequestPartnerForm';
 
 
 const drawerWidth = 240;
@@ -189,10 +190,13 @@ export default function Dashboard() {
               </Paper>
             </Grid>
             {/* Recent Orders */}
-            <Grid item xs={12}>
+            <Grid item xs={12} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
                 {/* <Orders /> */}
               </Paper>
+            </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              <RequestPartnerForm />
             </Grid>
           </Grid>
         </Container>

@@ -1,4 +1,4 @@
-// import userService from "../services/userService"
+import { postRequestAddRestaurant } from "../services/dataService"
 
 const initialState = {
   nearbyPlaces: undefined
@@ -10,6 +10,8 @@ const placesReducer = (state = initialState, action) => {
       return initialState
     case 'SET_PLACES':
       return { ...state, nearbyPlaces: action.data }
+    case 'REQUEST_ADD_RESTAURANT':
+      return state
     default:
       return state
   }
@@ -25,6 +27,19 @@ export const clearPlaces = () => {
   return {
     type: 'USER_LOGOUT',
     data: null
+  }
+}
+export const requestAddRestaurant = (name, city, country) => {
+  return async dispatch => {
+    try {
+      await postRequestAddRestaurant(name, city, country)
+      dispatch({
+        type: 'REQUEST_ADD_RESTAURANT',
+        data: null
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 

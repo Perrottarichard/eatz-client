@@ -23,3 +23,13 @@ export const getTextSearch = async (search) => {
   })
   return response.data
 }
+
+export const postRequestAddRestaurant = async (name, city, country) => {
+  const response = await axios.post(`${baseUrl}/requestNewRestaurant`, {
+    name: name,
+    city: city,
+    country: country
+  })
+  return response.data
+
+}
