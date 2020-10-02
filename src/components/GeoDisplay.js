@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { getByCoordinates } from '../services/dataService'
 import GoogleMapReact from 'google-map-react'
 import MapMarker from './MapMarker'
@@ -14,23 +14,33 @@ const GeoDisplay = () => {
   const geoData = useSelector(state => state.placesReducer.nearbyPlaces)
   const [showMap, setShowMap] = useState(false)
   const dispatch = useDispatch()
+  const isMountedRef = useRef(null)
 
   useEffect(() => {
-    if (navigator.geolocation) {
+    isMountedRef.current = true
+    if (navigator.geolocation && !lat && !lon) {
       navigator.geolocation.getCurrentPosition(function (position) {
-        setLat(position.coords.latitude)
-        setLon(position.coords.longitude)
-        const loadData = async () => {
-          if (showMap) {
-            const res = await getByCoordinates(lat, lon)
-            console.log(res)
-            dispatch(setPlaces(res.results))
-          }
+        if (isMountedRef.current) {
+          setLat(position.coords.latitude)
+          setLon(position.coords.longitude)
         }
-        loadData()
       })
     }
-  }, [dispatch, lat, lon, showMap])
+    return () => isMountedRef.current = false
+  }, [lat, lon])
+
+  useEffect(() => {
+    isMountedRef.current = true
+    const loadData = async () => {
+      if (showMap && isMountedRef.current) {
+        const res = await getByCoordinates(lat, lon)
+        if (isMountedRef.current)
+          dispatch(setPlaces(res.results))
+      }
+    }
+    loadData()
+    return () => isMountedRef.current = false
+  }, [dispatch, showMap, lat, lon])
 
   const center = {
     lat: lat,

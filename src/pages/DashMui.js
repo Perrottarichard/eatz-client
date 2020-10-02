@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -114,6 +115,7 @@ export default function Dashboard() {
   const dispatch = useDispatch()
   const [open, setOpen] = React.useState(false);
   const user = useSelector(state => state.activeUser.user)
+  const location = useLocation()
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -171,36 +173,34 @@ export default function Dashboard() {
         </div>
         <Divider />
         <List>{mainListItems}</List>
-        <Divider />
-        {/* <List>{secondaryListItems}</List> */}
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={6}>
-              <Paper className={fixedHeightPaper}>
-                <GeoDataList />
-              </Paper>
+        {location.pathname === '/dashboard' ?
+          <Container maxWidth="lg" className={classes.container}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6} lg={6}>
+                <Paper className={fixedHeightPaper}>
+                  <GeoDataList />
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={6} lg={6}>
+                <Paper className={fixedHeightPaper}>
+                  <GeoDisplay />
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={6} lg={6}>
+                <Paper className={fixedHeightPaper}>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={6} lg={6}>
+                <RequestPartnerForm />
+              </Grid>
             </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={6} lg={6}>
-              <Paper className={fixedHeightPaper}>
-                <GeoDisplay />
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12} md={6} lg={6}>
-              <Paper className={fixedHeightPaper}>
-                {/* <Orders /> */}
-              </Paper>
-            </Grid>
-            <Grid item xs={12} md={6} lg={6}>
-              <RequestPartnerForm />
-            </Grid>
-          </Grid>
-        </Container>
+          </Container>
+          : null}
       </main>
+
     </div>
   );
 }

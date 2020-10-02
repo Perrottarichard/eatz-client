@@ -3,6 +3,7 @@ import axios from 'axios'
 const baseUrl = 'http://localhost:3001/api'
 
 export const getByCoordinates = async (lat, lon) => {
+  console.log('getbycoord running')
   const response = await axios.post(`${baseUrl}/searchByCoordinates`, {
     lat: lat,
     lon: lon
@@ -32,4 +33,10 @@ export const postRequestAddRestaurant = async (name, city, country) => {
   })
   return response.data
 
+}
+export const getPlaceDetailsRequest = async (place_id) => {
+  const response = await axios.post(`${baseUrl}/placeDetails`, {
+    place_id: place_id
+  })
+  return response.data
 }

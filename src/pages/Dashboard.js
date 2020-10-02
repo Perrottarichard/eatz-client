@@ -1,22 +1,22 @@
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import GeoDisplay from '../components/GeoDisplay'
-import { getAtDashboard } from '../reducers/activeUserReducer'
+// import React, { useEffect } from 'react'
+// import { useDispatch } from 'react-redux'
+// import GeoDisplay from '../components/GeoDisplay'
+// import { getAtDashboard } from '../reducers/activeUserReducer'
 
-const Dashboard = ({ user }) => {
+// const Dashboard = ({ user }) => {
 
-  const dispatch = useDispatch()
+//   const dispatch = useDispatch()
 
-  useEffect(() => {
-    if (user === null)
-      dispatch(getAtDashboard())
-  }, [dispatch, user])
+//   useEffect(() => {
+//     if (user === null)
+//       dispatch(getAtDashboard())
+//   }, [dispatch, user])
 
-  return (
-    <div>
-      <GeoDisplay user={user} />
-    </div>
-  )
-}
+//   return (
+//     <div>
+//       <GeoDisplay user={user} />
+//     </div>
+//   )
+// }
 
-export default Dashboard
+// export default Dashboard

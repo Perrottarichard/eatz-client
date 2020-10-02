@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Button } from '@material-ui/core'
 import { setPlaces } from '../reducers/placesReducer'
 import { getByCoordinates } from '../services/dataService'
+import { useHistory } from 'react-router'
 
 const GeoDataList = () => {
   const geoData = useSelector(state => state.placesReducer.nearbyPlaces)
@@ -10,23 +11,34 @@ const GeoDataList = () => {
   const dispatch = useDispatch()
   const [lat, setLat] = useState(0)
   const [lon, setLon] = useState(0)
+  const history = useHistory()
+  const isMountedRef = useRef(null)
 
   useEffect(() => {
-    if (navigator.geolocation) {
+    isMountedRef.current = true
+    if (navigator.geolocation && !lat && !lon) {
       navigator.geolocation.getCurrentPosition(function (position) {
-        setLat(position.coords.latitude)
-        setLon(position.coords.longitude)
-        const loadData = async () => {
-          if (showList) {
-            const res = await getByCoordinates(lat, lon)
-            console.log(res)
-            dispatch(setPlaces(res.results))
-          }
+        if (isMountedRef.current) {
+          setLat(position.coords.latitude)
+          setLon(position.coords.longitude)
         }
-        loadData()
       })
     }
-  }, [dispatch, lat, lon, showList])
+    return () => isMountedRef.current = false
+  }, [lat, lon])
+
+  useEffect(() => {
+    isMountedRef.current = true
+    const loadData = async () => {
+      if (showList && isMountedRef.current) {
+        const res = await getByCoordinates(lat, lon)
+        if (isMountedRef.current)
+          dispatch(setPlaces(res.results))
+      }
+    }
+    loadData()
+    return () => isMountedRef.current = false
+  }, [dispatch, showList, lat, lon])
 
   const calcDistance = (lat1, lat2, lng1, lng2) => {
     const pi = Math.PI
@@ -46,12 +58,15 @@ const GeoDataList = () => {
 
     return c * radiusOfEarth
   }
+  const handleClick = (place_id) => {
+    history.push(`/dashboard/${place_id}`)
+  }
 
   return (
     <div style={{ height: '100%', width: '100%', margin: 'auto', paddingLeft: 20 }}>
       {geoData ? geoData.map(place =>
         <p key={place.place_id} >
-          <a href={place.place_id} style={{ textDecoration: 'none', color: '#575551' }}>{place.name}</a>
+          <button style={{ textDecoration: 'none', color: '#575551' }} onClick={() => handleClick(place.place_id)}>{place.name}</button>
           <span style={{ float: 'right', color: '#575551' }}>{calcDistance(lat, place.geometry.location.lat, lon, place.geometry.location.lng).toFixed(2) + ' km'}</span>
         </p>
       )

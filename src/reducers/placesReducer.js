@@ -1,7 +1,9 @@
 import { postRequestAddRestaurant } from "../services/dataService"
+import { getPlaceDetailsRequest } from '../services/dataService'
 
 const initialState = {
-  nearbyPlaces: undefined
+  nearbyPlaces: undefined,
+  placeDetails: undefined
 }
 
 const placesReducer = (state = initialState, action) => {
@@ -10,6 +12,8 @@ const placesReducer = (state = initialState, action) => {
       return initialState
     case 'SET_PLACES':
       return { ...state, nearbyPlaces: action.data }
+    case 'GET_PLACE_DETAILS':
+      return { ...state, placeDetails: action.data }
     case 'REQUEST_ADD_RESTAURANT':
       return state
     default:
@@ -36,6 +40,19 @@ export const requestAddRestaurant = (name, city, country) => {
       dispatch({
         type: 'REQUEST_ADD_RESTAURANT',
         data: null
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+export const getPlaceDetails = (place_id) => {
+  return async dispatch => {
+    try {
+      let res = await getPlaceDetailsRequest(place_id)
+      dispatch({
+        type: 'GET_PLACE_DETAILS',
+        data: res.data
       })
     } catch (error) {
       console.log(error)
