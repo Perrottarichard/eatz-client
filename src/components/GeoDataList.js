@@ -63,12 +63,16 @@ const GeoDataList = () => {
   }
 
   return (
-    <div style={{ height: '100%', width: '100%', margin: 'auto', paddingLeft: 20 }}>
+    <div className='dashDiv' style={{ height: '100%', width: '100%', margin: 'auto', padding: 'auto', textAlign: 'center' }}>
       {geoData ? geoData.map(place =>
-        <p key={place.place_id} >
-          <button style={{ textDecoration: 'none', color: '#575551' }} onClick={() => handleClick(place.place_id)}>{place.name}</button>
-          <span style={{ float: 'right', color: '#575551' }}>{calcDistance(lat, place.geometry.location.lat, lon, place.geometry.location.lng).toFixed(2) + ' km'}</span>
-        </p>
+        <div key={place.place_id} style={{ marginTop: 10 }} >
+          <p>
+            <button onClick={() => handleClick(place.place_id)} disabled={place.opening_hours.open_now === true ? false : true}>
+              <span style={{ fontSize: 16 }}>{place.name}</span><br />
+              <span style={{ fontSize: 12, color: '#cc2f2f' }}>{calcDistance(lat, place.geometry.location.lat, lon, place.geometry.location.lng).toFixed(2) + ' km'} </span>
+            </button>
+          </p>
+        </div>
       )
         : <div style={{ height: '100%', width: '100%', margin: 'auto', textAlign: 'center' }}>
           <Button style={{ width: '100%', height: '100%', margin: 'auto' }} onClick={() => setShowList(true)}>Show me nearby restaurants</Button>

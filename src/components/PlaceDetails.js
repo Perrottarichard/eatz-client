@@ -1,31 +1,37 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
-import { getPlaceDetails, getPlaceDetailsPhoto } from '../reducers/placesReducer'
+import { getPlaceDetails } from '../reducers/placesReducer'
 
 const PlaceDetails = () => {
   let place_id = useParams()
   const dispatch = useDispatch()
   const place = useSelector(state => state.placesReducer.placeDetails)
-  const photo = place.photos[0].photo_reference
-  const pic = useSelector(state => state.placesReducer.placeDetailsPhoto)
+  let photo
+  if (place) {
+    photo = place.photos[0].photo_reference
+  }
 
   useEffect(() => {
     if (!place || place.place_id !== place_id.id)
       dispatch(getPlaceDetails(place_id))
-  }, [])
-
-  // useEffect(() => {
-  //   if (place)
-  //     dispatch(getPlaceDetailsPhoto(photo))
-  // }, [place, dispatch, photo])
-
-
+  }, [dispatch, place, place_id])
 
   return (
     <div>
-      <h3>{place.name}</h3>
-      <img src={`data:image/jpeg;base64,${pic}`} alt='restaurant' />
+      {place !== undefined ?
+        <div>
+          <h3>{place.name}</h3>
+          <p>{place.formatted_address}</p>
+          <p>{place.formatted_phone_number}</p>
+          <ul>Hours:</ul>
+          {place.opening_hours.weekday_text.map(d => <li key={d}>{d}</li>)}
+          {/* <div style={{ width: 250, height: 250 }}>
+            <img src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=250&maxheight=250&photoreference=${photo}&key=${process.env.REACT_APP_GOOGLE_KEY}`} alt='restaurant' />
+          </div> */}
+        </div>
+        : <h3>Loading...</h3>}
+
     </div>
   )
 }

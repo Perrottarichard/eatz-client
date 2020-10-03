@@ -88,9 +88,9 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    width: theme.spacing(7),
+    width: theme.spacing(6),
     [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9),
+      width: theme.spacing(7),
     },
   },
   appBarSpacer: theme.mixins.toolbar,
@@ -162,7 +162,7 @@ export default function Dashboard() {
         </Toolbar>
       </AppBar>
       <Drawer
-        variant="permanent"
+        variant={window.innerWidth >= 500 ? 'permanent' : 'temporary'}
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
         }}
@@ -181,8 +181,8 @@ export default function Dashboard() {
         <Container maxWidth="lg" className={classes.container}>
           <Switch>
             <Route exact path='/dashboard' component={MainDashboard} />
-            <Route path='/dashboard/:id' component={PlaceDetails} />
-            <Route path='/dashboard/myorders' />
+            <Route exact path='/dashboard/:id' component={PlaceDetails} />
+            <Route exact path='/dashboard/myorders' />
           </Switch>
         </Container>
       </main>

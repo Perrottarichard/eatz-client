@@ -27,21 +27,21 @@ const MainDashboard = () => {
   return (
     <React.Fragment>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={6} lg={6}>
+        <Grid item xs={12} sm={6} md={4} lg={4}>
           <Paper className={fixedHeightPaper}>
             <GeoDataList />
           </Paper>
         </Grid>
-        <Grid item xs={12} md={6} lg={6}>
+        <Grid item xs={12} sm={6} md={8} lg={8}>
           <Paper className={fixedHeightPaper}>
             <GeoDisplay />
           </Paper>
         </Grid>
-        <Grid item xs={12} md={6} lg={6}>
+        <Grid item xs={12} sm={6} md={6} lg={6}>
           <Paper className={fixedHeightPaper}>
           </Paper>
         </Grid>
-        <Grid item xs={12} md={6} lg={6}>
+        <Grid item xs={12} sm={6} md={6} lg={6}>
           <RequestPartnerForm />
         </Grid>
       </Grid>

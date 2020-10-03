@@ -40,10 +40,3 @@ export const getPlaceDetailsRequest = async (place_id) => {
   })
   return response.data
 }
-
-export const getPlaceDetailsRequestPhoto = async (photo_ref) => {
-  const response = await axios.post(`${baseUrl}/placeDetails/photo`, {
-    photo_reference: photo_ref
-  })
-  return response.data
-}

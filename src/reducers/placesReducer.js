@@ -1,9 +1,8 @@
-import { postRequestAddRestaurant, getPlaceDetailsRequest, getPlaceDetailsRequestPhoto } from "../services/dataService"
+import { postRequestAddRestaurant, getPlaceDetailsRequest } from "../services/dataService"
 
 const initialState = {
   nearbyPlaces: undefined,
-  placeDetails: undefined,
-  placeDetailsPhoto: undefined
+  placeDetails: undefined
 }
 
 const placesReducer = (state = initialState, action) => {
@@ -14,8 +13,6 @@ const placesReducer = (state = initialState, action) => {
       return { ...state, nearbyPlaces: action.data }
     case 'GET_PLACE_DETAILS':
       return { ...state, placeDetails: action.data }
-    case 'GET_PLACE_DETAILS_PHOTO':
-      return { ...state, placeDetailsPhoto: [action.data] }
     case 'REQUEST_ADD_RESTAURANT':
       return state
     default:
@@ -55,19 +52,6 @@ export const getPlaceDetails = (place_id) => {
       dispatch({
         type: 'GET_PLACE_DETAILS',
         data: res.result
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-}
-export const getPlaceDetailsPhoto = (photo_ref) => {
-  return async dispatch => {
-    try {
-      let res = await getPlaceDetailsRequestPhoto(photo_ref)
-      dispatch({
-        type: 'GET_PLACE_DETAILS_PHOTO',
-        data: res
       })
     } catch (error) {
       console.log(error)
