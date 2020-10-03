@@ -1,5 +1,6 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
+// import { useLocation } from 'react-router-dom'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,18 +12,21 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+// import Grid from '@material-ui/core/Grid';
+// import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { mainListItems } from '../components/ListItems';
-import GeoDisplay from '../components/GeoDisplay';
+// import GeoDisplay from '../components/GeoDisplay';
 import { useSelector, useDispatch } from 'react-redux'
-import GeoDataList from '../components/GeoDataList';
+// import GeoDataList from '../components/GeoDataList';
 import logo from '../assets/pizzapizza50trans.png'
 import { clearUser } from '../reducers/activeUserReducer'
-import RequestPartnerForm from '../components/RequestPartnerForm';
+// import RequestPartnerForm from '../components/RequestPartnerForm';
+// import PlaceDetails from '../components/PlaceDetails';
+import PlaceDetails from '../components/PlaceDetails';
+import MainDashboard from '../components/MainDashboard';
 
 
 const drawerWidth = 240;
@@ -115,7 +119,6 @@ export default function Dashboard() {
   const dispatch = useDispatch()
   const [open, setOpen] = React.useState(false);
   const user = useSelector(state => state.activeUser.user)
-  const location = useLocation()
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -127,7 +130,6 @@ export default function Dashboard() {
   const logout = () => {
     dispatch(clearUser())
   }
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
     <div className={classes.root}>
@@ -176,29 +178,13 @@ export default function Dashboard() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        {location.pathname === '/dashboard' ?
-          <Container maxWidth="lg" className={classes.container}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={6} lg={6}>
-                <Paper className={fixedHeightPaper}>
-                  <GeoDataList />
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={6} lg={6}>
-                <Paper className={fixedHeightPaper}>
-                  <GeoDisplay />
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={6} lg={6}>
-                <Paper className={fixedHeightPaper}>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={6} lg={6}>
-                <RequestPartnerForm />
-              </Grid>
-            </Grid>
-          </Container>
-          : null}
+        <Container maxWidth="lg" className={classes.container}>
+          <Switch>
+            <Route exact path='/dashboard' component={MainDashboard} />
+            <Route path='/dashboard/:id' component={PlaceDetails} />
+            <Route path='/dashboard/myorders' />
+          </Switch>
+        </Container>
       </main>
 
     </div>
