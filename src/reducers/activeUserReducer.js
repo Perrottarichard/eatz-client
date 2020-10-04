@@ -1,7 +1,7 @@
 import userService from "../services/userService"
 
 const initialState = {
-  user: undefined
+  user: undefined,
 }
 
 const activeUserReducer = (state = initialState, action) => {
@@ -9,6 +9,8 @@ const activeUserReducer = (state = initialState, action) => {
     case 'USER_LOGOUT':
       return initialState
     case 'GET_USER':
+      return { ...state, user: action.data }
+    case 'ADD_FAVORITE':
       return { ...state, user: action.data }
     default:
       return state
@@ -53,5 +55,19 @@ export const clearUser = () => {
     }
   }
 }
+export const addFavorite = (place_id, user_id) => {
+  return async dispatch => {
+    try {
+      let res = await userService.addFavoriteRestaurant(place_id, user_id)
+      dispatch({
+        type: 'ADD_FAVORITE',
+        data: res
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 
 export default activeUserReducer

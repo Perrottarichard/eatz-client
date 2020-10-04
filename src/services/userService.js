@@ -39,6 +39,23 @@ const logoutUser = async () => {
   console.log(response.data)
   return response.data
 }
+const addFavoriteRestaurant = async (place_id, user_id) => {
+  console.log(place_id)
+  console.log(user_id)
+  const response = await axios.put(`${baseUrl}/account/favorite`, {
+    user_id: user_id,
+    place_id: place_id
+  }, {
+    withCredentials: true,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true
+    },
+  })
+  console.log(response.data)
+  return response.data
+}
 
 
-export default { getUser, getUserFromDash, logoutUser }
+export default { getUser, getUserFromDash, logoutUser, addFavoriteRestaurant }

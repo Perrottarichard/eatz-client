@@ -11,12 +11,10 @@ import CardActions from '@material-ui/core/CardActions';
 import FavoriteIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import IconButton from '@material-ui/core/IconButton';
 
-const GeoDataList = () => {
+const Favorites = () => {
   const user = useSelector(state => state.activeUser.user)
-  const geoData = useSelector(state => state.placesReducer.nearbyPlaces.filter(p => !user.favoriteRestaurants.includes(p.place_id)))
+  const geoData = useSelector(state => state.placesReducer.nearbyPlaces.filter(p => user.favoriteRestaurants.includes(p.place_id)))
 
-  const [showList, setShowList] = useState(false)
-  const dispatch = useDispatch()
   const [lat, setLat] = useState(0)
   const [lon, setLon] = useState(0)
   const history = useHistory()
@@ -35,26 +33,26 @@ const GeoDataList = () => {
     return () => isMountedRef.current = false
   }, [lat, lon])
 
-  useEffect(() => {
-    isMountedRef.current = true
-    const loadData = async () => {
-      if (showList && isMountedRef.current) {
-        const res = await getByCoordinates(lat, lon)
-        if (isMountedRef.current)
-          dispatch(setPlaces(res.results))
-      }
-    }
-    loadData()
-    return () => isMountedRef.current = false
-  }, [dispatch, showList, lat, lon])
+  // useEffect(() => {
+  //   isMountedRef.current = true
+  //   const loadData = async () => {
+  //     if (showList && isMountedRef.current) {
+  //       const res = await getByCoordinates(lat, lon)
+  //       if (isMountedRef.current)
+  //         dispatch(setPlaces(res.results))
+  //     }
+  //   }
+  //   loadData()
+  //   return () => isMountedRef.current = false
+  // }, [dispatch, showList, lat, lon])
 
-  const addToFavorites = (place_id) => {
-    try {
-      dispatch(addFavorite(place_id, user._id))
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  // const addToFavorites = (place_id) => {
+  //   try {
+  //     dispatch(addFavorite(place_id, user._id))
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   const calcDistance = (lat1, lat2, lng1, lng2) => {
     const pi = Math.PI
@@ -80,7 +78,7 @@ const GeoDataList = () => {
 
   return (
     <div className='dashDiv'>
-      <h5 className='sticky-head'>Near Me</h5>
+      <h5 className='sticky-head'>My Favorites</h5>
       {geoData ? geoData.map(place =>
         <div key={place.place_id} style={{ marginTop: 10 }}>
           <Card>
@@ -88,18 +86,18 @@ const GeoDataList = () => {
             <CardActions>
               <Button onClick={() => handleClick(place.place_id)} disabled={place.opening_hours.open_now === true ? false : true}>{place.opening_hours.open_now === true ? 'Show Details' : 'Closed'}
               </Button>
-              <IconButton aria-label="add to favorites" onClick={() => addToFavorites(place.place_id)}>
+              {/* <IconButton aria-label="add to favorites" onClick={() => addToFavorites(place.place_id)}>
                 <FavoriteIcon />
-              </IconButton>
+              </IconButton> */}
             </CardActions>
           </Card>
         </div>
       )
         : <div style={{ height: '100%', width: '100%', margin: 'auto', textAlign: 'center' }}>
-          <Button style={{ width: '100%', height: '100%', margin: 'auto' }} onClick={() => setShowList(true)}>Show me nearby restaurants</Button>
+          You don't have any favorites :(
         </div>
       }
     </div>
   )
 }
-export default GeoDataList
+export default Favorites

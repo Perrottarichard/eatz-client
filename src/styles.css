@@ -1,25 +1,52 @@
 .dashDiv {
-  background-image: linear-gradient(45deg, #808080 25%, transparent 25%), linear-gradient(-45deg, #808080 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #808080 75%), linear-gradient(-45deg, transparent 75%, #808080 75%);
-  background-size: 20px 20px;
-  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  display: block;
   overflow-x: hidden;
   overflow-y: auto;
+  justify-content: center;
+  text-align: center;
+  background-color:#de5246;
 }
-.dashDiv button {
-  background-color:white;
-  color: #575551;
-  width: 200px;
-  height: auto; 
-  padding: 20px;
-  border: none;
+.dashDiv .sticky-head {
+  position: sticky;
+  top: 0;
+  text-align: left;
+  margin-top: 0;
+  padding: 3px;
+  background-color: #575551;
+  color: white;
 }
-.dashDiv button:hover {
-  border-color:#cc2f2f;
-  border-style: double;
-  width: 200px;
-  height: auto; 
-  padding: 20px;
+.dashDiv .MuiCard-root {
+height: auto;
+width: 260px;
+margin: auto;
+margin-bottom: 12px;
 }
-#badge {
-  background-color: green;
+.dashDiv .MuiCardHeader-root {
+  padding: 8px;
+}
+.dashDiv .MuiCardHeader-title {
+  font-size: 14px;
+}
+.dashDiv .MuiCardHeader-subheader {
+  font-size: 12px;
+}
+.dashDiv .MuiCardActions-root {
+display: block;
+padding: 0px;
+margin: 0px;
+}
+.dashDiv .MuiIconButton-root {
+  color: rgb(221, 68, 68);
+  float: right;
+  padding: auto;
+  margin-right: 20px;
+}
+.dashDiv .MuiButton-root {
+  float: left;
+  line-height: 2.5;
+  text-transform: none;
+  margin-left: 20px;
+}
+.dashDiv .MuiButton-root:hover {
+  background-color: gray;
 }

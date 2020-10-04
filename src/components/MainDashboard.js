@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import GeoDataList from './GeoDataList';
 import GeoDisplay from './GeoDisplay';
 import RequestPartnerForm from './RequestPartnerForm';
+import Favorites from './Favorites';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,6 +40,7 @@ const MainDashboard = () => {
         </Grid>
         <Grid item xs={12} sm={6} md={6} lg={6}>
           <Paper className={fixedHeightPaper}>
+            <Favorites />
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6} md={6} lg={6}>
