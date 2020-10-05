@@ -49,3 +49,13 @@ margin: 0px;
   text-transform: none;
   margin-left: 20px;
 }
+.sticky-head {
+  position: sticky;
+  top: 0;
+  text-align: left;
+  margin-top: 0;
+  padding: 3px;
+  background-color: #575551;
+  color: white;
+  z-index: 1000;
+}

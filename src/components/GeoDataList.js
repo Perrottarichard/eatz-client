@@ -22,9 +22,7 @@ export const calcDistance = (lat1, lat2, lng1, lng2) => {
   let dlat = radiansLat2 - radiansLat1
 
   let ans = Math.pow(Math.sin(dlat / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon / 2), 2)
-
   let c = 2 * Math.asin(Math.sqrt(ans))
-
   const radiusOfEarth = 6371
 
   return c * radiusOfEarth
@@ -80,7 +78,9 @@ const GeoDataList = () => {
 
   return (
     <div className='dashDiv'>
-      <h5 className='sticky-head'>Near Me <Button style={{ float: 'right', height: 'auto', textTransform: 'none', lineHeight: 0.5, color: 'white' }}>next page</Button></h5>
+      <h5 className='sticky-head'>Near Me
+      {/* <Button style={{ float: 'right', height: 'auto', textTransform: 'none', lineHeight: 0.5, color: 'white' }}>next page</Button> */}
+      </h5>
       {geoData ? geoData.map(place =>
         <div key={place.place_id} style={{ marginTop: 10 }}>
           <Card>

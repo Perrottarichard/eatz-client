@@ -25,8 +25,8 @@ import logo from '../assets/pizzapizza50trans.png'
 import { clearUser } from '../reducers/activeUserReducer'
 // import RequestPartnerForm from '../components/RequestPartnerForm';
 // import PlaceDetails from '../components/PlaceDetails';
-import PlaceDetails from '../components/PlaceDetails';
 import MainDashboard from '../components/MainDashboard';
+import MainPlaceDetails from '../components/MainPlaceDetails';
 
 
 const drawerWidth = 240;
@@ -181,7 +181,7 @@ export default function Dashboard() {
         <Container maxWidth="lg" className={classes.container}>
           <Switch>
             <Route exact path='/dashboard' component={MainDashboard} />
-            <Route exact path='/dashboard/:id' component={PlaceDetails} />
+            <Route exact path='/dashboard/:id' component={MainPlaceDetails} />
             <Route exact path='/dashboard/myorders' />
           </Switch>
         </Container>
