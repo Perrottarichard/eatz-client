@@ -24,7 +24,6 @@ const getUserFromDash = async () => {
     },
 
   })
-  console.log(response.data)
   return response.data
 }
 const logoutUser = async () => {
@@ -36,12 +35,9 @@ const logoutUser = async () => {
       "Access-Control-Allow-Credentials": true
     },
   })
-  console.log(response.data)
   return response.data
 }
 const addFavoriteRestaurant = async (place_id, user_id) => {
-  console.log(place_id)
-  console.log(user_id)
   const response = await axios.put(`${baseUrl}/account/favorite`, {
     user_id: user_id,
     place_id: place_id
@@ -53,9 +49,22 @@ const addFavoriteRestaurant = async (place_id, user_id) => {
       "Access-Control-Allow-Credentials": true
     },
   })
-  console.log(response.data)
+  return response.data
+}
+const removeFavoriteRestaurant = async (place_id, user_id) => {
+  const response = await axios.put(`${baseUrl}/account/removefavorite`, {
+    user_id: user_id,
+    place_id: place_id
+  }, {
+    withCredentials: true,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true
+    },
+  })
   return response.data
 }
 
 
-export default { getUser, getUserFromDash, logoutUser, addFavoriteRestaurant }
+export default { getUser, getUserFromDash, logoutUser, addFavoriteRestaurant, removeFavoriteRestaurant }

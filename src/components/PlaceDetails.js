@@ -7,10 +7,10 @@ const PlaceDetails = () => {
   let place_id = useParams()
   const dispatch = useDispatch()
   const place = useSelector(state => state.placesReducer.placeDetails)
-  let photo
-  if (place) {
-    photo = place.photos[0].photo_reference
-  }
+  // let photo
+  // if (place) {
+  //   photo = place.photos[0].photo_reference
+  // }
 
   useEffect(() => {
     if (!place || place.place_id !== place_id.id)

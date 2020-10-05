@@ -85,7 +85,7 @@ const GeoDisplay = () => {
         </GoogleMapReact>
         :
         <div style={{ height: '100%', width: '100%', margin: 'auto', textAlign: 'center', backgroundImage: `url(${stockMap}` }}>
-          <Button style={{ width: '100%', height: '100%', margin: 'auto' }} onClick={() => setShowMap(true)}>Show me on the map</Button>
+          <Button style={{ width: '100%', height: '100%', margin: 'auto', textTransform: 'none' }} onClick={() => setShowMap(true)}>Show Map</Button>
         </div>}
     </div >
   )

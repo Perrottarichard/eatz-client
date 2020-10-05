@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Button } from '@material-ui/core'
-import { setPlaces } from '../reducers/placesReducer'
-import { addFavorite } from '../reducers/activeUserReducer'
-import { getByCoordinates } from '../services/dataService'
+import { removeFavorite } from '../reducers/activeUserReducer'
 import { useHistory } from 'react-router'
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
-import FavoriteIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import IconButton from '@material-ui/core/IconButton';
+import ClearIcon from '@material-ui/icons/Clear';
+import { calcDistance } from './GeoDataList'
 
 const Favorites = () => {
+  const dispatch = useDispatch()
   const user = useSelector(state => state.activeUser.user)
-  const geoData = useSelector(state => state.placesReducer.nearbyPlaces.filter(p => user.favoriteRestaurants.includes(p.place_id)))
+  const geoData = useSelector(state => state.placesReducer.nearbyPlaces ? state.placesReducer.nearbyPlaces.filter(p => user.favoriteRestaurants.includes(p.place_id)) : null)
 
   const [lat, setLat] = useState(0)
   const [lon, setLon] = useState(0)
@@ -33,45 +33,14 @@ const Favorites = () => {
     return () => isMountedRef.current = false
   }, [lat, lon])
 
-  // useEffect(() => {
-  //   isMountedRef.current = true
-  //   const loadData = async () => {
-  //     if (showList && isMountedRef.current) {
-  //       const res = await getByCoordinates(lat, lon)
-  //       if (isMountedRef.current)
-  //         dispatch(setPlaces(res.results))
-  //     }
-  //   }
-  //   loadData()
-  //   return () => isMountedRef.current = false
-  // }, [dispatch, showList, lat, lon])
-
-  // const addToFavorites = (place_id) => {
-  //   try {
-  //     dispatch(addFavorite(place_id, user._id))
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
-  const calcDistance = (lat1, lat2, lng1, lng2) => {
-    const pi = Math.PI
-    let radiansLat1 = lat1 * (pi / 180)
-    let radiansLat2 = lat2 * (pi / 180)
-    let radiansLng1 = lng1 * (pi / 180)
-    let radiansLng2 = lng2 * (pi / 180)
-
-    let dlon = radiansLng2 - radiansLng1
-    let dlat = radiansLat2 - radiansLat1
-
-    let ans = Math.pow(Math.sin(dlat / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon / 2), 2)
-
-    let c = 2 * Math.asin(Math.sqrt(ans))
-
-    const radiusOfEarth = 6371
-
-    return c * radiusOfEarth
+  const removeFromFavorites = (place_id) => {
+    try {
+      dispatch(removeFavorite(place_id, user._id))
+    } catch (error) {
+      console.log(error)
+    }
   }
+
   const handleClick = (place_id) => {
     history.push(`/dashboard/${place_id}`)
   }
@@ -86,9 +55,9 @@ const Favorites = () => {
             <CardActions>
               <Button onClick={() => handleClick(place.place_id)} disabled={place.opening_hours.open_now === true ? false : true}>{place.opening_hours.open_now === true ? 'Show Details' : 'Closed'}
               </Button>
-              {/* <IconButton aria-label="add to favorites" onClick={() => addToFavorites(place.place_id)}>
-                <FavoriteIcon />
-              </IconButton> */}
+              <IconButton aria-label="add to favorites" onClick={() => removeFromFavorites(place.place_id)}>
+                <ClearIcon />
+              </IconButton>
             </CardActions>
           </Card>
         </div>
