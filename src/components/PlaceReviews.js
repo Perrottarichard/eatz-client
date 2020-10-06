@@ -8,7 +8,7 @@ const PlaceReviews = ({ place }) => {
   return (
     <div>
       <h5 className='sticky-head'>Reviews</h5>
-      {place !== undefined ?
+      {place.reviews !== undefined ?
         place.reviews.map(r =>
           < Card key={r.author_name}>
             <CardContent>
@@ -26,7 +26,7 @@ const PlaceReviews = ({ place }) => {
             </CardContent>
           </Card >
         )
-        : <h3>Loading...</h3>}
+        : <h3>No reviews</h3>}
     </div>
   )
 }
