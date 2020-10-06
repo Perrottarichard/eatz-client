@@ -40,3 +40,7 @@ export const getPlaceDetailsRequest = async (place_id) => {
   })
   return response.data
 }
+export const loadMenu = async () => {
+  const response = await axios.get(`${baseUrl}/menuItems`)
+  return response.data
+}

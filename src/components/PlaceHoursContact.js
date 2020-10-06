@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const HoursContact = ({ place }) => {
+const PlaceHoursContact = ({ place }) => {
 
   return (
     <div>
@@ -18,6 +18,6 @@ const HoursContact = ({ place }) => {
   )
 }
 
-export default HoursContact
+export default PlaceHoursContact
 
 

@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const NameAddress = ({ place }) => {
+const PlaceNameAddress = ({ place }) => {
 
   return (
     <div>
@@ -19,4 +19,4 @@ const NameAddress = ({ place }) => {
   )
 }
 
-export default NameAddress
+export default PlaceNameAddress
