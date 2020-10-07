@@ -1,3 +1,4 @@
+import { Container } from '@material-ui/core'
 import React from 'react'
 
 
@@ -7,11 +8,11 @@ const PlaceHoursContact = ({ place }) => {
     <div>
       <h5 className='sticky-head'>Hours and Contact</h5>
       {place !== undefined ?
-        <div>
+        <Container>
           <p>{place.formatted_phone_number}</p>
           <ul>Hours:</ul>
           {place.opening_hours.weekday_text.map(d => <li key={d}>{d}</li>)}
-        </div>
+        </Container>
         : <h3>Loading...</h3>}
 
     </div>

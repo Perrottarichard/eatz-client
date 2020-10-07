@@ -10,7 +10,7 @@ import Favorites from './Favorites';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    padding: theme.spacing(1),
+    padding: theme.spacing(0),
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',

@@ -14,7 +14,7 @@ import PlaceMenu from './PlaceMenu'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    padding: theme.spacing(1),
+    paddingLeft: theme.spacing(0),
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
