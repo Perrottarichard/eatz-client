@@ -82,18 +82,16 @@ const GeoDataList = () => {
       {/* <Button style={{ float: 'right', height: 'auto', textTransform: 'none', lineHeight: 0.5, color: 'white' }}>next page</Button> */}
       </h5>
       {geoData ? geoData.map(place =>
-        <div key={place.place_id} style={{ marginTop: 10 }}>
-          <Card>
-            <CardHeader title={place.name} subheader={calcDistance(lat, place.geometry.location.lat, lon, place.geometry.location.lng).toFixed(2) + ' km'} />
-            <CardActions>
-              <Button onClick={() => handleClick(place.place_id)} disabled={false}>{'Show Details'}
-              </Button>
-              <IconButton aria-label="add to favorites" onClick={() => addToFavorites(place.place_id)}>
-                <FavoriteIcon />
-              </IconButton>
-            </CardActions>
-          </Card>
-        </div>
+        <Card>
+          <CardHeader title={place.name} subheader={calcDistance(lat, place.geometry.location.lat, lon, place.geometry.location.lng).toFixed(2) + ' km'} />
+          <CardActions>
+            <Button onClick={() => handleClick(place.place_id)} disabled={false}>{'Show Details'}
+            </Button>
+            <IconButton aria-label="add to favorites" onClick={() => addToFavorites(place.place_id)}>
+              <FavoriteIcon />
+            </IconButton>
+          </CardActions>
+        </Card>
       )
         : <div style={{ height: '100%', width: '100%', margin: 'auto', textAlign: 'center' }}>
           <Button style={{ width: '100%', height: '100%', margin: 'auto' }} onClick={() => setShowList(true)}>Show me nearby restaurants</Button>

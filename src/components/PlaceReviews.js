@@ -12,18 +12,20 @@ const PlaceReviews = ({ place }) => {
       <h5 className='sticky-head'>Reviews</h5>
       {place.reviews !== undefined ?
         place.reviews.map(r =>
-          < Card key={r.author_name}>
-            <CardContent>
-              <Avatar src={r.profile_photo_url} />
-              <Typography variant="h6" component="h6">
+          < Card key={r.author_name} >
+            <CardContent className='placeReviewsCard'>
+
+              <Typography variant="p" component="p">
                 {r.author_name}
-                <span style={{ fontSize: 10, float: 'right', lineHeight: 3 }}>{r.relative_time_description}</span>
+                <Avatar src={r.profile_photo_url} />
+                <Typography style={{ fontSize: 10 }}>{r.relative_time_description}</Typography>
               </Typography>
+              <Rating name="read-only" value={r.rating} readOnly />
               <Typography variant="body2" color="textSecondary" component="p">
                 {r.text}
               </Typography>
-              <Typography variant="body2" component="p">
-                <Rating name="read-only" value={r.rating} readOnly />
+              <Typography variant="body2" component="h6">
+
               </Typography>
             </CardContent>
           </Card >
