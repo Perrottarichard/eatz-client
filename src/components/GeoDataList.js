@@ -82,7 +82,7 @@ const GeoDataList = () => {
       {/* <Button style={{ float: 'right', height: 'auto', textTransform: 'none', lineHeight: 0.5, color: 'white' }}>next page</Button> */}
       </h5>
       {geoData ? geoData.map(place =>
-        <Card>
+        <Card key={place.place_id}>
           <CardHeader title={place.name} subheader={calcDistance(lat, place.geometry.location.lat, lon, place.geometry.location.lng).toFixed(2) + ' km'} />
           <CardActions>
             <Button onClick={() => handleClick(place.place_id)} disabled={false}>{'Show Details'}

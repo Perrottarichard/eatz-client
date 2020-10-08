@@ -6,7 +6,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
-import { CheckCircleOutline, RemoveCircleOutline } from '@material-ui/icons';
+import { CheckCircleOutline, Phone, RemoveCircleOutline, Schedule } from '@material-ui/icons';
 
 
 
@@ -16,7 +16,7 @@ const PlaceHoursContact = ({ place }) => {
     <div>
       <h5 className='sticky-head'>Hours and Contact</h5>
       {place !== undefined ?
-        <Card>
+        <Card style={{ textAlign: 'center', margin: 'auto' }}>
           {place.opening_hours.open_now
             ?
             <Chip label="Open" icon={<CheckCircleOutline style={{ color: 'green' }} />} />
@@ -24,16 +24,16 @@ const PlaceHoursContact = ({ place }) => {
             <Chip label="Closed" icon={<RemoveCircleOutline style={{ color: 'red' }} />} />}
           <CardContent>
             <Typography variant='body1' color='textPrimary'>
-              Phone:
-          </Typography>
+              <Phone />
+            </Typography>
             <Typography variant="body2" color='textSecondary' component="p">
               {place.formatted_phone_number}
             </Typography>
             <br />
             <Typography variant='body1' color='textPrimary'>
-              Operating Hours:
+              <Schedule />
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="ul">
+            <Typography variant="body2" color="textSecondary" component="ul" style={{ listStyleType: 'none', padding: 0 }}>
               {place.opening_hours.weekday_text.map(d => <li key={d}>{d}</li>)}
             </Typography>
           </CardContent>

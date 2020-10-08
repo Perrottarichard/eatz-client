@@ -1,95 +1,83 @@
 import React, { useState } from 'react'
-import { Container } from '@material-ui/core'
-import { FormControl, FormGroup, FormControlLabel, FormLabel, Radio, RadioGroup, Checkbox, Grid } from '@material-ui/core'
-
+import { Typography } from '@material-ui/core'
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import Button from '@material-ui/core/Button';
+import Pizza from './Pizza';
+import Beverage from './Beverage';
 
 const PlaceMenu = ({ items }) => {
-  const beverages = items.filter(i => i.type === 'beverage')
+
+  const beverages = items.filter(i => i.type === 'beverages')
   const pizza = items.filter(i => i.type === 'pizza')
+  const [activeStep, setActiveStep] = React.useState(0);
 
-  const [size, setSize] = useState(null)
-  const [variant, setVariant] = useState(null)
-  const [regularToppings, setRegularToppings] = useState([])
-  const [premiumToppings, setPremiumToppings] = useState([])
-
-  const handleVariantChange = (e) => {
-    setVariant(e.target.value)
+  function getSteps() {
+    return ['Select size, style, and toppings', 'Wet your whistle', 'Apply a promotion'];
   }
-  const handleSizeChange = (e) => {
-    setSize(e.target.value)
-  }
-
-  const addRegTopping = (e) => {
-    let toppings = regularToppings
-    if (toppings.includes(e.target.value)) {
-      let removed = toppings.filter(t => t !== e.target.value)
-      setRegularToppings(removed)
-      console.log(regularToppings)
-    } else {
-      toppings.push(e.target.value)
-      setRegularToppings(toppings)
-      console.log(regularToppings)
+  function getStepContent(stepIndex) {
+    switch (stepIndex) {
+      case 0:
+        return <Pizza pizza={pizza} />
+      case 1:
+        return <Beverage beverages={beverages} />
+      case 2:
+        return 'This is the bit I really care about!';
+      default:
+        return 'Unknown stepIndex';
     }
   }
-  const addPremTopping = (e) => {
-    let toppings = premiumToppings
-    if (toppings.includes(e.target.value)) {
-      let removed = toppings.filter(t => t !== e.target.value)
-      setPremiumToppings(removed)
-      console.log(premiumToppings)
-    } else {
-      toppings.push(e.target.value)
-      setPremiumToppings(toppings)
-      console.log(premiumToppings)
-    }
-  }
+  const steps = getSteps();
+
+
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleReset = () => {
+    setActiveStep(0);
+  };
+
+
   return (
-    <Container>
-      <h2>Pizza</h2>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6} md={6} lg={6}>
-          <FormControl component='fieldset'>
-            <FormLabel component='legend'>Step 1: Choose a size:</FormLabel>
-            <RadioGroup aria-label="style" name="Style" value={size} onChange={handleSizeChange}>
-              {pizza.map(p => p.pizza_base_prices.map(x =>
-                <FormControlLabel key={x.size} value={x.size} control={<Radio />} label={`${x.size}: $${x.price}`} />
-              ))}
-            </RadioGroup>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6} lg={6}>
-          <FormControl component="fieldset">
-            <FormLabel component="legend">Step 2: Choose a style:</FormLabel>
-            <RadioGroup aria-label="style" name="Style" value={variant} onChange={handleVariantChange}>
-              {pizza.map(p => p.variants.map(v =>
-                <FormControlLabel key={v} value={v} control={<Radio />} label={v !== 'regular' ? `${v} (add 20%)` : v} />
-              ))
-              }
-            </RadioGroup>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={6}>
-          <FormLabel component='legend'>Step 3: Choose some toppings:</FormLabel><br />
-          <FormLabel component='legend'>Regular toppings ($2 each)</FormLabel>
-          <FormGroup row>
-            {pizza.map(p => p.regular_toppings.map(t =>
-              <FormControlLabel key={t} control={<Checkbox value={t} onChange={(e) => addRegTopping(e)} />} label={t} />
-            ))}
-          </FormGroup>
-          <br />
-          <FormLabel component='legend'>Premium toppings ($4 each)</FormLabel>
-          <FormGroup row>
-            {pizza.map(p => p.premium_toppings.map(t =>
-              <FormControlLabel key={t} control={<Checkbox value={t} onChange={(e) => addPremTopping(e)} />} label={t} />
-            ))}
-          </FormGroup>
-          <br />
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={6}>
-
-        </Grid>
-      </Grid>
-    </Container>
+    <React.Fragment>
+      <h5 className='sticky-head'>Menu</h5>
+      <Stepper activeStep={activeStep} alternativeLabel>
+        {steps.map((label) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+      <div>
+        {activeStep === steps.length ? (
+          <div>
+            <Typography >All steps completed</Typography>
+            <Button onClick={handleReset}>Reset</Button>
+          </div>
+        ) : (
+            <React.Fragment>
+              {getStepContent(activeStep)}
+              <div>
+                <Button
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                >
+                  Back
+              </Button>
+                <Button variant="contained" color="primary" onClick={handleNext}>
+                  {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                </Button>
+              </div>
+            </React.Fragment>
+          )}
+      </div>
+    </React.Fragment>
   )
 }
 export default PlaceMenu

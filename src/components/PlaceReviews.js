@@ -14,12 +14,11 @@ const PlaceReviews = ({ place }) => {
         place.reviews.map(r =>
           < Card key={r.author_name} >
             <CardContent className='placeReviewsCard'>
-
-              <Typography variant="p" component="p">
+              <Avatar src={r.profile_photo_url} />
+              <Typography variant="body1" component="p">
                 {r.author_name}
-                <Avatar src={r.profile_photo_url} />
-                <Typography style={{ fontSize: 10 }}>{r.relative_time_description}</Typography>
               </Typography>
+              <Typography style={{ fontSize: 10 }}>{r.relative_time_description}</Typography>
               <Rating name="read-only" value={r.rating} readOnly />
               <Typography variant="body2" color="textSecondary" component="p">
                 {r.text}
