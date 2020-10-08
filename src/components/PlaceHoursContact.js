@@ -23,18 +23,19 @@ const PlaceHoursContact = ({ place }) => {
             :
             <Chip label="Closed" icon={<RemoveCircleOutline style={{ color: 'red' }} />} />}
           <CardContent>
-            <Typography variant='body1' color='textPrimary'>
-              <Phone />
-            </Typography>
-            <Typography variant="body2" color='textSecondary' component="p">
-              {place.formatted_phone_number}
-            </Typography>
-            <br />
+
             <Typography variant='body1' color='textPrimary'>
               <Schedule />
             </Typography>
             <Typography variant="body2" color="textSecondary" component="ul" style={{ listStyleType: 'none', padding: 0 }}>
               {place.opening_hours.weekday_text.map(d => <li key={d}>{d}</li>)}
+            </Typography>
+            <br />
+            <Typography variant='body1' color='textPrimary'>
+              <Phone />
+            </Typography>
+            <Typography variant="body2" color='textSecondary' component="p">
+              {place.formatted_phone_number}
             </Typography>
           </CardContent>
         </Card>

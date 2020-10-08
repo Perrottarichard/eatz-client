@@ -1,6 +1,11 @@
 import React, { useState } from 'react'
 import { Container, Button } from '@material-ui/core'
 import { FormControl, FormGroup, FormControlLabel, FormLabel, Radio, RadioGroup, Checkbox, Grid, Fab } from '@material-ui/core'
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import { AddShoppingCart, RemoveCircleOutline } from '@material-ui/icons'
 
 
@@ -10,6 +15,7 @@ const Pizza = ({ pizza }) => {
 
   const [size, setSize] = useState(null)
   const [variant, setVariant] = useState(null)
+  const [open, setOpen] = React.useState(false);
 
   //dynamically intialize an object from the array of topping choices to use for the checkbox with key/value pairs set initially to false. When checked, corresponding key item's value will change to true
   const regInitial = [pizza.map(p => p.regular_toppings.map(x => [x, false]))]
@@ -53,13 +59,22 @@ const Pizza = ({ pizza }) => {
   const handlePremiumChecked = (event) => {
     setPremiumChecked({ ...premiumChecked, [event.target.name]: event.target.checked });
   }
+
+  //handle confirmation dialog
+  const handleClickOpen = () => {
+    setOpen(true);
+  }
+
+  const handleClose = () => {
+    setOpen(false);
+  }
+
   //Can't use. possibly a bug in Mui. Resetting Mui checkbox values programmatically isn't reflected in the UI.
   // const clearSelection = () => {
   //   setRegularChecked(regObj)
   //   setPremiumChecked(premObj)
   //   setSize(null)
   //   setVariant(null)
-
   // }
 
   return (
@@ -109,12 +124,29 @@ const Pizza = ({ pizza }) => {
       </Grid>
       {variant && size ?
         <div style={{ display: 'block', textAlign: 'center', marginBottom: 20 }}>
-          <Fab id='pizza-button' aria-label="add">
+          <Fab onClick={handleClickOpen} id='pizza-button' aria-label="add">
             <AddShoppingCart />
           </Fab>
-          {/* <Fab onClick={clearSelection} color="secondary" aria-label="clear">
-            <RemoveCircleOutline />
-          </Fab> */}
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                {`Add a ${size} ${variant} pizza to your cart?`}
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                No
+          </Button>
+              <Button onClick={handleClose} color="primary" autoFocus>
+                Yes
+          </Button>
+            </DialogActions>
+          </Dialog>
         </div>
         : null}
     </Container>

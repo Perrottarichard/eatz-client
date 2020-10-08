@@ -74,7 +74,7 @@ const MainPlaceDetails = () => {
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Paper className={menu}>
-            <PlaceMenu items={items} />
+            <PlaceMenu items={items} place={place} />
           </Paper>
         </Grid>
       </Grid>

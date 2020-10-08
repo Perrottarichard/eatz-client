@@ -1,20 +1,21 @@
 import React, { useState } from 'react'
-import { Typography } from '@material-ui/core'
+import { Typography, Container } from '@material-ui/core'
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Pizza from './Pizza';
 import Beverage from './Beverage';
+import placesReducer from '../reducers/placesReducer';
 
-const PlaceMenu = ({ items }) => {
+const PlaceMenu = ({ items, place }) => {
 
   const beverages = items.filter(i => i.type === 'beverages')
   const pizza = items.filter(i => i.type === 'pizza')
   const [activeStep, setActiveStep] = React.useState(0);
 
   function getSteps() {
-    return ['Select size, style, and toppings', '...and to drink?', 'Apply a promotion'];
+    return ['Build your pizza', '...and to drink?', 'Apply a promotion'];
   }
   function getStepContent(stepIndex) {
     switch (stepIndex) {
@@ -43,6 +44,18 @@ const PlaceMenu = ({ items }) => {
     setActiveStep(0);
   };
 
+  if (!place.opening_hours.open_now) {
+    return (
+      <div>
+        <h5 className='sticky-head'>Menu</h5>
+        <Container>
+          <Typography variant='h6' component='h6'>
+            Sorry, this restaurant is closed. Come back again during operating hours to view the menu and place an order.
+        </Typography>
+        </Container>
+      </div>
+    )
+  }
 
   return (
     <React.Fragment>
@@ -70,7 +83,7 @@ const PlaceMenu = ({ items }) => {
                 >
                   Back
               </Button>
-                <Button variant="contained" color="primary" onClick={handleNext}>
+                <Button variant="contained" style={{ float: 'right' }} onClick={handleNext}>
                   {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                 </Button>
               </div>

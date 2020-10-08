@@ -85,7 +85,7 @@ const GeoDataList = () => {
         <Card key={place.place_id}>
           <CardHeader title={place.name} subheader={calcDistance(lat, place.geometry.location.lat, lon, place.geometry.location.lng).toFixed(2) + ' km'} />
           <CardActions>
-            <Button onClick={() => handleClick(place.place_id)} disabled={false}>{'Show Details'}
+            <Button onClick={() => handleClick(place.place_id)} disabled={place.opening_hours.open_now === true ? false : true}>{place.opening_hours.open_now === true ? 'Show Details' : 'Closed'}
             </Button>
             <IconButton aria-label="add to favorites" onClick={() => addToFavorites(place.place_id)}>
               <FavoriteIcon />
