@@ -64,3 +64,39 @@ margin: 0px;
   width: 100%;
 }
 
+@keyframes pulse {
+  from { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  to { transform: scale(1); }
+}
+
+#pizza-button {
+  animation-name: pulse;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  background-color: #ff430a;
+  color: white;
+}
+#pizza-button:hover,
+#pizza-button:focus {
+  animation-name: unset;
+}
+span.MuiStepLabel-label {
+  color: black;
+}
+span.MuiStepLabel-label.MuiStepLabel-active {
+  color: black;
+}
+
+span.MuiSvgIcon-root.MuiStepIcon-root.MuiStepIcon-completed {
+  color:  #ff430a;
+}
+.MuiStepIcon{
+  color: #ff430a;
+}
+.MuiStepIcon-completed {
+  color: purple;
+}
+circle {
+  color:  #ff430a;
+}

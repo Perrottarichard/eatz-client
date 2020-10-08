@@ -7,5 +7,6 @@ Google red:
 dashboard grey:
 #575551
 
-pizza map marker orange:
-#f77943
+reddish orange:
+#ff430a
+

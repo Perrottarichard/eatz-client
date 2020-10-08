@@ -13,10 +13,10 @@ const MapMarker = (props) => {
   }
   return (
     <div className="marker"
-      style={{ fontSize: 25 }}
+      style={{ fontSize: 20 }}
       title={name}>
       <IconButton onClick={() => handleClick(place_id)}>
-        <FontAwesomeIcon icon={faPizzaSlice} style={{ color: '#f77943' }} />
+        <FontAwesomeIcon icon={faPizzaSlice} style={{ color: '#ff430a' }} />
       </IconButton>
     </div>
   );
