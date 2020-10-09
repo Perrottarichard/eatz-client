@@ -11,6 +11,7 @@ import PlaceNameAddress from './PlaceNameAddress';
 import PlaceHoursContact from './PlaceHoursContact';
 import PlaceReviews from './PlaceReviews';
 import PlaceMenu from './PlaceMenu'
+import { LinearProgress } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -50,9 +51,13 @@ const MainPlaceDetails = () => {
     }
   }, [dispatch, items])
 
+  if (!place) {
+    return <LinearProgress color="secondary" />
+  }
+
   console.log(items)
   if (!items) {
-    return <h1>Loading...</h1>
+    return <LinearProgress color="secondary" />
   }
   return (
     <React.Fragment>
