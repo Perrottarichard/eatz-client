@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Typography, Container } from '@material-ui/core'
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -6,10 +7,9 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Pizza from './Pizza';
 import Beverage from './Beverage';
-import placesReducer from '../reducers/placesReducer';
 
 const PlaceMenu = ({ items, place }) => {
-
+  const user = useSelector(state => state.activeUser.user)
   const beverages = items.filter(i => i.type === 'beverages')
   const pizza = items.filter(i => i.type === 'pizza')
   const [activeStep, setActiveStep] = React.useState(0);
@@ -20,7 +20,7 @@ const PlaceMenu = ({ items, place }) => {
   function getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
-        return <Pizza pizza={pizza} />
+        return <Pizza pizza={pizza} place={place} user={user} />
       case 1:
         return <Beverage beverages={beverages} />
       case 2:

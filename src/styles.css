@@ -71,16 +71,16 @@ margin: 0px;
 }
 
 #pizza-button {
-  animation-name: pulse;
+  /* animation-name: pulse;
   animation-duration: 3s;
-  animation-iteration-count: infinite;
+  animation-iteration-count: infinite; */
   background-color: #ff430a;
   color: white;
 }
-#pizza-button:hover,
+/* #pizza-button:hover,
 #pizza-button:focus {
   animation-name: unset;
-}
+} */
 span.MuiStepLabel-label {
   color: black;
 }

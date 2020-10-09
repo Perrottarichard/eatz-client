@@ -14,6 +14,8 @@ const activeUserReducer = (state = initialState, action) => {
       return { ...state, user: action.data }
     case 'REMOVE_FAVORITE':
       return { ...state, user: action.data }
+    case 'ADD_CART':
+      return { ...state, user: action.data }
     default:
       return state
   }
@@ -76,6 +78,19 @@ export const removeFavorite = (place_id, user_id) => {
       let res = await userService.removeFavoriteRestaurant(place_id, user_id)
       dispatch({
         type: 'REMOVE_FAVORITE',
+        data: res
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+export const addCart = (user_id, item) => {
+  return async dispatch => {
+    try {
+      let res = await userService.addItemToCart(user_id, item)
+      dispatch({
+        type: 'ADD_CART',
         data: res
       })
     } catch (error) {

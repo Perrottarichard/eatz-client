@@ -1,18 +1,52 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Container, Button } from '@material-ui/core'
 import { FormControl, FormGroup, FormControlLabel, FormLabel, Radio, RadioGroup, Checkbox, Grid, Fab } from '@material-ui/core'
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import { addCart } from '../reducers/activeUserReducer'
 import { AddShoppingCart, RemoveCircleOutline } from '@material-ui/icons'
 
 
+const calcPizzaPrice = (pizza, size, variant, selectedRegularToppings, selectedPremiumToppings) => {
+  let sizePrice = 0
+  let variantPrice = 0
+  let regToppingsPrice = 0
+  let premToppingsPrice = 0
+
+  for (let i = 0; i < pizza[0].pizza_base_prices.length; i++) {
+    console.log(size)
+    if (size === pizza[0].pizza_base_prices[i].size) {
+      sizePrice = pizza[0].pizza_base_prices[i].price
+    }
+  }
+  for (let i = 0; i < pizza[0].add_ons.length; i++) {
+    if (variant === pizza[0].add_ons[i].variant) {
+      variantPrice = pizza[0].add_ons[i].multiplier * sizePrice
+    }
+  }
+  if (selectedRegularToppings) {
+    regToppingsPrice = selectedRegularToppings.length * 2
+  }
+  if (selectedPremiumToppings) {
+    premToppingsPrice = selectedPremiumToppings.length * 4
+  }
+  console.log(sizePrice)
+  console.log(variantPrice)
+  console.log(regToppingsPrice)
+  console.log(premToppingsPrice)
 
 
-const Pizza = ({ pizza }) => {
+  let totalPrice = ((variantPrice + regToppingsPrice + premToppingsPrice) * 1.07).toFixed(2)
+  return totalPrice
+}
 
+
+const Pizza = ({ pizza, place, user }) => {
+
+  const dispatch = useDispatch()
   const [size, setSize] = useState(null)
   const [variant, setVariant] = useState(null)
   const [open, setOpen] = React.useState(false);
@@ -29,8 +63,8 @@ const Pizza = ({ pizza }) => {
   const [premiumChecked, setPremiumChecked] = useState(premObj)
 
   //initialize empty arrays to store final topping choices before pushing to cart. Keep separate for billing purposes
-  let selectedRegularToppings = []
-  let selectedPremiumToppings = []
+  const selectedRegularToppings = []
+  const selectedPremiumToppings = []
 
   //make iterable arrays from objects
   let regArr = Object.entries(regularChecked)
@@ -69,6 +103,29 @@ const Pizza = ({ pizza }) => {
     setOpen(false);
   }
 
+
+  const handleAddCart = (itemId, size, variant, restaurantName, restaurantId, selectedRegularToppings, selectedPremiumToppings) => {
+    console.log(variant)
+    let totalPrice = calcPizzaPrice(pizza, size, variant, selectedRegularToppings, selectedPremiumToppings)
+    let itemToAdd = {
+      itemId: itemId,
+      selectedVariant: variant,
+      selectedSize: size,
+      selectedRegularToppings: selectedRegularToppings,
+      selectedPremiumToppings: selectedPremiumToppings,
+      restaurantName: restaurantName,
+      restaurantId: restaurantId,
+      totalPrice: totalPrice
+    }
+    try {
+      dispatch(addCart(user._id, itemToAdd))
+      handleClose()
+    } catch (error) {
+      console.log(error)
+      handleClose()
+    }
+  }
+
   //Can't use. possibly a bug in Mui. Resetting Mui checkbox values programmatically isn't reflected in the UI.
   // const clearSelection = () => {
   //   setRegularChecked(regObj)
@@ -78,7 +135,7 @@ const Pizza = ({ pizza }) => {
   // }
 
   return (
-    <Container>
+    <Container >
       <h2>Pizza</h2>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={6} lg={6}>
@@ -103,7 +160,7 @@ const Pizza = ({ pizza }) => {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={6}>
-          <FormLabel component='legend'>Choose some toppings:</FormLabel><br />
+          <FormLabel component='legend' style={{ color: '#575551' }}>Choose some toppings:</FormLabel><br />
           <FormLabel component='legend'>Regular ($2 each)</FormLabel>
           <FormGroup row>
             {pizza.map(p => p.regular_toppings.map(t =>
@@ -119,8 +176,8 @@ const Pizza = ({ pizza }) => {
           </FormGroup>
           <br />
         </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={6}>
-        </Grid>
+        {/* <Grid item xs={12} sm={12} md={12} lg={6}>
+        </Grid> */}
       </Grid>
       {variant && size ?
         <div style={{ display: 'block', textAlign: 'center', marginBottom: 20 }}>
@@ -142,7 +199,7 @@ const Pizza = ({ pizza }) => {
               <Button onClick={handleClose} color="primary">
                 No
           </Button>
-              <Button onClick={handleClose} color="primary" autoFocus>
+              <Button onClick={() => handleAddCart(pizza.id, size, variant, place.name, place.place_id, selectedRegularToppings, selectedPremiumToppings)} color="primary" autoFocus>
                 Yes
           </Button>
             </DialogActions>
