@@ -103,9 +103,15 @@ const Pizza = ({ pizza, place, user }) => {
     setOpen(false);
   }
 
+  // Can't use. possibly a bug in Mui. Resetting Mui checkbox values programmatically isn't reflected in the UI.
+  const clearSelection = () => {
+    setRegularChecked(regObj)
+    setPremiumChecked(premObj)
+    setSize(null)
+    setVariant(null)
+  }
 
   const handleAddCart = (itemId, size, variant, restaurantName, restaurantId, selectedRegularToppings, selectedPremiumToppings) => {
-
     const totalPrice = calcPizzaPrice(pizza, size, variant, selectedRegularToppings, selectedPremiumToppings)
 
     const itemToAdd = {
@@ -126,14 +132,6 @@ const Pizza = ({ pizza, place, user }) => {
       console.log(error)
       handleClose()
     }
-  }
-
-  // Can't use. possibly a bug in Mui. Resetting Mui checkbox values programmatically isn't reflected in the UI.
-  const clearSelection = () => {
-    setRegularChecked(regObj)
-    setPremiumChecked(premObj)
-    setSize(null)
-    setVariant(null)
   }
 
   return (
@@ -166,14 +164,14 @@ const Pizza = ({ pizza, place, user }) => {
           <FormLabel component='legend'>Regular ($2 each)</FormLabel>
           <FormGroup row>
             {pizza.map(p => p.regular_toppings.map(t =>
-              <FormControlLabel key={t} control={<Checkbox style={{ color: '#575551' }} checked={regularChecked.t} name={t} onChange={handleRegularChecked} />} label={t} />
+              <FormControlLabel key={t} control={<Checkbox style={{ color: '#575551' }} checked={regularChecked[t]} name={t} onChange={handleRegularChecked} />} label={t} />
             ))}
           </FormGroup>
           <br />
           <FormLabel component='legend'>Premium ($4 each)</FormLabel>
           <FormGroup row>
             {pizza.map(p => p.premium_toppings.map(t =>
-              <FormControlLabel key={t} control={<Checkbox style={{ color: '#575551' }} checked={premiumChecked.t} name={t} onChange={handlePremiumChecked} />} label={t} />
+              <FormControlLabel key={t} control={<Checkbox style={{ color: '#575551' }} checked={premiumChecked[t]} name={t} onChange={handlePremiumChecked} />} label={t} />
             ))}
           </FormGroup>
           <br />
