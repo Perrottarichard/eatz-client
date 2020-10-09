@@ -105,9 +105,10 @@ const Pizza = ({ pizza, place, user }) => {
 
 
   const handleAddCart = (itemId, size, variant, restaurantName, restaurantId, selectedRegularToppings, selectedPremiumToppings) => {
-    console.log(variant)
-    let totalPrice = calcPizzaPrice(pizza, size, variant, selectedRegularToppings, selectedPremiumToppings)
-    let itemToAdd = {
+
+    const totalPrice = calcPizzaPrice(pizza, size, variant, selectedRegularToppings, selectedPremiumToppings)
+
+    const itemToAdd = {
       itemId: itemId,
       selectedVariant: variant,
       selectedSize: size,
@@ -120,19 +121,20 @@ const Pizza = ({ pizza, place, user }) => {
     try {
       dispatch(addCart(user._id, itemToAdd))
       handleClose()
+      clearSelection()
     } catch (error) {
       console.log(error)
       handleClose()
     }
   }
 
-  //Can't use. possibly a bug in Mui. Resetting Mui checkbox values programmatically isn't reflected in the UI.
-  // const clearSelection = () => {
-  //   setRegularChecked(regObj)
-  //   setPremiumChecked(premObj)
-  //   setSize(null)
-  //   setVariant(null)
-  // }
+  // Can't use. possibly a bug in Mui. Resetting Mui checkbox values programmatically isn't reflected in the UI.
+  const clearSelection = () => {
+    setRegularChecked(regObj)
+    setPremiumChecked(premObj)
+    setSize(null)
+    setVariant(null)
+  }
 
   return (
     <Container >
