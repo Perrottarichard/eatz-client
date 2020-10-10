@@ -47,6 +47,7 @@ margin: 0px;
   line-height: 2.5;
   text-transform: none;
   margin-left: 20px;
+  font-weight: 500;
 }
 .sticky-head {
   position: sticky;

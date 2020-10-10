@@ -73,7 +73,7 @@ const GeoDataList = () => {
     }
   }
   const handleClick = (place_id) => {
-    history.push(`/dashboard/${place_id}`)
+    history.push(`/dashboard/restaurant/${place_id}`)
   }
 
   return (

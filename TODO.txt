@@ -17,3 +17,4 @@ form validation
 add google fonts
 finalize styles --organized (try Sass?)
 remove map and geolist button-locks for production
+change favicon

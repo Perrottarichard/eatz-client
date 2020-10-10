@@ -15,7 +15,7 @@ const PlaceMenu = ({ items, place }) => {
   const [activeStep, setActiveStep] = React.useState(0);
 
   function getSteps() {
-    return ['Build your pizza', '...and to drink?', 'Apply a promotion'];
+    return ['Build your pizzas', '...and to drink?', 'Apply a promotion'];
   }
   function getStepContent(stepIndex) {
     switch (stepIndex) {

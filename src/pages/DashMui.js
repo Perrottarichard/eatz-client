@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom'
-// import { useLocation } from 'react-router-dom'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,21 +11,16 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
-// import Grid from '@material-ui/core/Grid';
-// import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { mainListItems } from '../components/ListItems';
-// import GeoDisplay from '../components/GeoDisplay';
 import { useSelector, useDispatch } from 'react-redux'
-// import GeoDataList from '../components/GeoDataList';
 import logo from '../assets/pizzapizza50trans.png'
 import { clearUser } from '../reducers/activeUserReducer'
-// import RequestPartnerForm from '../components/RequestPartnerForm';
-// import PlaceDetails from '../components/PlaceDetails';
 import MainDashboard from '../components/MainDashboard';
 import MainPlaceDetails from '../components/MainPlaceDetails';
+import MainCart from '../components/MainCart';
 
 
 const drawerWidth = 240;
@@ -100,8 +94,10 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
   },
   container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2)
   },
   paper: {
     padding: theme.spacing(1),
@@ -181,8 +177,9 @@ export default function Dashboard() {
         <Container maxWidth="lg" className={classes.container}>
           <Switch>
             <Route exact path='/dashboard' component={MainDashboard} />
-            <Route exact path='/dashboard/:id' component={MainPlaceDetails} />
-            <Route exact path='/dashboard/myorders' />
+            <Route path='/dashboard/restaurant/:id' component={MainPlaceDetails} />
+            <Route path='/dashboard/orders' />
+            <Route path='/dashboard/cart' component={MainCart} />
           </Switch>
         </Container>
       </main>

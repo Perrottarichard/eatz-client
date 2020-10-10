@@ -9,7 +9,7 @@ const MapMarker = (props) => {
   const history = useHistory()
 
   const handleClick = (place_id) => {
-    history.push(`/dashboard/${place_id}`)
+    history.push(`/dashboard/restaurant/${place_id}`)
   }
   return (
     <div className="marker"

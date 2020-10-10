@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   fixedHeight: {
-    height: 240,
+    height: 280,
   }
 }))
 
@@ -27,7 +27,7 @@ const MainDashboard = () => {
 
   return (
     <React.Fragment>
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4} lg={4}>
           <Paper className={fixedHeightPaper}>
             <GeoDataList />
