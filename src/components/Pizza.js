@@ -17,7 +17,6 @@ const calcPizzaPrice = (pizza, size, variant, selectedRegularToppings, selectedP
   let premToppingsPrice = 0
 
   for (let i = 0; i < pizza[0].pizza_base_prices.length; i++) {
-    console.log(size)
     if (size === pizza[0].pizza_base_prices[i].size) {
       sizePrice = pizza[0].pizza_base_prices[i].price
     }
@@ -33,11 +32,6 @@ const calcPizzaPrice = (pizza, size, variant, selectedRegularToppings, selectedP
   if (selectedPremiumToppings) {
     premToppingsPrice = selectedPremiumToppings.length * 4
   }
-  console.log(sizePrice)
-  console.log(variantPrice)
-  console.log(regToppingsPrice)
-  console.log(premToppingsPrice)
-
 
   let totalPrice = ((variantPrice + regToppingsPrice + premToppingsPrice) * 1.07).toFixed(2)
   return totalPrice
@@ -115,7 +109,7 @@ const Pizza = ({ pizza, place, user }) => {
 
     const itemToAdd = {
       itemId: itemId,
-      type: type,
+      itemType: type,
       selectedVariant: variant,
       selectedSize: size,
       selectedRegularToppings: selectedRegularToppings,
@@ -199,7 +193,7 @@ const Pizza = ({ pizza, place, user }) => {
               <Button onClick={handleClose} color="primary">
                 No
           </Button>
-              <Button onClick={() => handleAddPizza(pizza.id, pizza.type, size, variant, place.name, place.place_id, selectedRegularToppings, selectedPremiumToppings)} color="primary" autoFocus>
+              <Button onClick={() => handleAddPizza(pizza.id, pizza[0].type, size, variant, place.name, place.place_id, selectedRegularToppings, selectedPremiumToppings)} color="primary" autoFocus>
                 Yes
           </Button>
             </DialogActions>

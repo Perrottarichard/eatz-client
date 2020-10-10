@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Typography, Container } from '@material-ui/core'
 import Stepper from '@material-ui/core/Stepper';
@@ -13,9 +14,10 @@ const PlaceMenu = ({ items, place }) => {
   const beverages = items.filter(i => i.type === 'beverages')
   const pizza = items.filter(i => i.type === 'pizza')
   const [activeStep, setActiveStep] = React.useState(0);
+  const history = useHistory()
 
   function getSteps() {
-    return ['Build your pizzas', '...and to drink?', 'Apply a promotion'];
+    return ['Build your pizzas', '...and to drink?'];
   }
   function getStepContent(stepIndex) {
     switch (stepIndex) {
@@ -23,8 +25,6 @@ const PlaceMenu = ({ items, place }) => {
         return <Pizza pizza={pizza} place={place} user={user} />
       case 1:
         return <Beverage beverages={beverages} user={user} place={place} />
-      case 2:
-        return 'This is the bit I really care about!';
       default:
         return 'Unknown stepIndex';
     }
@@ -43,6 +43,9 @@ const PlaceMenu = ({ items, place }) => {
   const handleReset = () => {
     setActiveStep(0);
   };
+  const sendToCart = () => {
+    history.push('/dashboard/cart')
+  }
 
   if (!place.opening_hours.open_now) {
     return (
@@ -76,14 +79,15 @@ const PlaceMenu = ({ items, place }) => {
         ) : (
             <React.Fragment>
               {getStepContent(activeStep)}
-              <div>
+              <div style={{ textAlign: 'center' }}>
                 <Button
                   disabled={activeStep === 0}
                   onClick={handleBack}
+                  style={{ marginRight: 20, marginBottom: 20, marginTop: 20 }}
                 >
                   Back
               </Button>
-                <Button variant="contained" style={{ float: 'right' }} onClick={handleNext}>
+                <Button style={{ border: 'solid', borderWeight: 1, borderColor: '#ff430a', backgroundColor: '#575551', color: 'white', marginBottom: 20, marginTop: 20, marginLeft: 20 }} variant="contained" onClick={activeStep === steps.length - 1 ? () => sendToCart() : handleNext}>
                   {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                 </Button>
               </div>

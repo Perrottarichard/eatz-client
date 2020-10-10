@@ -51,7 +51,7 @@ const Beverage = ({ beverages, user, place }) => {
       selectedBeverages: selectedBeverages,
       totalPrice: totalPrice,
       item_id: item_id,
-      type: type,
+      itemType: type,
       restaurantName: restaurantName,
       restaurantId: restaurantId
     }
@@ -64,6 +64,7 @@ const Beverage = ({ beverages, user, place }) => {
       handleClose()
     }
   }
+  console.log(beverages)
   return (
     <Container>
       <h2>{`Beverages ($${beverages[0].beverage_base_prices} each)`}</h2>
@@ -89,14 +90,14 @@ const Beverage = ({ beverages, user, place }) => {
           >
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                {`Add ${choicesChecked} to your cart?`}
+                {`Add ${selectedBeverages.map(b => 'a ' + b)} to your cart?`}
               </DialogContentText>
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose} color="primary">
                 No
           </Button>
-              <Button onClick={() => handleAddBeverage(beverages[0].id, beverages[0].type, selectedBeverages, place.name, place.place_id,)} color="primary" autoFocus>
+              <Button onClick={() => handleAddBeverage(beverages[0]._id, beverages[0].type, selectedBeverages, place.name, place.place_id,)} color="primary" autoFocus>
                 Yes
           </Button>
             </DialogActions>

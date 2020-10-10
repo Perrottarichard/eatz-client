@@ -102,3 +102,6 @@ span.MuiSvgIcon-root.MuiStepIcon-root.MuiStepIcon-completed {
 circle {
   color:  #ff430a;
 }
+.MuiSvgIcon-root .MuiStepIcon-root .MuiStepIcon-completed {
+  color: #ff430a
+}

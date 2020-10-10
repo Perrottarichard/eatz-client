@@ -58,7 +58,7 @@ const MainCart = () => {
           <Paper className={itemsContainer}>
             <Grid container spacing={1}>
               {cart.map(c =>
-                <Grid item xs={12} sm={12} md={4} lg={4}>
+                <Grid key={c._id} item xs={12} sm={12} md={4} lg={4}>
                   <Paper className={classes.items}>
                     here
                       </Paper>
