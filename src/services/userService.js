@@ -65,8 +65,19 @@ const removeFavoriteRestaurant = async (place_id, user_id) => {
   })
   return response.data
 }
-const addItemToCart = async (user_id, item) => {
-  const response = await axios.put(`${baseUrl}/account/addCart`, { user_id: user_id, item: item }, {
+const addPizzaToCart = async (user_id, item) => {
+  const response = await axios.put(`${baseUrl}/account/addPizza`, { user_id: user_id, item: item }, {
+    withCredentials: true,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true
+    },
+  })
+  return response.data
+}
+const addBeveragesToCart = async (user_id, item) => {
+  const response = await axios.put(`${baseUrl}/account/addBeverages`, { user_id: user_id, item: item }, {
     withCredentials: true,
     headers: {
       Accept: "application/json",
@@ -84,5 +95,6 @@ export default {
   logoutUser,
   addFavoriteRestaurant,
   removeFavoriteRestaurant,
-  addItemToCart
+  addPizzaToCart,
+  addBeveragesToCart
 }

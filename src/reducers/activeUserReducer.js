@@ -14,7 +14,9 @@ const activeUserReducer = (state = initialState, action) => {
       return { ...state, user: action.data }
     case 'REMOVE_FAVORITE':
       return { ...state, user: action.data }
-    case 'ADD_CART':
+    case 'ADD_PIZZA_TO_CART':
+      return { ...state, user: action.data }
+    case 'ADD_BEVERAGES_TO_CART':
       return { ...state, user: action.data }
     default:
       return state
@@ -88,9 +90,9 @@ export const removeFavorite = (place_id, user_id) => {
 export const addCart = (user_id, item) => {
   return async dispatch => {
     try {
-      let res = await userService.addItemToCart(user_id, item)
+      let res = await userService.addPizzaToCart(user_id, item)
       dispatch({
-        type: 'ADD_CART',
+        type: 'ADD_PIZZA_TO_CART',
         data: res
       })
     } catch (error) {
@@ -98,6 +100,18 @@ export const addCart = (user_id, item) => {
     }
   }
 }
-
+export const addBeverage = (user_id, beveragesToAddObj) => {
+  return async dispatch => {
+    try {
+      let res = await userService.addBeveragesToCart(user_id, beveragesToAddObj)
+      dispatch({
+        type: 'ADD_BEVERAGES_TO_CART',
+        data: res
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
 
 export default activeUserReducer

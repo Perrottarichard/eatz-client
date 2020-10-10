@@ -49,7 +49,7 @@ const Pizza = ({ pizza, place, user }) => {
   const dispatch = useDispatch()
   const [size, setSize] = useState(null)
   const [variant, setVariant] = useState(null)
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false)
 
   //dynamically intialize an object from the array of topping choices to use for the checkbox with key/value pairs set initially to false. When checked, corresponding key item's value will change to true
   const regInitial = [pizza.map(p => p.regular_toppings.map(x => [x, false]))]
@@ -103,7 +103,6 @@ const Pizza = ({ pizza, place, user }) => {
     setOpen(false);
   }
 
-  // Can't use. possibly a bug in Mui. Resetting Mui checkbox values programmatically isn't reflected in the UI.
   const clearSelection = () => {
     setRegularChecked(regObj)
     setPremiumChecked(premObj)
@@ -111,11 +110,12 @@ const Pizza = ({ pizza, place, user }) => {
     setVariant(null)
   }
 
-  const handleAddCart = (itemId, size, variant, restaurantName, restaurantId, selectedRegularToppings, selectedPremiumToppings) => {
+  const handleAddPizza = (itemId, type, size, variant, restaurantName, restaurantId, selectedRegularToppings, selectedPremiumToppings) => {
     const totalPrice = calcPizzaPrice(pizza, size, variant, selectedRegularToppings, selectedPremiumToppings)
 
     const itemToAdd = {
       itemId: itemId,
+      type: type,
       selectedVariant: variant,
       selectedSize: size,
       selectedRegularToppings: selectedRegularToppings,
@@ -199,7 +199,7 @@ const Pizza = ({ pizza, place, user }) => {
               <Button onClick={handleClose} color="primary">
                 No
           </Button>
-              <Button onClick={() => handleAddCart(pizza.id, size, variant, place.name, place.place_id, selectedRegularToppings, selectedPremiumToppings)} color="primary" autoFocus>
+              <Button onClick={() => handleAddPizza(pizza.id, pizza.type, size, variant, place.name, place.place_id, selectedRegularToppings, selectedPremiumToppings)} color="primary" autoFocus>
                 Yes
           </Button>
             </DialogActions>

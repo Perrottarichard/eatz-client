@@ -16,8 +16,12 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 200,
   },
-  menu: {
-    minHeight: 500
+  itemsContainer: {
+    minHeight: 500,
+    backgroundColor: '#575551'
+  },
+  items: {
+    height: 150,
   }
 }))
 
@@ -25,7 +29,7 @@ const MainCart = () => {
 
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const menu = clsx(classes.paper, classes.menu)
+  const itemsContainer = clsx(classes.paper, classes.itemsContainer)
   const user = useSelector(state => state.activeUser.user)
   const dispatch = useDispatch()
   const place = useSelector(state => state.placesReducer.placeDetails)
@@ -40,28 +44,31 @@ const MainCart = () => {
   return (
     <React.Fragment>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6} md={4} lg={4}>
+        <Grid item xs={12} sm={6} md={6} lg={6}>
           <Paper className={fixedHeightPaper}>
             Cart will go here
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={4}>
-          <Paper className={fixedHeightPaper}>
-
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={12} md={4} lg={4}>
+        <Grid item xs={12} sm={6} md={6} lg={6}>
           <Paper className={fixedHeightPaper}>
 
           </Paper>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <Paper className={menu}>
-
+          <Paper className={itemsContainer}>
+            <Grid container spacing={1}>
+              {cart.map(c =>
+                <Grid item xs={12} sm={12} md={4} lg={4}>
+                  <Paper className={classes.items}>
+                    here
+                      </Paper>
+                </Grid>
+              )}
+            </Grid>
           </Paper>
         </Grid>
       </Grid>
-    </React.Fragment>
+    </React.Fragment >
   )
 
 }

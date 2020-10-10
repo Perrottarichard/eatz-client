@@ -22,7 +22,7 @@ const PlaceMenu = ({ items, place }) => {
       case 0:
         return <Pizza pizza={pizza} place={place} user={user} />
       case 1:
-        return <Beverage beverages={beverages} />
+        return <Beverage beverages={beverages} user={user} place={place} />
       case 2:
         return 'This is the bit I really care about!';
       default:

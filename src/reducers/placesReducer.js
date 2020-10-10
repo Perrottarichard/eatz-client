@@ -1,9 +1,10 @@
-import { postRequestAddRestaurant, getPlaceDetailsRequest, loadMenu } from "../services/dataService"
+import { postRequestAddRestaurant, getPlaceDetailsRequest, loadMenu, loadPromos } from "../services/dataService"
 
 const initialState = {
   nearbyPlaces: undefined,
   placeDetails: undefined,
-  menu: undefined
+  menu: undefined,
+  promos: undefined
 }
 
 const placesReducer = (state = initialState, action) => {
@@ -18,6 +19,8 @@ const placesReducer = (state = initialState, action) => {
       return state
     case 'INIT_MENU':
       return { ...state, menu: action.data }
+    case 'INIT_PROMOS':
+      return { ...state, promos: action.data }
     default:
       return state
   }
@@ -67,6 +70,19 @@ export const initMenu = () => {
       let res = await loadMenu()
       dispatch({
         type: 'INIT_MENU',
+        data: res
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+export const initPromos = () => {
+  return async dispatch => {
+    try {
+      let res = await loadPromos()
+      dispatch({
+        type: 'INIT_PROMOS',
         data: res
       })
     } catch (error) {

@@ -7,6 +7,7 @@ import GeoDataList from './GeoDataList';
 import GeoDisplay from './GeoDisplay';
 import RequestPartnerForm from './RequestPartnerForm';
 import Favorites from './Favorites';
+import Promos from './Promos';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,7 +45,9 @@ const MainDashboard = () => {
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6} md={6} lg={6}>
-          <RequestPartnerForm />
+          <Paper className={fixedHeightPaper}>
+            <Promos />
+          </Paper>
         </Grid>
       </Grid>
     </React.Fragment>

@@ -44,3 +44,7 @@ export const loadMenu = async () => {
   const response = await axios.get(`${baseUrl}/menuItems`)
   return response.data
 }
+export const loadPromos = async () => {
+  const response = await axios.get(`${baseUrl}/promos`)
+  return response.data
+}
