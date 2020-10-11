@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Container, Button } from '@material-ui/core'
 import { FormControl, FormGroup, FormControlLabel, FormLabel, Radio, RadioGroup, Checkbox, Grid, Fab } from '@material-ui/core'
 import Dialog from '@material-ui/core/Dialog';
@@ -7,7 +7,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import { addCart } from '../reducers/activeUserReducer'
-import { AddShoppingCart, RemoveCircleOutline } from '@material-ui/icons'
+import { AddShoppingCart } from '@material-ui/icons'
 
 
 const calcPizzaPrice = (pizza, size, variant, selectedRegularToppings, selectedPremiumToppings) => {
@@ -127,6 +127,17 @@ const Pizza = ({ pizza, place, user }) => {
       handleClose()
     }
   }
+  const selectedToppingsGrammar = () => {
+    let toppingCount = selectedRegularToppings.length + selectedPremiumToppings.length
+    switch (toppingCount) {
+      case 0:
+        return `no toppings`
+      case 1:
+        return `1 topping`
+      default:
+        return `${toppingCount} toppings`
+    }
+  }
 
   return (
     <Container >
@@ -186,7 +197,7 @@ const Pizza = ({ pizza, place, user }) => {
           >
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                {`Add a ${size} ${variant} pizza to your cart?`}
+                {`Add a ${size} ${variant} pizza with ${selectedToppingsGrammar()} to your cart?`}
               </DialogContentText>
             </DialogContent>
             <DialogActions>

@@ -64,7 +64,18 @@ const Beverage = ({ beverages, user, place }) => {
       handleClose()
     }
   }
-  console.log(beverages)
+  const selectedBevGrammar = () => {
+    if (selectedBeverages.length === 1) {
+      return `a ${selectedBeverages[0]} to your cart?`
+    } else if (selectedBeverages.length === 2) {
+      return `a ${selectedBeverages[0]} and a ${selectedBeverages[1]} to your cart?`
+    } else if (selectedBeverages.length === 3) {
+      return `a ${selectedBeverages[0]}, a ${selectedBeverages[1]}, and a ${selectedBeverages[2]} to your cart?`
+    } else {
+      return `a ${selectedBeverages[0]}, a ${selectedBeverages[1]}, a ${selectedBeverages[2]} and a ${selectedBeverages[3]} to your cart?`
+    }
+  }
+
   return (
     <Container>
       <h2>{`Beverages ($${beverages[0].beverage_base_prices} each)`}</h2>
@@ -90,7 +101,7 @@ const Beverage = ({ beverages, user, place }) => {
           >
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                {`Add ${selectedBeverages.map(b => 'a ' + b)} to your cart?`}
+                {`Add ${selectedBevGrammar()}`}
               </DialogContentText>
             </DialogContent>
             <DialogActions>

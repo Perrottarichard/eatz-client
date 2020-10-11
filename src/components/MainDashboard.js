@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import GeoDataList from './GeoDataList';
 import GeoDisplay from './GeoDisplay';
-import RequestPartnerForm from './RequestPartnerForm';
 import Favorites from './Favorites';
 import Promos from './Promos';
 

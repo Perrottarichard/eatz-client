@@ -1,4 +1,4 @@
-add/remove items to/from cart
+remove items from cart
 process order (nodemailer confirmation email?)
 manage locking/unlocking cart to prevent adding items from multiple restaurants to a single order(1 order at a time)
 handle closed restaurants properly
@@ -17,4 +17,5 @@ form validation
 add google fonts
 finalize styles --organized (try Sass?)
 remove map and geolist button-locks for production
+put request partner form somewhere
 change favicon

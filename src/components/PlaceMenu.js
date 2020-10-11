@@ -13,7 +13,7 @@ const PlaceMenu = ({ items, place }) => {
   const user = useSelector(state => state.activeUser.user)
   const beverages = items.filter(i => i.type === 'beverages')
   const pizza = items.filter(i => i.type === 'pizza')
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
   const history = useHistory()
 
   function getSteps() {

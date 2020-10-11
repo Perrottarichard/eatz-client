@@ -4,7 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
-const PlaceNameAddress = ({ place }) => {
+const CartRestaurant = ({ place }) => {
 
   return (
     <div style={{ height: '100%' }}>
@@ -12,8 +12,7 @@ const PlaceNameAddress = ({ place }) => {
       {place !== undefined ?
         <Card style={{ height: '100%' }}>
           <CardContent>
-            <Typography variant='body1' color='textPrimary'>{place.name}</Typography>
-            <Typography variant='body2' color='textSecondary'>{place.formatted_address}</Typography>
+            <Typography variant='body1' color='textPrimary'>{place}</Typography>
           </CardContent>
         </Card>
         : <h3>Loading...</h3>}
@@ -22,4 +21,4 @@ const PlaceNameAddress = ({ place }) => {
   )
 }
 
-export default PlaceNameAddress
+export default CartRestaurant

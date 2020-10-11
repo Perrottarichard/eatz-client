@@ -1,17 +1,12 @@
 
 import React from 'react'
-import { Container } from '@material-ui/core'
-import Rating from '@material-ui/lab/Rating';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import { CheckCircleOutline, Phone, RemoveCircleOutline, Schedule } from '@material-ui/icons';
 
-
-
 const PlaceHoursContact = ({ place }) => {
-
   return (
     <div>
       <h5 className='sticky-head'>Hours and Contact</h5>
