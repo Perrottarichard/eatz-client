@@ -11,23 +11,23 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent'
 import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
-import CartPromo from './CartPromo';
 import CartBilling from './CartBilling';
 import CartRestaurant from './CartRestaurant';
+import { removeCart } from '../reducers/activeUserReducer';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     paddingLeft: theme.spacing(0),
     display: 'flex',
-    overflow: 'auto',
     flexDirection: 'column',
   },
   fixedHeight: {
     height: 200,
+
   },
   itemsContainer: {
     minHeight: 500,
-    backgroundColor: '#575551',
+    backgroundColor: '#575551'
   },
   cardStyle: {
     display: 'block',
@@ -42,6 +42,7 @@ const MainCart = () => {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const itemsContainer = clsx(classes.paper, classes.itemsContainer)
   const user = useSelector(state => state.activeUser.user)
+  const dispatch = useDispatch()
 
   const cart = user.cart
 
@@ -51,17 +52,13 @@ const MainCart = () => {
   //prop passed to CartRestaurant, can change later to fetch full place details from google
   const place = pizza[0].restaurantName
 
-
-  console.log(bevs)
-  console.log(pizza)
-
-  // const removeFromCart = (item_id) => {
-  //   try {
-  //     dispatch(removeFavorite(place_id, user._id))
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
+  const removeFromCart = (item_id) => {
+    try {
+      dispatch(removeCart(user._id, item_id))
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <React.Fragment>
@@ -74,14 +71,8 @@ const MainCart = () => {
         <Grid item xs={12} sm={6} md={8} lg={8}>
           <Paper className={fixedHeightPaper}>
             <CartBilling pizza={pizza} bevs={bevs} />
-            <CartPromo />
           </Paper>
         </Grid>
-        {/* <Grid item xs={12} sm={6} md={4} lg={}>
-          <Paper className={fixedHeightPaper}>
-            
-          </Paper>
-        </Grid> */}
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Paper className={itemsContainer}>
             <Grid container spacing={1}>
@@ -105,7 +96,7 @@ const MainCart = () => {
                         price (inc. 7% tax): <strong>${c.totalPrice}</strong>
                       </Typography>
                       <CardActions style={{ margin: 'auto', justifyContent: 'center' }}>
-                        <IconButton aria-label="remove from favorites">
+                        <IconButton aria-label="remove from cart" onClick={() => removeFromCart(c._id)}>
                           <ClearIcon style={{ color: 'red' }} />
                         </IconButton>
                       </CardActions>
@@ -127,7 +118,7 @@ const MainCart = () => {
                         price (inc. 7% tax): <strong>${b.totalPrice}</strong>
                       </Typography>
                       <CardActions style={{ margin: 'auto', justifyContent: 'center' }}>
-                        <IconButton aria-label="remove from favorites">
+                        <IconButton aria-label="remove from cart" onClick={() => removeFromCart(b._id)}>
                           <ClearIcon style={{ color: 'red' }} />
                         </IconButton>
                       </CardActions>

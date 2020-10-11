@@ -18,6 +18,8 @@ const activeUserReducer = (state = initialState, action) => {
       return { ...state, user: action.data }
     case 'ADD_BEVERAGES_TO_CART':
       return { ...state, user: action.data }
+    case 'REMOVE_CART':
+      return { ...state, user: action.data }
     default:
       return state
   }
@@ -100,12 +102,26 @@ export const addCart = (user_id, item) => {
     }
   }
 }
+
 export const addBeverage = (user_id, beveragesToAddObj) => {
   return async dispatch => {
     try {
       let res = await userService.addBeveragesToCart(user_id, beveragesToAddObj)
       dispatch({
         type: 'ADD_BEVERAGES_TO_CART',
+        data: res
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+export const removeCart = (user_id, item_id) => {
+  return async dispatch => {
+    try {
+      let res = await userService.removeItemFromCart(user_id, item_id)
+      dispatch({
+        type: 'REMOVE_CART',
         data: res
       })
     } catch (error) {

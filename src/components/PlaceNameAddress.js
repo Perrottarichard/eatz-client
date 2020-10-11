@@ -10,7 +10,7 @@ const PlaceNameAddress = ({ place }) => {
     <div style={{ height: '100%' }}>
       <h5 className='sticky-head'>Restaurant</h5>
       {place !== undefined ?
-        <Card style={{ height: '100%' }}>
+        <Card style={{ height: 178 }}>
           <CardContent>
             <Typography variant='body1' color='textPrimary'>{place.name}</Typography>
             <Typography variant='body2' color='textSecondary'>{place.formatted_address}</Typography>

@@ -10,7 +10,7 @@ const CartRestaurant = ({ place }) => {
     <div style={{ height: '100%' }}>
       <h5 className='sticky-head'>Restaurant</h5>
       {place !== undefined ?
-        <Card style={{ height: '100%' }}>
+        <Card style={{ height: 178, textAlign: 'center' }}>
           <CardContent>
             <Typography variant='body1' color='textPrimary'>{place}</Typography>
           </CardContent>

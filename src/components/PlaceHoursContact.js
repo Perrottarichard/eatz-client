@@ -11,7 +11,7 @@ const PlaceHoursContact = ({ place }) => {
     <div>
       <h5 className='sticky-head'>Hours and Contact</h5>
       {place !== undefined ?
-        <Card style={{ textAlign: 'center', margin: 'auto' }}>
+        <Card style={{ textAlign: 'center', height: 'auto', marginTop: 10 }}>
           {place.opening_hours.open_now
             ?
             <Chip label="Open" icon={<CheckCircleOutline style={{ color: 'green' }} />} />
