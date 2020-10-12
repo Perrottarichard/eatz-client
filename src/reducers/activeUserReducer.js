@@ -131,19 +131,14 @@ export const removeCart = (user_id, item_id) => {
     }
   }
 }
-export const setActiveCartBilling = (user_id, totalPrice, diff, promoApplied, discount) => {
+export const setActiveCartBilling = (user_id, totalPrice, newTotal, diff, promoApplied) => {
   return async dispatch => {
-    console.log('reducer1')
     try {
-      let res = await userService.updateActiveCartBilling(user_id, totalPrice, diff, promoApplied, discount)
-      console.log('reducer2')
-
+      let res = await userService.updateActiveCartBilling(user_id, totalPrice, newTotal, diff, promoApplied)
       dispatch({
         type: 'SET_ACTIVE_CART_BILLING',
         data: res
       })
-      console.log('reducer3')
-
     } catch (error) {
       console.log(error)
     }

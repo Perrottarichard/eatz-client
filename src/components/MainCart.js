@@ -57,10 +57,15 @@ const MainCart = () => {
   let place
   //prop passed to CartRestaurant, can change later to fetch full place details from google
   if (pizza.length > 0) {
-    place = pizza[0].restaurantName
+    place = {
+      _id: pizza[0].restaurantId,
+      name: pizza[0].restaurantName
+    }
   }
 
   const removeFromCart = (item_id) => {
+    let appliedPromotions = user.activeCartBilling
+    console.log(appliedPromotions)
     cart = cart.filter(c => c._id !== item_id)
     bevs = cart.filter(c => c.itemType === 'beverages')
     pizza = cart.filter(c => c.itemType === 'pizza')

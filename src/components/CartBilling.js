@@ -21,14 +21,16 @@ const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice }) => {
 
   const dispatch = useDispatch()
   const promos = useSelector(state => state.placesReducer.promos)
-  const [codeEntered, setCodeEntered] = useState('')
+  const activeCartBillingObject = user.activeCartBilling
+  const [codeEntered, setCodeEntered] = useState(activeCartBillingObject ? activeCartBillingObject.promoApplied : '')
   const [notifyPromo, setNotifyPromo] = useState('')
   const [successAppliedPromotion, setSuccessAppliedPromotions] = useState('')
 
-  // const updateActiveCart = () => {
-  //   console.log(user._id, totalPrice, diff, successAppliedPromotion)
-  //   dispatch(setActiveCartBilling(user._id, totalPrice, diff, codeEntered, successAppliedPromotion))
-  // }
+
+  const updateActiveCartOnEnterPromoCode = (newTotal) => {
+    let diff = (totalPrice - newTotal).toFixed(2)
+    dispatch(setActiveCartBilling(user._id, totalPrice, newTotal, diff, codeEntered))
+  }
 
   const checkPromo = (codeEntered) => {
     //check to see if code entered matches promos codes
@@ -58,13 +60,16 @@ const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice }) => {
           setNotifyPromo('')
         }, 3000);
         setSuccessAppliedPromotions(promoToApply.discount)
+        let newTotal
         if (promoToApply['multiplier']) {
+          newTotal = (totalPrice * promoToApply.multiplier).toFixed(2)
           setTotalPrice(prevTotalPrice => (prevTotalPrice * promoToApply.multiplier).toFixed(2))
         }
         if (promoToApply['credit']) {
+          newTotal = (totalPrice - promoToApply.credit).toFixed(2)
           setTotalPrice(prevTotalPrice => (prevTotalPrice - promoToApply.credit).toFixed(2))
         }
-        updateActiveCart()
+        updateActiveCartOnEnterPromoCode(newTotal)
       } else {
         setNotifyPromo('You can only apply 1 promotion per order')
         setTimeout(() => {
@@ -88,30 +93,33 @@ const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice }) => {
       <h5 className='sticky-head'>Billing</h5>
       <Card style={{ height: 178, textAlign: 'center' }}>
         <CardContent style={{ padding: 10 }}>
-          <Typography variant='h5'>
-            Total Due: ${totalPrice}
+          <Typography variant='body1'>
+            Total Due: ${activeCartBillingObject ? activeCartBillingObject.afterPromoPrice : totalPrice}
           </Typography>
           <Typography variant='caption' style={{ listStyleType: 'none' }}>
-            {successAppliedPromotion ? `discount: ${successAppliedPromotion}` : null}
+            {activeCartBillingObject ? `original price: $${activeCartBillingObject.beforePromoPrice}` : null}
+          </Typography><br />
+          <Typography variant='caption' style={{ listStyleType: 'none' }}>
+            {activeCartBillingObject ? `discount: $${activeCartBillingObject.priceDiff}` : null}
           </Typography>
         </CardContent>
         <div>
           <form>
             <TextField
               id="outlined-helperText"
-              label="Enter Promo Code"
-              helperText="*case-sensitive"
+              label="Promo Code *case-sensitive"
               variant="outlined"
               size='small'
               value={codeEntered}
               onChange={(e) => handleChange(e)}
+              disabled={activeCartBillingObject ? true : false}
             />
-            <Button onClick={() => checkPromo(codeEntered)}>
+            <Button disabled={activeCartBillingObject ? true : false} onClick={() => checkPromo(codeEntered)}>
               Apply
           </Button>
           </form>
         </div>
-        <Typography variant='h6'>
+        <Typography variant='overline'>
           {notifyPromo}
         </Typography>
       </Card>
