@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -36,6 +36,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+const getTotalPrice = (itemArray1, itemArray2) => {
+  let pizzaTotal = itemArray1.reduce((a, b) => a + b.totalPrice, 0)
+  let beveragesTotal = itemArray2.reduce((a, b) => a + b.totalPrice, 0)
+  let t = pizzaTotal + beveragesTotal
+  return t
+}
+
 const MainCart = () => {
 
   const classes = useStyles();
@@ -43,16 +50,21 @@ const MainCart = () => {
   const itemsContainer = clsx(classes.paper, classes.itemsContainer)
   const user = useSelector(state => state.activeUser.user)
   const dispatch = useDispatch()
-
-  const cart = user.cart
-
-  const bevs = cart.filter(c => c.itemType === 'beverages')
-  const pizza = cart.filter(c => c.itemType === 'pizza')
-
+  let cart = user.cart
+  let bevs = cart.filter(c => c.itemType === 'beverages')
+  let pizza = cart.filter(c => c.itemType === 'pizza')
+  const [totalPrice, setTotalPrice] = useState(getTotalPrice(pizza, bevs))
+  let place
   //prop passed to CartRestaurant, can change later to fetch full place details from google
-  const place = pizza[0].restaurantName
+  if (pizza.length > 0) {
+    place = pizza[0].restaurantName
+  }
 
   const removeFromCart = (item_id) => {
+    cart = cart.filter(c => c._id !== item_id)
+    bevs = cart.filter(c => c.itemType === 'beverages')
+    pizza = cart.filter(c => c.itemType === 'pizza')
+    setTotalPrice(getTotalPrice(pizza, bevs))
     try {
       dispatch(removeCart(user._id, item_id))
     } catch (error) {
@@ -70,7 +82,7 @@ const MainCart = () => {
         </Grid>
         <Grid item xs={12} sm={6} md={8} lg={8}>
           <Paper className={fixedHeightPaper}>
-            <CartBilling pizza={pizza} bevs={bevs} />
+            <CartBilling pizza={pizza} bevs={bevs} user={user} totalPrice={totalPrice} setTotalPrice={setTotalPrice} />
           </Paper>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
@@ -96,7 +108,7 @@ const MainCart = () => {
                         price (inc. 7% tax): <strong>${c.totalPrice}</strong>
                       </Typography>
                       <CardActions style={{ margin: 'auto', justifyContent: 'center' }}>
-                        <IconButton aria-label="remove from cart" onClick={() => removeFromCart(c._id)}>
+                        <IconButton aria-label="remove from cart" onClick={() => removeFromCart(c._id, c.totalPrice)}>
                           <ClearIcon style={{ color: 'red' }} />
                         </IconButton>
                       </CardActions>

@@ -20,6 +20,8 @@ const activeUserReducer = (state = initialState, action) => {
       return { ...state, user: action.data }
     case 'REMOVE_CART':
       return { ...state, user: action.data }
+    case 'SET_ACTIVE_CART_BILLING':
+      return { ...state, user: action.data }
     default:
       return state
   }
@@ -124,6 +126,24 @@ export const removeCart = (user_id, item_id) => {
         type: 'REMOVE_CART',
         data: res
       })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+export const setActiveCartBilling = (user_id, totalPrice, diff, promoApplied, discount) => {
+  return async dispatch => {
+    console.log('reducer1')
+    try {
+      let res = await userService.updateActiveCartBilling(user_id, totalPrice, diff, promoApplied, discount)
+      console.log('reducer2')
+
+      dispatch({
+        type: 'SET_ACTIVE_CART_BILLING',
+        data: res
+      })
+      console.log('reducer3')
+
     } catch (error) {
       console.log(error)
     }

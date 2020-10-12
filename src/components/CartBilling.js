@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Card, CardContent, Typography, TextField, Button } from '@material-ui/core'
+import { setActiveCartBilling } from '../reducers/activeUserReducer'
 
-const getTotalPrice = (itemArray1, itemArray2) => {
-  let pizzaTotal = itemArray1.reduce((a, b) => a + b.totalPrice, 0)
-  let beveragesTotal = itemArray2.reduce((a, b) => a + b.totalPrice, 0)
-  return pizzaTotal + beveragesTotal
-}
+
 const checkQualify = (user, qualifyingPromo, pizzaArray, beverageArray, totalPrice) => {
   switch (qualifyingPromo) {
     case 'RIPBRASI':
@@ -20,13 +17,18 @@ const checkQualify = (user, qualifyingPromo, pizzaArray, beverageArray, totalPri
   }
 }
 
-const CartBilling = ({ pizza, bevs }) => {
+const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice }) => {
 
-  const user = useSelector(state => state.activeUser.user)
+  const dispatch = useDispatch()
   const promos = useSelector(state => state.placesReducer.promos)
   const [codeEntered, setCodeEntered] = useState('')
-  const [totalPrice, setTotalPrice] = useState(getTotalPrice(pizza, bevs))
   const [notifyPromo, setNotifyPromo] = useState('')
+  const [successAppliedPromotion, setSuccessAppliedPromotions] = useState('')
+
+  // const updateActiveCart = () => {
+  //   console.log(user._id, totalPrice, diff, successAppliedPromotion)
+  //   dispatch(setActiveCartBilling(user._id, totalPrice, diff, codeEntered, successAppliedPromotion))
+  // }
 
   const checkPromo = (codeEntered) => {
     //check to see if code entered matches promos codes
@@ -37,24 +39,43 @@ const CartBilling = ({ pizza, bevs }) => {
     //if match, store the object in a local variable
     let promoToApply
     let filterFalsy = matched.filter(Boolean)
-    if (filterFalsy) {
+    if (filterFalsy.length > 0) {
       promoToApply = filterFalsy[0]
     } else {
-      return setNotifyPromo('Invalid code')
+      setNotifyPromo('Invalid code')
+      setTimeout(() => {
+        setNotifyPromo('')
+      }, 3000);
+      return null
     }
 
     //if valid code, check to make sure cart items qualify for entered promotion
     //if true, calculate new total accordingly, if false send 'order not qualified' notification
     if (checkQualify(user, promoToApply.code, pizza, bevs, totalPrice)) {
-      if (promoToApply['multiplier']) {
-        setTotalPrice(prevTotalPrice => (prevTotalPrice * promoToApply.multiplier).toFixed(2))
+      if (!successAppliedPromotion) {
+        setNotifyPromo('Success')
+        setTimeout(() => {
+          setNotifyPromo('')
+        }, 3000);
+        setSuccessAppliedPromotions(promoToApply.discount)
+        if (promoToApply['multiplier']) {
+          setTotalPrice(prevTotalPrice => (prevTotalPrice * promoToApply.multiplier).toFixed(2))
+        }
+        if (promoToApply['credit']) {
+          setTotalPrice(prevTotalPrice => (prevTotalPrice - promoToApply.credit).toFixed(2))
+        }
+        updateActiveCart()
+      } else {
+        setNotifyPromo('You can only apply 1 promotion per order')
+        setTimeout(() => {
+          setNotifyPromo('')
+        }, 3000);
       }
-      if (promoToApply['credit']) {
-        setTotalPrice(prevTotalPrice => (prevTotalPrice - promoToApply.credit).toFixed(2))
-      }
-      setNotifyPromo('Success')
     } else {
       setNotifyPromo('Your order does not qualify for the promotion you entered')
+      setTimeout(() => {
+        setNotifyPromo('')
+      }, 3000);
     }
   }
 
@@ -69,6 +90,9 @@ const CartBilling = ({ pizza, bevs }) => {
         <CardContent style={{ padding: 10 }}>
           <Typography variant='h5'>
             Total Due: ${totalPrice}
+          </Typography>
+          <Typography variant='caption' style={{ listStyleType: 'none' }}>
+            {successAppliedPromotion ? `discount: ${successAppliedPromotion}` : null}
           </Typography>
         </CardContent>
         <div>

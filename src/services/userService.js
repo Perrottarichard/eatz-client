@@ -98,6 +98,19 @@ const removeItemFromCart = async (user_id, item_id) => {
   })
   return response.data
 }
+const updateActiveCartBilling = async (user_id, totalPrice, diff, promoApplied, discount) => {
+  console.log('userservice')
+  const response = await axios.put(`${baseUrl}/account/updateActiveCartBilling`, { user_id: user_id, totalPrice: totalPrice, diff: diff, promoApplied: promoApplied, discount: discount }, {
+    withCredentials: true,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true
+    },
+  })
+  console.log(response.data)
+  return response.data
+}
 
 export default {
   getUser,
@@ -107,5 +120,6 @@ export default {
   removeFavoriteRestaurant,
   addPizzaToCart,
   addBeveragesToCart,
-  removeItemFromCart
+  removeItemFromCart,
+  updateActiveCartBilling
 }

@@ -55,7 +55,6 @@ const MainPlaceDetails = () => {
     return <LinearProgress color="secondary" />
   }
 
-  console.log(items)
   if (!items) {
     return <LinearProgress color="secondary" />
   }
