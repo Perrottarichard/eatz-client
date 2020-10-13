@@ -1,0 +1,21 @@
+lock cart after promo applied (can add but cant remove)
+process order (nodemailer confirmation email?)
+manage locking/unlocking cart to prevent adding items from multiple restaurants to a single order(1 order at a time)
+handle closed restaurants properly
+handly empty favorites properly
+fix glitchy oauth login
+add regular create local account login
+My orders page
+integrate promotions
+remove FB oauth from ui
+manage user delivery addresses
+remove ALL unnecessary code and unused imports
+comment everything
+refactor components, pages, routes etc...
+error handling with notifications (mui snackbar?)
+form validation
+add google fonts
+finalize styles --organized (try Sass?)
+remove map and geolist button-locks for production
+put request partner form somewhere
+change favicon
