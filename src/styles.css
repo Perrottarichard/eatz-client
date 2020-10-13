@@ -104,3 +104,15 @@ circle {
 .MuiSvgIcon-root .MuiStepIcon-root .MuiStepIcon-completed {
   color: #ff430a
 }
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background:#ff430a;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

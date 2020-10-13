@@ -1,4 +1,4 @@
-remove items from cart
+lock cart after promo applied (can add but cant remove)
 process order (nodemailer confirmation email?)
 manage locking/unlocking cart to prevent adding items from multiple restaurants to a single order(1 order at a time)
 handle closed restaurants properly

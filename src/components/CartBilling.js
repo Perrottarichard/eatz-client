@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Card, CardContent, Typography, TextField, Button } from '@material-ui/core'
-import { setActiveCartBilling } from '../reducers/activeUserReducer'
+import { setActiveCartBilling, resetCart } from '../reducers/activeUserReducer'
 
 
 const checkQualify = (user, qualifyingPromo, pizzaArray, beverageArray, totalPrice) => {
@@ -17,15 +17,13 @@ const checkQualify = (user, qualifyingPromo, pizzaArray, beverageArray, totalPri
   }
 }
 
-const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice }) => {
+const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice, activeCartBillingObject }) => {
 
   const dispatch = useDispatch()
   const promos = useSelector(state => state.placesReducer.promos)
-  const activeCartBillingObject = user.activeCartBilling
   const [codeEntered, setCodeEntered] = useState(activeCartBillingObject ? activeCartBillingObject.promoApplied : '')
   const [notifyPromo, setNotifyPromo] = useState('')
   const [successAppliedPromotion, setSuccessAppliedPromotions] = useState('')
-
 
   const updateActiveCartOnEnterPromoCode = (newTotal) => {
     let diff = (totalPrice - newTotal).toFixed(2)
@@ -88,19 +86,25 @@ const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice }) => {
     setCodeEntered(e.target.value)
   }
 
+  const clearCart = () => {
+    dispatch(resetCart(user._id))
+    setCodeEntered('')
+    setTotalPrice(0)
+  }
+
   return (
     <div style={{ height: '100%' }}>
-      <h5 className='sticky-head'>Billing</h5>
+      <h5 className='sticky-head'>Billing </h5>
       <Card style={{ height: 178, textAlign: 'center' }}>
         <CardContent style={{ padding: 10 }}>
           <Typography variant='body1'>
-            Total Due: ${activeCartBillingObject ? activeCartBillingObject.afterPromoPrice : totalPrice}
+            Total Due: ${activeCartBillingObject ? activeCartBillingObject.afterPromoPrice.toFixed(2) : Number(totalPrice).toFixed(2)}
           </Typography>
           <Typography variant='caption' style={{ listStyleType: 'none' }}>
-            {activeCartBillingObject ? `original price: $${activeCartBillingObject.beforePromoPrice}` : null}
+            {activeCartBillingObject ? `original price: $${activeCartBillingObject.beforePromoPrice.toFixed(2)}` : null}
           </Typography><br />
           <Typography variant='caption' style={{ listStyleType: 'none' }}>
-            {activeCartBillingObject ? `discount: $${activeCartBillingObject.priceDiff}` : null}
+            {activeCartBillingObject ? `discount: $${activeCartBillingObject.priceDiff.toFixed(2)}` : null}
           </Typography>
         </CardContent>
         <div>
@@ -118,6 +122,7 @@ const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice }) => {
               Apply
           </Button>
           </form>
+          <Button onClick={() => clearCart()} style={{ float: 'right', fontSize: 10, color: 'red' }}>Reset Cart</Button>
         </div>
         <Typography variant='overline'>
           {notifyPromo}

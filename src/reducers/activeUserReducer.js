@@ -22,6 +22,8 @@ const activeUserReducer = (state = initialState, action) => {
       return { ...state, user: action.data }
     case 'SET_ACTIVE_CART_BILLING':
       return { ...state, user: action.data }
+    case 'RESET_CART':
+      return { ...state, user: action.data }
     default:
       return state
   }
@@ -144,5 +146,17 @@ export const setActiveCartBilling = (user_id, totalPrice, newTotal, diff, promoA
     }
   }
 }
-
+export const resetCart = (user_id) => {
+  return async dispatch => {
+    try {
+      let res = await userService.clearCart(user_id)
+      dispatch({
+        type: 'RESET_CART',
+        data: res
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
 export default activeUserReducer
