@@ -38,12 +38,12 @@ const calcPizzaPrice = (pizza, size, variant, selectedRegularToppings, selectedP
 }
 
 
-const Pizza = ({ pizza, place, user }) => {
+const Pizza = ({ pizza, place, user, handleClickOpen, open, setOpen, handleNext }) => {
 
   const dispatch = useDispatch()
-  const [size, setSize] = useState(null)
-  const [variant, setVariant] = useState(null)
-  const [open, setOpen] = useState(false)
+  const [size, setSize] = useState('large')
+  const [variant, setVariant] = useState('regular')
+
 
   //dynamically intialize an object from the array of topping choices to use for the checkbox with key/value pairs set initially to false. When checked, corresponding key item's value will change to true
   const regInitial = [pizza.map(p => p.regular_toppings.map(x => [x, false]))]
@@ -88,20 +88,16 @@ const Pizza = ({ pizza, place, user }) => {
     setPremiumChecked({ ...premiumChecked, [event.target.name]: event.target.checked });
   }
 
-  //handle confirmation dialog
-  const handleClickOpen = () => {
-    setOpen(true);
-  }
-
   const handleClose = () => {
-    setOpen(false);
+    setOpen(false)
+    handleNext()
   }
 
   const clearSelection = () => {
     setRegularChecked(regObj)
     setPremiumChecked(premObj)
-    setSize(null)
-    setVariant(null)
+    setSize('large')
+    setVariant('regular')
   }
 
   const handleAddPizza = (itemId, type, size, variant, restaurantName, restaurantId, selectedRegularToppings, selectedPremiumToppings) => {
@@ -125,6 +121,7 @@ const Pizza = ({ pizza, place, user }) => {
     } catch (error) {
       console.log(error)
       handleClose()
+
     }
   }
   const selectedToppingsGrammar = () => {
@@ -186,9 +183,6 @@ const Pizza = ({ pizza, place, user }) => {
       </Grid>
       {variant && size ?
         <div style={{ display: 'block', textAlign: 'center', marginBottom: 20 }}>
-          <Fab onClick={handleClickOpen} id='pizza-button' aria-label="add">
-            <AddShoppingCart />
-          </Fab>
           <Dialog
             open={open}
             onClose={handleClose}

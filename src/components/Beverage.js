@@ -5,9 +5,8 @@ import { FormGroup, FormControlLabel, Checkbox, Grid, Fab, Dialog, DialogContent
 import { AddShoppingCart } from '@material-ui/icons'
 import { addBeverage } from '../reducers/activeUserReducer'
 
-const Beverage = ({ beverages, user, place }) => {
+const Beverage = ({ beverages, user, place, handleClickOpen, open, setOpen, handleNext, sendToCart }) => {
   const dispatch = useDispatch()
-  const [open, setOpen] = useState(false)
 
   const choicesInitial = [beverages[0].choices.map(b => [b, false])]
   const choicesObj = Object.fromEntries(choicesInitial[0])
@@ -27,11 +26,6 @@ const Beverage = ({ beverages, user, place }) => {
     if (bevArr[i].includes(true)) {
       selectedBeverages.push(bevArr[i][0])
     }
-  }
-
-  //handle confirmation dialog
-  const handleClickOpen = () => {
-    setOpen(true);
   }
 
   const handleClose = () => {
@@ -59,6 +53,7 @@ const Beverage = ({ beverages, user, place }) => {
       dispatch(addBeverage(user._id, beverageToAdd))
       handleClose()
       clearSelection()
+      sendToCart()
     } catch (error) {
       console.log(error)
       handleClose()
@@ -90,9 +85,9 @@ const Beverage = ({ beverages, user, place }) => {
       </Grid>
       {selectedBeverages.length > 0 ?
         <div style={{ display: 'block', textAlign: 'center', marginBottom: 20 }}>
-          <Fab onClick={handleClickOpen} id='pizza-button' aria-label="add">
+          {/* <Fab onClick={handleClickOpen} id='pizza-button' aria-label="add">
             <AddShoppingCart />
-          </Fab>
+          </Fab> */}
           <Dialog
             open={open}
             onClose={handleClose}
@@ -105,7 +100,7 @@ const Beverage = ({ beverages, user, place }) => {
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose} color="primary">
+              <Button onClick={() => sendToCart()} color="primary">
                 No
           </Button>
               <Button onClick={() => handleAddBeverage(beverages[0]._id, beverages[0].type, selectedBeverages, place.name, place.place_id,)} color="primary" autoFocus>

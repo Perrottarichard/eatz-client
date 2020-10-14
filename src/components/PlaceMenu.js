@@ -13,18 +13,23 @@ const PlaceMenu = ({ items, place }) => {
   const user = useSelector(state => state.activeUser.user)
   const beverages = items.filter(i => i.type === 'beverages')
   const pizza = items.filter(i => i.type === 'pizza')
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(0)
+  const [open, setOpen] = useState(false)
   const history = useHistory()
 
-  function getSteps() {
+  //handle confirmation dialog
+  const handleClickOpen = () => {
+    setOpen(true);
+  }
+  const getSteps = () => {
     return ['Build your pizzas', '...and to drink?'];
   }
   function getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
-        return <Pizza pizza={pizza} place={place} user={user} />
+        return <Pizza pizza={pizza} place={place} user={user} handleClickOpen={handleClickOpen} open={open} setOpen={setOpen} handleNext={handleNext} />
       case 1:
-        return <Beverage beverages={beverages} user={user} place={place} />
+        return <Beverage beverages={beverages} user={user} place={place} handleClickOpen={handleClickOpen} open={open} setOpen={setOpen} handleNext={handleNext} sendToCart={sendToCart} />
       default:
         return 'Unknown stepIndex';
     }
@@ -87,7 +92,7 @@ const PlaceMenu = ({ items, place }) => {
                 >
                   Back
               </Button>
-                <Button style={{ border: 'solid', borderWeight: 1, borderColor: '#ff430a', backgroundColor: '#575551', color: 'white', marginBottom: 20, marginTop: 20, marginLeft: 20 }} variant="contained" onClick={activeStep === steps.length - 1 ? () => sendToCart() : handleNext}>
+                <Button style={{ border: 'solid', borderWeight: 1, borderColor: '#ff430a', backgroundColor: '#575551', color: 'white', marginBottom: 20, marginTop: 20, marginLeft: 20 }} variant="contained" onClick={handleClickOpen}>
                   {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                 </Button>
               </div>
