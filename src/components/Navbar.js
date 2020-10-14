@@ -11,6 +11,7 @@ import { Avatar } from '@material-ui/core'
 import logo from '../assets/pizzapizza50trans.png'
 import SideDrawer from './SideDrawer';
 import { clearUser } from '../reducers/activeUserReducer'
+import { AccountCircle } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,10 +62,10 @@ export default function MenuAppBar() {
                 onClick={handleMenu}
                 color="inherit"
               >
-                {user ?
+                {user && user.image ?
                   <Avatar src={user.image} alt='user'></Avatar>
                   :
-                  null}
+                  <AccountCircle />}
               </IconButton>
               <Menu
                 id="menu-appbar"

@@ -66,6 +66,7 @@ const MainCart = () => {
   const user = useSelector(state => state.activeUser.user)
   const dispatch = useDispatch()
   const activeCartBillingObject = user.activeCartBilling
+  const [codeEntered, setCodeEntered] = useState(activeCartBillingObject ? activeCartBillingObject.promoApplied : '')
   let cart = user.cart
   let bevs = cart.filter(c => c.itemType === 'beverages')
   let pizza = cart.filter(c => c.itemType === 'pizza')
@@ -96,12 +97,12 @@ const MainCart = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4} lg={4}>
           <Paper className={fixedHeightPaper}>
-            <CartRestaurant place={place} />
+            <CartRestaurant place={place} setTotalPrice={setTotalPrice} setCodeEntered={setCodeEntered} />
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6} md={8} lg={8}>
           <Paper className={fixedHeightPaper}>
-            <CartBilling pizza={pizza} bevs={bevs} user={user} totalPrice={totalPrice} setTotalPrice={setTotalPrice} activeCartBillingObject={activeCartBillingObject} />
+            <CartBilling pizza={pizza} bevs={bevs} user={user} totalPrice={totalPrice} setTotalPrice={setTotalPrice} activeCartBillingObject={activeCartBillingObject} codeEntered={codeEntered} setCodeEntered={setCodeEntered} />
           </Paper>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>

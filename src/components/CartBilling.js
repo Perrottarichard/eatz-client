@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Card, CardContent, Typography, TextField, Button } from '@material-ui/core'
-import { setActiveCartBilling, resetCart } from '../reducers/activeUserReducer'
+import { setActiveCartBilling } from '../reducers/activeUserReducer'
+import Snackbar from '@material-ui/core/Snackbar';
+import { Alert } from '@material-ui/lab'
 
 
 const checkQualify = (user, qualifyingPromo, pizzaArray, beverageArray, totalPrice) => {
@@ -17,17 +19,25 @@ const checkQualify = (user, qualifyingPromo, pizzaArray, beverageArray, totalPri
   }
 }
 
-const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice, activeCartBillingObject }) => {
+const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice, activeCartBillingObject, codeEntered, setCodeEntered }) => {
 
   const dispatch = useDispatch()
   const promos = useSelector(state => state.placesReducer.promos)
-  const [codeEntered, setCodeEntered] = useState(activeCartBillingObject ? activeCartBillingObject.promoApplied : '')
-  const [notifyPromo, setNotifyPromo] = useState('')
+
+  const [notifyPromo, setNotifyPromo] = useState({
+    severity: '',
+    message: ''
+  })
   const [successAppliedPromotion, setSuccessAppliedPromotions] = useState('')
 
   const updateActiveCartOnEnterPromoCode = (newTotal) => {
     let diff = (totalPrice - newTotal).toFixed(2)
     dispatch(setActiveCartBilling(user._id, totalPrice, newTotal, diff, codeEntered))
+  }
+  const [openNotify, setOpenNotify] = React.useState(false);
+
+  const handleClose = () => {
+    setOpenNotify(false);
   }
 
   const checkPromo = (codeEntered) => {
@@ -42,21 +52,24 @@ const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice, activeCartB
     if (filterFalsy.length > 0) {
       promoToApply = filterFalsy[0]
     } else {
-      setNotifyPromo('Invalid code')
+      setOpenNotify(true)
+      setNotifyPromo({ severity: 'error', message: 'Invalid Code' })
       setTimeout(() => {
         setNotifyPromo('')
-      }, 3000);
+      }, 6000);
       return null
     }
+
 
     //if valid code, check to make sure cart items qualify for entered promotion
     //if true, calculate new total accordingly, if false send 'order not qualified' notification
     if (checkQualify(user, promoToApply.code, pizza, bevs, totalPrice)) {
       if (!successAppliedPromotion) {
-        setNotifyPromo('Success')
+        setOpenNotify(true)
+        setNotifyPromo({ severity: 'success', message: 'Success!' })
         setTimeout(() => {
           setNotifyPromo('')
-        }, 3000);
+        }, 6000);
         setSuccessAppliedPromotions(promoToApply.discount)
         let newTotal
         if (promoToApply['multiplier']) {
@@ -69,16 +82,18 @@ const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice, activeCartB
         }
         updateActiveCartOnEnterPromoCode(newTotal)
       } else {
-        setNotifyPromo('You can only apply 1 promotion per order')
+        setOpenNotify(true)
+        setNotifyPromo({ severity: 'warning', message: 'You can only apply 1 promotion per order' })
         setTimeout(() => {
           setNotifyPromo('')
-        }, 3000);
+        }, 6000);
       }
     } else {
-      setNotifyPromo('Your order does not qualify for the promotion you entered')
+      setOpenNotify(true)
+      setNotifyPromo({ severity: 'error', message: 'Your order does not qualify for the promotion you entered' })
       setTimeout(() => {
         setNotifyPromo('')
-      }, 3000);
+      }, 6000);
     }
   }
 
@@ -86,15 +101,11 @@ const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice, activeCartB
     setCodeEntered(e.target.value)
   }
 
-  const clearCart = () => {
-    dispatch(resetCart(user._id))
-    setCodeEntered('')
-    setTotalPrice(0)
-  }
+
 
   return (
     <div style={{ height: '100%' }}>
-      <h5 className='sticky-head'>Billing </h5>
+      <h5 className='sticky-head'>Billing  </h5>
       <Card style={{ height: 178, textAlign: 'center' }}>
         <CardContent style={{ padding: 10 }}>
           <Typography variant='body1'>
@@ -122,11 +133,12 @@ const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice, activeCartB
               Apply
           </Button>
           </form>
-          <Button onClick={() => clearCart()} style={{ float: 'right', fontSize: 10, color: 'red' }}>Reset Cart</Button>
+          <Snackbar open={openNotify} autoHideDuration={5000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity={notifyPromo.severity}>
+              {notifyPromo.message}
+            </Alert>
+          </Snackbar>
         </div>
-        <Typography variant='overline'>
-          {notifyPromo}
-        </Typography>
       </Card>
     </div>
   )

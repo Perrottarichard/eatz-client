@@ -121,6 +121,28 @@ const clearCart = async (user_id) => {
   })
   return response.data
 }
+const addNewOrder = async (user_id) => {
+  const response = await axios.put(`${baseUrl}/account/addNewOrder`, { user_id: user_id }, {
+    withCredentials: true,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true
+    },
+  })
+  return response.data
+}
+const addNewAddress = async (user_id, addressObject) => {
+  const response = await axios.put(`${baseUrl}/account/addNewAddress`, { user_id: user_id, addressObject: addressObject }, {
+    withCredentials: true,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true
+    },
+  })
+  return response.data
+}
 
 export default {
   getUser,
@@ -132,5 +154,7 @@ export default {
   addBeveragesToCart,
   removeItemFromCart,
   updateActiveCartBilling,
-  clearCart
+  clearCart,
+  addNewOrder,
+  addNewAddress
 }

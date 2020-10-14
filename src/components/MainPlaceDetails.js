@@ -33,7 +33,7 @@ const MainPlaceDetails = () => {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const menu = clsx(classes.paper, classes.menu)
-
+  const user = useSelector(state => state.activeUser.user)
   let place_id = useParams()
   const dispatch = useDispatch()
   const place = useSelector(state => state.placesReducer.placeDetails)
@@ -78,7 +78,10 @@ const MainPlaceDetails = () => {
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Paper className={menu}>
-            <PlaceMenu items={items} place={place} />
+            {user.cart.length === 0 || user.cart[0].restaurantId === place.place_id ?
+              <PlaceMenu items={items} place={place} />
+              :
+              `You already have items from ${user.cart[0].restaurantName} in your cart.  Please complete your order from that restaurant first, or remove those items from your cart.`}
           </Paper>
         </Grid>
       </Grid>

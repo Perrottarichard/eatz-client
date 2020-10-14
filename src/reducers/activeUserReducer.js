@@ -24,6 +24,10 @@ const activeUserReducer = (state = initialState, action) => {
       return { ...state, user: action.data }
     case 'RESET_CART':
       return { ...state, user: action.data }
+    case 'ADD_ORDER':
+      return { ...state, user: action.data }
+    case 'ADD_ADDRESS':
+      return { ...state, user: action.data }
     default:
       return state
   }
@@ -152,6 +156,32 @@ export const resetCart = (user_id) => {
       let res = await userService.clearCart(user_id)
       dispatch({
         type: 'RESET_CART',
+        data: res
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+export const addOrder = (user_id) => {
+  return async dispatch => {
+    try {
+      let res = await userService.addNewOrder(user_id)
+      dispatch({
+        type: 'ADD_ORDER',
+        data: res
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+export const addAddress = (user_id, addressObject) => {
+  return async dispatch => {
+    try {
+      let res = await userService.addNewAddress(user_id, addressObject)
+      dispatch({
+        type: 'ADD_ADDRESS',
         data: res
       })
     } catch (error) {

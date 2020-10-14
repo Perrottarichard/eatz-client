@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -7,6 +8,8 @@ import GeoDataList from './GeoDataList';
 import GeoDisplay from './GeoDisplay';
 import Favorites from './Favorites';
 import Promos from './Promos';
+import UserAddressesModal from './UserAddressesModal';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -24,6 +27,7 @@ const MainDashboard = () => {
 
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const user = useSelector(state => state.activeUser.user)
 
   return (
     <React.Fragment>
@@ -49,7 +53,9 @@ const MainDashboard = () => {
           </Paper>
         </Grid>
       </Grid>
+      <UserAddressesModal user={user} titleMessage={`'Tell us where to deliver your pizza, and we'll save your information so you only have to do this once.'`} />
     </React.Fragment>
+
   )
 }
 export default MainDashboard
