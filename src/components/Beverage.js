@@ -83,33 +83,30 @@ const Beverage = ({ beverages, user, place, handleClickOpen, open, setOpen, hand
           </FormGroup>
         </Grid>
       </Grid>
-      {selectedBeverages.length > 0 ?
-        <div style={{ display: 'block', textAlign: 'center', marginBottom: 20 }}>
-          {/* <Fab onClick={handleClickOpen} id='pizza-button' aria-label="add">
-            <AddShoppingCart />
-          </Fab> */}
-          <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                {`Add ${selectedBevGrammar()}`}
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={() => sendToCart()} color="primary">
-                No
+      <div style={{ display: 'block', textAlign: 'center', marginBottom: 20 }}>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {selectedBeverages.length > 0 ?
+                `Add ${selectedBevGrammar()}`
+                : `Continue without adding a drink?`}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => sendToCart()} color="primary">
+              No
           </Button>
-              <Button onClick={() => handleAddBeverage(beverages[0]._id, beverages[0].type, selectedBeverages, place.name, place.place_id,)} color="primary" autoFocus>
-                Yes
+            <Button onClick={selectedBeverages.length > 0 ? () => handleAddBeverage(beverages[0]._id, beverages[0].type, selectedBeverages, place.name, place.place_id,) : () => sendToCart()} color="primary" autoFocus>
+              Yes
           </Button>
-            </DialogActions>
-          </Dialog>
-        </div>
-        : null}
+          </DialogActions>
+        </Dialog>
+      </div>
     </Container>
   )
 }

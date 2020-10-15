@@ -56,7 +56,7 @@ const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice, activeCartB
       setNotifyPromo({ severity: 'error', message: 'Invalid Code' })
       setTimeout(() => {
         setNotifyPromo('')
-      }, 6000);
+      }, 5000);
       return null
     }
 
@@ -69,7 +69,7 @@ const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice, activeCartB
         setNotifyPromo({ severity: 'success', message: 'Success!' })
         setTimeout(() => {
           setNotifyPromo('')
-        }, 6000);
+        }, 5000);
         setSuccessAppliedPromotions(promoToApply.discount)
         let newTotal
         if (promoToApply['multiplier']) {
@@ -86,14 +86,14 @@ const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice, activeCartB
         setNotifyPromo({ severity: 'warning', message: 'You can only apply 1 promotion per order' })
         setTimeout(() => {
           setNotifyPromo('')
-        }, 6000);
+        }, 5000);
       }
     } else {
       setOpenNotify(true)
       setNotifyPromo({ severity: 'error', message: 'Your order does not qualify for the promotion you entered' })
       setTimeout(() => {
         setNotifyPromo('')
-      }, 6000);
+      }, 5000);
     }
   }
 
