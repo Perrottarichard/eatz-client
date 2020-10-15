@@ -27,12 +27,12 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="My Orders" />
     </ListItem>
-    <ListItem button component={Link} to="/dashboard/promotions">
+    {/* <ListItem button component={Link} to="/dashboard/promotions">
       <ListItemIcon>
         <Loyalty />
       </ListItemIcon>
       <ListItemText primary="My Promotions" />
-    </ListItem>
+    </ListItem> */}
     {/* <ListItem button>
       <ListItemIcon>
         <LayersIcon />

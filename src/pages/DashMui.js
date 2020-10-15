@@ -21,6 +21,7 @@ import { clearUser } from '../reducers/activeUserReducer'
 import MainDashboard from '../components/MainDashboard';
 import MainPlaceDetails from '../components/MainPlaceDetails';
 import MainCart from '../components/MainCart';
+import MainOrderHistory from '../components/MainOrderHistory';
 
 
 const drawerWidth = 240;
@@ -178,7 +179,7 @@ export default function Dashboard() {
           <Switch>
             <Route exact path='/dashboard' component={MainDashboard} />
             <Route path='/dashboard/restaurant/:id' component={MainPlaceDetails} />
-            <Route path='/dashboard/orders' />
+            <Route path='/dashboard/orders' component={MainOrderHistory} />
             <Route path='/dashboard/cart' component={MainCart} />
           </Switch>
         </Container>
