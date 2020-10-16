@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Container } from '@material-ui/core'
-import { FormGroup, FormControlLabel, Checkbox, Grid, Fab, Dialog, DialogContentText, DialogContent, DialogActions, Button } from '@material-ui/core'
-import { AddShoppingCart } from '@material-ui/icons'
+import { FormGroup, FormControlLabel, Checkbox, Grid, Dialog, DialogContentText, DialogContent, DialogActions, Button } from '@material-ui/core'
 import { addBeverage } from '../reducers/activeUserReducer'
 
 const Beverage = ({ beverages, user, place, handleClickOpen, open, setOpen, handleNext, sendToCart }) => {

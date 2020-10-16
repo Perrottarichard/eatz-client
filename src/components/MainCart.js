@@ -14,6 +14,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import CartBilling from './CartBilling';
 import CartRestaurant from './CartRestaurant';
 import { removeCart } from '../reducers/activeUserReducer';
+import { formatPrice } from './MainOrderHistory'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -125,7 +126,7 @@ const MainCart = () => {
                     </CardContent>
                     <div style={{ display: 'block', textAlign: 'center' }}>
                       <Typography className={classes.priceText}>
-                        <strong>${c.totalPrice}</strong> <small style={{ fontSize: 9 }}>incuding tax</small>
+                        <strong>${formatPrice(c.totalPrice)}</strong> <small style={{ fontSize: 9 }}>incuding tax</small>
                       </Typography>
                       <CardActions className={classes.cardActions}>
                         {!activeCartBillingObject ?
@@ -150,7 +151,7 @@ const MainCart = () => {
                     </CardContent>
                     <div style={{ display: 'block', textAlign: 'center' }}>
                       <Typography className={classes.priceText} >
-                        <strong>${b.totalPrice}</strong> <small style={{ fontSize: 9 }}>including tax</small>
+                        <strong>${formatPrice(b.totalPrice)}</strong> <small style={{ fontSize: 9 }}>including tax</small>
                       </Typography>
                       <CardActions className={classes.cardActions}>
                         {!activeCartBillingObject ?

@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
+import { useSelector } from 'react-redux'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -7,13 +7,8 @@ import Paper from '@material-ui/core/Paper';
 import { Typography } from '@material-ui/core'
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent'
-import IconButton from '@material-ui/core/IconButton';
-import ClearIcon from '@material-ui/icons/Clear';
-import CartBilling from './CartBilling';
-import CartRestaurant from './CartRestaurant';
-import { removeCart } from '../reducers/activeUserReducer';
+import { LocalDrink, LocalPizzaOutlined } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardStyle: {
     display: 'block',
-    height: 300,
+    height: 'auto',
     margin: 'auto'
   },
   cardHeader: {
@@ -58,32 +53,30 @@ const getProgress = (date) => {
   const endMilli = startMilli + (60000 * 25)
   const currentMilli = Date.now()
   if (currentMilli > endMilli) {
-    return 'completed'
+    return 'Completed'
   } else {
-    return 'in progress'
+    return 'In progress'
   }
+}
+export const formatPrice = (number) => {
+  let split = number.toString().split(/\./)
+  if (split[split.length - 1].length === 1) {
+    split[split.length - 1] = split[split.length - 1] + '0'
+  }
+  return split.join('.')
 }
 
 
 const MainOrderHistory = () => {
 
   const classes = useStyles();
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const itemsContainer = clsx(classes.paper, classes.itemsContainer)
   const user = useSelector(state => state.activeUser.user)
-  const activeCartBillingObject = user.activeCartBilling
-
-  let startMilli = user.orders.map(o => new Date(o.date).getTime())
-  const MS_IN_MINUTE = 60000
-
-  // let endMilli = startMilli.map(t => t + (MS_IN_MINUTE * 25))
-  // user.orders.map(o => console.log(new Date(o.date)))
-  // endMilli.map(x => console.log(new Date(x)))
 
   return (
     <React.Fragment>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6} md={8} lg={8}>
+        {/* <Grid item xs={12} sm={6} md={8} lg={8}>
           <Paper className={fixedHeightPaper}>
 
           </Paper>
@@ -92,36 +85,47 @@ const MainOrderHistory = () => {
           <Paper className={fixedHeightPaper}>
 
           </Paper>
-        </Grid>
+        </Grid> */}
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Paper className={itemsContainer}>
             <Grid container spacing={1}>
               {user.orders.sort((a, b) => new Date(b.date) - new Date(a.date)).map(o =>
                 <Grid key={o._id} item xs={12} sm={6} md={3} lg={3}>
                   <Card className={classes.cardStyle}>
-                    <CardHeader className={classes.cardHeader} titleTypographyProps={{ variant: 'subtitle1' }} title={`${o.cart[0].restaurantName}`} subheader={`Status: ${getProgress(o.date)}`} />
+                    <CardHeader className={classes.cardHeader} titleTypographyProps={{ variant: 'subtitle1' }} title={`${o.cart[0].restaurantName}`} subheader={getProgress(o.date) === 'Completed' ? new Date(o.date).toString().slice(0, 25) : 'progress bar here'} />
                     <CardContent style={{ listStyleType: 'none', paddingTop: 0, height: 180, overflow: 'auto' }}>
-                      <Typography variant='subtitle2'>
-                        {getProgress(o.date) === 'completed' ? new Date(o.date).toString().slice(0, 25) : 'progress bar here'}
-                      </Typography><br />
+                      <hr />
+                      <Typography variant='subtitle2' style={{ height: 20 }}>
+                        <div style={{ float: 'left' }}>
+                          {`Status: ${getProgress(o.date)}`}
+                        </div>
+                        <div style={{ float: 'right' }}>
+                          {`OrderID: ${o.confirmation}`}
+                        </div>
+                      </Typography>
+                      <hr />
                       {o.cart.map(c =>
-                        <div key={c._id}>
-                          <Typography variant='body1'>
-                            {c.selectedVariant ? c.selectedVariant + ' pizza' : null}
+                        <div key={c._id} style={{ margin: 5, paddingBottom: 5, paddingTop: 0, textAlign: 'center' }}>
+                          <Typography variant='body2' style={{ display: 'inline-flex', lineHeight: 1.75 }}>
+                            {c.selectedVariant ? <LocalPizzaOutlined /> : null}
+                            {c.selectedVariant ? <em>{c.selectedVariant}</em> : null}
                           </Typography>
-                          <Typography variant='caption' >
-                            {c.selectedRegularToppings.map(t => <li key={t}>{t}</li>)}
-                            {c.selectedPremiumToppings.map(t => <li key={t}>{t}</li>)}
-                          </Typography>
-                          <Typography variant='body1'>
-                            {c.itemType === 'beverages' ? c.selectedBeverages.map(b => <li key={b}>{b}</li>)
-                              : null}
-                          </Typography>
+                          <div style={{ display: 'block', textAlign: 'center' }}>
+                            <Typography variant='caption'>
+                              <small> {c.selectedRegularToppings.map(t => <span key={t}> {t} </span>)}
+                                {c.selectedPremiumToppings.map(t => <span key={t}> {t} </span>)}</small>
+                            </Typography>
+                          </div>
+                          {c.itemType === 'beverages' ? c.selectedBeverages.map(b => <div><Typography key={b} variant='body2' style={{ display: 'inline-flex', lineHeight: 1.75 }}>
+                            {<LocalDrink />}
+                            {<em> {b}</em>}
+                          </Typography></div>)
+                            : null}
                         </div>
                       )}
                     </CardContent>
-                    <div style={{ textAlign: 'center', height: '50px' }}>
-                      {o.activeCartBilling ? o.activeCartBilling.afterPromoPrice : o.cart.reduce((a, b) => a + b.totalPrice, 0)}
+                    <div style={{ textAlign: 'center', height: '50px', lineHeight: 4 }}>
+                      {o.activeCartBilling ? `$${formatPrice(o.activeCartBilling.afterPromoPrice)}` : `$${formatPrice(o.cart.reduce((a, b) => a + b.totalPrice, 0))}`}
                     </div>
                   </Card>
                 </Grid>

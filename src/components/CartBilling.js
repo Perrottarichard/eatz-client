@@ -4,6 +4,7 @@ import { Card, CardContent, Typography, TextField, Button } from '@material-ui/c
 import { setActiveCartBilling } from '../reducers/activeUserReducer'
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert } from '@material-ui/lab'
+import { formatPrice } from './MainOrderHistory'
 
 
 const checkQualify = (user, qualifyingPromo, pizzaArray, beverageArray, totalPrice) => {
@@ -109,13 +110,13 @@ const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice, activeCartB
       <Card style={{ height: 178, textAlign: 'center' }}>
         <CardContent style={{ padding: 10 }}>
           <Typography variant='body1'>
-            Total Due: ${activeCartBillingObject ? activeCartBillingObject.afterPromoPrice.toFixed(2) : Number(totalPrice).toFixed(2)}
+            Total Due: ${activeCartBillingObject ? formatPrice(activeCartBillingObject.afterPromoPrice.toFixed(2)) : Number(formatPrice(totalPrice)).toFixed(2)}
           </Typography>
           <Typography variant='caption' style={{ listStyleType: 'none' }}>
-            {activeCartBillingObject ? `original price: $${activeCartBillingObject.beforePromoPrice.toFixed(2)}` : null}
+            {activeCartBillingObject ? `original price: $${formatPrice(activeCartBillingObject.beforePromoPrice.toFixed(2))}` : null}
           </Typography><br />
           <Typography variant='caption' style={{ listStyleType: 'none' }}>
-            {activeCartBillingObject ? `discount: $${activeCartBillingObject.priceDiff.toFixed(2)}` : null}
+            {activeCartBillingObject ? `discount: $${formatPrice(activeCartBillingObject.priceDiff.toFixed(2))}` : null}
           </Typography>
         </CardContent>
         <div>

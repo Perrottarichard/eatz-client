@@ -5,7 +5,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import { Receipt, Loyalty } from '@material-ui/icons';
+import { Receipt } from '@material-ui/icons';
 
 export const mainListItems = (
   <div>
