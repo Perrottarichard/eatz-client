@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,6 +9,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent'
 import { LocalDrink, LocalPizzaOutlined } from '@material-ui/icons'
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -50,12 +51,15 @@ const useStyles = makeStyles((theme) => ({
 
 const getProgress = (date) => {
   const startMilli = new Date(date).getTime()
-  const endMilli = startMilli + (60000 * 25)
+  const endMilli = startMilli + (60000 * 30)
   const currentMilli = Date.now()
   if (currentMilli > endMilli) {
     return 'Completed'
   } else {
-    return 'In progress'
+    let minutesLeft = (Math.floor((endMilli - currentMilli) / 60000))
+    let minutesElapsed = (30 - minutesLeft)
+    let percentageComplete = Math.round((minutesElapsed / 30) * 100)
+    return percentageComplete
   }
 }
 export const formatPrice = (number) => {
@@ -72,7 +76,37 @@ const MainOrderHistory = () => {
   const classes = useStyles();
   const itemsContainer = clsx(classes.paper, classes.itemsContainer)
   const user = useSelector(state => state.activeUser.user)
+  const [progress, setProgress] = useState(0);
 
+  const progMessage = (prog) => {
+    if (prog < 20) {
+      return 'Preparing your order'
+    } else if (prog < 60) {
+      return 'It\'s a\'cookin!'
+    } else if (prog < 70) {
+      return 'Adding the finishing touches'
+    } else if (prog < 87) {
+      return 'Our driver picked up your order'
+    } else if (prog < 99) {
+      return 'Your order will be arriving any minute now'
+    }
+  }
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress((oldProgress) => {
+        if (oldProgress === 100) {
+          return 0;
+        }
+        const diff = Math.random() * 10;
+        return Math.min(oldProgress + diff, 100);
+      });
+    }, 500);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
   return (
     <React.Fragment>
       <Grid container spacing={2}>
@@ -92,31 +126,34 @@ const MainOrderHistory = () => {
               {user.orders.sort((a, b) => new Date(b.date) - new Date(a.date)).map(o =>
                 <Grid key={o._id} item xs={12} sm={6} md={3} lg={3}>
                   <Card className={classes.cardStyle}>
-                    <CardHeader className={classes.cardHeader} titleTypographyProps={{ variant: 'subtitle1' }} title={`${o.cart[0].restaurantName}`} subheader={getProgress(o.date) === 'Completed' ? new Date(o.date).toString().slice(0, 25) : 'progress bar here'} />
+                    <CardHeader className={classes.cardHeader} titleTypographyProps={{ variant: 'subtitle1' }} title={`${o.cart[0].restaurantName}`} subheader={getProgress(o.date) === 'Completed' ? new Date(o.date).toString().slice(0, 25) : <LinearProgress variant="determinate" value={getProgress(o.date)} />} />
                     <CardContent style={{ listStyleType: 'none', paddingTop: 0, height: 180, overflow: 'auto' }}>
-                      <hr />
+                      <Typography variant='caption'>
+                        {getProgress(o.date) !== 'Completed' ? <em>{progMessage(getProgress(o.date))}</em> : null}
+                        {getProgress(o.date) !== 'Completed' ? <hr /> : null}
+                      </Typography>
                       <Typography variant='subtitle2' style={{ height: 20 }}>
                         <div style={{ float: 'left' }}>
-                          {`Status: ${getProgress(o.date)}`}
+                          {`${getProgress(o.date) === 'Completed' ? 'Completed' : getProgress(o.date) + '%'}`}
                         </div>
                         <div style={{ float: 'right' }}>
-                          {`OrderID: ${o.confirmation}`}
+                          {`ID: ${o.confirmation}`}
                         </div>
                       </Typography>
                       <hr />
                       {o.cart.map(c =>
-                        <div key={c._id} style={{ margin: 5, paddingBottom: 5, paddingTop: 0, textAlign: 'center' }}>
+                        <div key={c._id} style={{ margin: 5, paddingBottom: 5, paddingTop: 0 }}>
                           <Typography variant='body2' style={{ display: 'inline-flex', lineHeight: 1.75 }}>
                             {c.selectedVariant ? <LocalPizzaOutlined /> : null}
                             {c.selectedVariant ? <em>{c.selectedVariant}</em> : null}
                           </Typography>
-                          <div style={{ display: 'block', textAlign: 'center' }}>
+                          <div style={{ display: 'block' }}>
                             <Typography variant='caption'>
                               <small> {c.selectedRegularToppings.map(t => <span key={t}> {t} </span>)}
                                 {c.selectedPremiumToppings.map(t => <span key={t}> {t} </span>)}</small>
                             </Typography>
                           </div>
-                          {c.itemType === 'beverages' ? c.selectedBeverages.map(b => <div><Typography key={b} variant='body2' style={{ display: 'inline-flex', lineHeight: 1.75 }}>
+                          {c.itemType === 'beverages' ? c.selectedBeverages.map(b => <div key={b}><Typography variant='body2' style={{ display: 'inline-flex', lineHeight: 1.75 }}>
                             {<LocalDrink />}
                             {<em> {b}</em>}
                           </Typography></div>)
@@ -124,8 +161,8 @@ const MainOrderHistory = () => {
                         </div>
                       )}
                     </CardContent>
-                    <div style={{ textAlign: 'center', height: '50px', lineHeight: 4 }}>
-                      {o.activeCartBilling ? `$${formatPrice(o.activeCartBilling.afterPromoPrice)}` : `$${formatPrice(o.cart.reduce((a, b) => a + b.totalPrice, 0))}`}
+                    <div style={{ textAlign: 'center', height: '50px', lineHeight: 4, backgroundColor: 'black', color: 'white' }}>
+                      {o.activeCartBilling ? `Total: $${formatPrice(o.activeCartBilling.afterPromoPrice)}` : `Total: $${formatPrice(o.cart.reduce((a, b) => a + b.totalPrice, 0))}`}
                     </div>
                   </Card>
                 </Grid>
