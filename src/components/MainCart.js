@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardStyle: {
     display: 'block',
-    height: 200,
+    height: 250,
     margin: 'auto'
   },
   cardHeader: {
@@ -43,12 +43,11 @@ const useStyles = makeStyles((theme) => ({
   cardActions: {
     justifyContent: 'center',
     margin: 'auto',
-    height: 35,
-    backgroundColor: 'black',
+    height: 50,
+    color: '#ff430a'
   },
   priceText: {
-    backgroundColor: '#ff430a',
-    color: 'white'
+    fontStyle: 'bold'
   }
 }))
 
@@ -128,10 +127,11 @@ const MainCart = () => {
                       <Typography className={classes.priceText}>
                         <strong>${formatPrice(c.totalPrice)}</strong> <small style={{ fontSize: 9 }}>incuding tax</small>
                       </Typography>
+                      <hr style={{ marginBottom: 0 }} />
                       <CardActions className={classes.cardActions}>
                         {!activeCartBillingObject ?
                           <IconButton aria-label="remove from cart" onClick={() => removeFromCart(c._id, c.totalPrice)} disabled={activeCartBillingObject ? true : false}>
-                            <ClearIcon style={{ color: 'white', fontSize: 25 }} />
+                            <ClearIcon style={{ color: '#575551', fontSize: 25 }} />
                           </IconButton>
                           : null
                         }
@@ -156,7 +156,7 @@ const MainCart = () => {
                       <CardActions className={classes.cardActions}>
                         {!activeCartBillingObject ?
                           <IconButton aria-label="remove from cart" onClick={() => removeFromCart(b._id)}>
-                            <ClearIcon style={{ color: 'white', fontSize: 25 }} />
+                            <ClearIcon style={{ color: '#575551', fontSize: 25 }} />
                           </IconButton>
                           : null}
                       </CardActions>

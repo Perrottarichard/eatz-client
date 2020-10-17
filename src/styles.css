@@ -1,6 +1,3 @@
-body{
-  font-family: 'Cherry Cream Soda', cursive;
-}
 
 .dashDiv {
   display: block;
@@ -31,10 +28,11 @@ margin-bottom: 12px;
   padding: 8px;
 }
 .dashDiv .MuiCardHeader-title {
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: bold;
 }
 .dashDiv .MuiCardHeader-subheader {
-  font-size: 12px;
+  font-size: 14px;
 }
 .dashDiv .MuiCardActions-root {
 display: block;
@@ -52,8 +50,9 @@ margin: 0px;
   line-height: 2.5;
   text-transform: none;
   margin-left: 20px;
-  font-weight: 500;
+  font-weight: 400;
 }
+
 .sticky-head {
   position: sticky;
   top: 0;

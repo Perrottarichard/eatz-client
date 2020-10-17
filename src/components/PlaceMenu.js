@@ -67,9 +67,6 @@ const PlaceMenu = ({ items, place }) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
   const sendToCart = () => {
     history.push('/dashboard/cart')
   }
@@ -110,28 +107,23 @@ const PlaceMenu = ({ items, place }) => {
           ))}
         </Stepper>
         <div>
-          {activeStep === steps.length ? (
-            <div>
-              <Typography >All steps completed</Typography>
-              <Button onClick={handleReset}>Reset</Button>
-            </div>
-          ) : (
-              <React.Fragment>
-                {getStepContent(activeStep)}
-                <div style={{ textAlign: 'center' }}>
-                  <Button
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
-                    style={{ marginRight: 20, marginBottom: 20, marginTop: 20 }}
-                  >
-                    Back
+          {activeStep === steps.length ? sendToCart() : (
+            <React.Fragment>
+              {getStepContent(activeStep)}
+              <div style={{ textAlign: 'center' }}>
+                <Button
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  style={{ marginRight: 20, marginBottom: 20, marginTop: 20 }}
+                >
+                  Back
               </Button>
-                  <Button style={{ marginBottom: 20, marginTop: 20, marginLeft: 20 }} color='default' variant="outlined" onClick={handleNext}>
-                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                  </Button>
-                </div>
-              </React.Fragment>
-            )}
+                <Button style={{ marginBottom: 20, marginTop: 20, marginLeft: 20 }} color='default' variant="outlined" onClick={handleNext}>
+                  {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                </Button>
+              </div>
+            </React.Fragment>
+          )}
         </div>
       </Collapse>
     </React.Fragment>

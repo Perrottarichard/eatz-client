@@ -79,13 +79,12 @@ const GeoDataList = () => {
   return (
     <div className='dashDiv'>
       <h5 className='sticky-head'>Near Me
-      {/* <Button style={{ float: 'right', height: 'auto', textTransform: 'none', lineHeight: 0.5, color: 'white' }}>next page</Button> */}
       </h5>
       {geoData ? geoData.map(place =>
         <Card key={place.place_id}>
-          <CardHeader title={place.name} subheader={calcDistance(lat, place.geometry.location.lat, lon, place.geometry.location.lng).toFixed(2) + ' km'} />
+          <CardHeader titleTypographyProps={{ variant: 'h4' }} title={place.name} subheader={calcDistance(lat, place.geometry.location.lat, lon, place.geometry.location.lng).toFixed(2) + ' km'} />
           <CardActions>
-            <Button onClick={() => handleClick(place.place_id)} disabled={place.opening_hours.open_now === true ? false : true}>{place.opening_hours.open_now === true ? 'Show Details' : 'Closed'}
+            <Button variant='outlined' size='small' onClick={() => handleClick(place.place_id)} disabled={place.opening_hours.open_now === true ? false : true}>{place.opening_hours.open_now === true ? 'Show Details' : 'Closed'}
             </Button>
             <IconButton aria-label="add to favorites" onClick={() => addToFavorites(place.place_id)}>
               <FavoriteIcon />
