@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Container } from '@material-ui/core'
-import { FormGroup, FormControlLabel, Checkbox, Grid, Dialog, DialogContentText, DialogContent, DialogActions, Button } from '@material-ui/core'
+import { FormGroup, FormControlLabel, Checkbox, Grid, CardActions, Typography, CardContent, Card, Button } from '@material-ui/core'
 import { addBeverage } from '../reducers/activeUserReducer'
 
 const Beverage = ({ beverages, user, place, handleClickOpen, open, setOpen, handleNext, sendToCart }) => {
@@ -81,8 +81,29 @@ const Beverage = ({ beverages, user, place, handleClickOpen, open, setOpen, hand
             )}
           </FormGroup>
         </Grid>
+        <Grid item xs={12} sm={6} md={6} lg={6}>
+          <Container style={{ paddingTop: 70, paddingBottom: 70 }}>
+            <Card style={{ backgroundColor: '#575551', color: 'white' }}>
+              <CardContent>
+                <Typography variant='body1'>
+                  {selectedBeverages.length > 0 ?
+                    `Add ${selectedBevGrammar()}`
+                    : `No drink selected`}
+                </Typography>
+              </CardContent>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <CardActions style={{ textAlign: 'center' }}>
+                  {selectedBeverages.length > 0 ?
+                    <Button onClick={() => handleAddBeverage(beverages[0]._id, beverages[0].type, selectedBeverages, place.name, place.place_id)} variant='outlined' style={{ backgroundColor: '#ff430a', color: 'white' }}>Add</Button>
+                    : null}
+                </CardActions>
+              </div>
+            </Card>
+          </Container>
+        </Grid>
       </Grid>
-      <div style={{ display: 'block', textAlign: 'center', marginBottom: 20 }}>
+
+      {/* <div style={{ display: 'block', textAlign: 'center', marginBottom: 20 }}>
         <Dialog
           open={open}
           onClose={handleClose}
@@ -105,7 +126,7 @@ const Beverage = ({ beverages, user, place, handleClickOpen, open, setOpen, hand
           </Button>
           </DialogActions>
         </Dialog>
-      </div>
+      </div> */}
     </Container>
   )
 }

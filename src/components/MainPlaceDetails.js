@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     height: 200,
   },
   menu: {
-    minHeight: 500
+    height: 'auto'
   }
 }))
 

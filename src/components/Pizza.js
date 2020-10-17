@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Container, Button } from '@material-ui/core'
-import { FormControl, FormGroup, FormControlLabel, FormLabel, Radio, RadioGroup, Checkbox, Grid } from '@material-ui/core'
+import { Container, Button, CardActionArea, CardActions } from '@material-ui/core'
+import { FormControl, FormGroup, FormControlLabel, FormLabel, Radio, RadioGroup, Checkbox, Grid, Card, CardHeader, CardContent, Typography } from '@material-ui/core'
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -38,7 +38,7 @@ const calcPizzaPrice = (pizza, size, variant, selectedRegularToppings, selectedP
 }
 
 
-const Pizza = ({ pizza, place, user, handleClickOpen, open, setOpen, handleNext }) => {
+const Pizza = ({ pizza, place, user, handleClickOpen, open, setOpen, handleNext, handleExpandClick, expanded, setExpanded }) => {
 
   const dispatch = useDispatch()
   const [size, setSize] = useState('large')
@@ -88,10 +88,10 @@ const Pizza = ({ pizza, place, user, handleClickOpen, open, setOpen, handleNext 
     setPremiumChecked({ ...premiumChecked, [event.target.name]: event.target.checked });
   }
 
-  const handleClose = () => {
-    setOpen(false)
-    handleNext()
-  }
+  // const handleClose = () => {
+  //   setOpen(false)
+  //   handleNext()
+  // }
 
   const clearSelection = () => {
     setRegularChecked(regObj)
@@ -116,12 +116,9 @@ const Pizza = ({ pizza, place, user, handleClickOpen, open, setOpen, handleNext 
     }
     try {
       dispatch(addCart(user._id, itemToAdd))
-      handleClose()
       clearSelection()
     } catch (error) {
       console.log(error)
-      handleClose()
-
     }
   }
   const selectedToppingsGrammar = () => {
@@ -161,7 +158,7 @@ const Pizza = ({ pizza, place, user, handleClickOpen, open, setOpen, handleNext 
             </RadioGroup>
           </FormControl>
         </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={6}>
+        <Grid item xs={12} sm={12} md={6} lg={6}>
           <FormLabel component='legend' style={{ color: '#575551' }}>Choose some toppings:</FormLabel><br />
           <FormLabel component='legend'>Regular ($2 each)</FormLabel>
           <FormGroup row>
@@ -178,10 +175,24 @@ const Pizza = ({ pizza, place, user, handleClickOpen, open, setOpen, handleNext 
           </FormGroup>
           <br />
         </Grid>
-        {/* <Grid item xs={12} sm={12} md={12} lg={6}>
-        </Grid> */}
+        <Grid item xs={12} sm={12} md={6} lg={6}>
+          <Container style={{ paddingTop: 70, paddingBottom: 70 }}>
+            <Card style={{ backgroundColor: '#575551', color: 'white' }}>
+              <CardContent>
+                <Typography variant='body1'>
+                  {`Add a ${size} ${variant} pizza with ${selectedToppingsGrammar()} to your cart?`}
+                </Typography>
+              </CardContent>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <CardActions style={{ textAlign: 'center' }}>
+                  <Button onClick={() => handleAddPizza(pizza.id, pizza[0].type, size, variant, place.name, place.place_id, selectedRegularToppings, selectedPremiumToppings)} variant='outlined' style={{ backgroundColor: '#ff430a', color: 'white' }}>Add</Button>
+                </CardActions>
+              </div>
+            </Card>
+          </Container>
+        </Grid>
       </Grid>
-      {variant && size ?
+      {/* {variant && size ?
         <div style={{ display: 'block', textAlign: 'center', marginBottom: 20 }}>
           <Dialog
             open={open}
@@ -204,7 +215,7 @@ const Pizza = ({ pizza, place, user, handleClickOpen, open, setOpen, handleNext 
             </DialogActions>
           </Dialog>
         </div>
-        : null}
+        : null} */}
     </Container>
   )
 }
