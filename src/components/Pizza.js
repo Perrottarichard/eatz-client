@@ -34,12 +34,11 @@ const calcPizzaPrice = (pizza, size, variant, selectedRegularToppings, selectedP
 }
 
 
-const Pizza = ({ pizza, place, user, handleClickOpen, open, setOpen, handleNext, handleExpandClick, expanded, setExpanded }) => {
+const Pizza = ({ pizza, place, user }) => {
 
   const dispatch = useDispatch()
   const [size, setSize] = useState('large')
   const [variant, setVariant] = useState('regular')
-
 
   //dynamically intialize an object from the array of topping choices to use for the checkbox with key/value pairs set initially to false. When checked, corresponding key item's value will change to true
   const regInitial = [pizza.map(p => p.regular_toppings.map(x => [x, false]))]
@@ -134,6 +133,7 @@ const Pizza = ({ pizza, place, user, handleClickOpen, open, setOpen, handleNext,
       <h2>Pizza</h2>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={6} lg={6}>
+          <div />
           <FormControl component='fieldset'>
             <FormLabel style={{ color: '#575551' }} component='legend'>Choose a size:</FormLabel>
             <RadioGroup aria-label="style" name="Style" value={size} onChange={handleSizeChange}>

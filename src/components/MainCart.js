@@ -72,13 +72,20 @@ const MainCart = () => {
   let pizza = cart.filter(c => c.itemType === 'pizza')
   const [totalPrice, setTotalPrice] = useState(getTotalPrice(pizza, bevs))
   let place
-  //prop passed to CartRestaurant, can change later to fetch full place details from google
+
+  //place prop passed to CartRestaurant to avoid unnecessary fetching from google api
   if (pizza.length > 0) {
     place = {
       _id: pizza[0].restaurantId,
       name: pizza[0].restaurantName
     }
+  } else if (bevs.length > 0) {
+    place = {
+      _id: bevs[0].restaurantId,
+      name: bevs[0].restaurantName
+    }
   }
+
 
   const removeFromCart = (item_id) => {
     cart = cart.filter(c => c._id !== item_id)
@@ -113,7 +120,7 @@ const MainCart = () => {
                   <Card className={classes.cardStyle}>
                     <CardHeader className={classes.cardHeader} titleTypographyProps={{ variant: 'h6' }} title={`${c.selectedVariant} ${c.itemType}`} subheader={`size: ${c.selectedSize}`} />
                     <CardContent style={{ listStyleType: 'none', paddingTop: 0, height: '35%', overflow: 'auto' }}>
-                      <Typography variant='body1'>
+                      <Typography variant='body2'>
                         {c.selectedRegularToppings.length + c.selectedPremiumToppings.length > 0 ? 'Toppings: '
                           : 'No toppings'}
                       </Typography>
@@ -131,7 +138,7 @@ const MainCart = () => {
                       <CardActions className={classes.cardActions}>
                         {!activeCartBillingObject ?
                           <IconButton aria-label="remove from cart" onClick={() => removeFromCart(c._id, c.totalPrice)} disabled={activeCartBillingObject ? true : false}>
-                            <ClearIcon style={{ color: '#575551', fontSize: 25 }} />
+                            <ClearIcon style={{ color: 'red', fontSize: 25 }} />
                           </IconButton>
                           : null
                         }
@@ -146,17 +153,18 @@ const MainCart = () => {
                     <CardHeader className={classes.cardHeader} titleTypographyProps={{ variant: 'h6' }} title={`${b.itemType}`} subheader='size: 20oz' style={{ textTransform: 'capitalize' }} />
                     <CardContent style={{ listStyleType: 'none', paddingTop: 0, height: '35%', overflow: 'auto' }}>
                       <Typography variant='body2' >
-                        {b.selectedBeverages.map(t => <li key={t}>{t}</li>)}
+                        {b.selectedBeverages.map(t => <li key={t} style={{ textTransform: 'capitalize' }}>{t}</li>)}
                       </Typography>
                     </CardContent>
                     <div style={{ display: 'block', textAlign: 'center' }}>
                       <Typography className={classes.priceText} >
                         <strong>${formatPrice(b.totalPrice)}</strong> <small style={{ fontSize: 9 }}>including tax</small>
                       </Typography>
+                      <hr style={{ marginBottom: 0 }} />
                       <CardActions className={classes.cardActions}>
                         {!activeCartBillingObject ?
                           <IconButton aria-label="remove from cart" onClick={() => removeFromCart(b._id)}>
-                            <ClearIcon style={{ color: '#575551', fontSize: 25 }} />
+                            <ClearIcon style={{ color: 'red', fontSize: 25 }} />
                           </IconButton>
                           : null}
                       </CardActions>

@@ -8,7 +8,6 @@ import { Typography } from '@material-ui/core'
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent'
-import { LocalDrink, LocalPizzaOutlined } from '@material-ui/icons'
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 const useStyles = makeStyles((theme) => ({
@@ -76,6 +75,7 @@ const MainOrderHistory = () => {
   const classes = useStyles();
   const itemsContainer = clsx(classes.paper, classes.itemsContainer)
   const user = useSelector(state => state.activeUser.user)
+  // eslint-disable-next-line no-unused-vars
   const [progress, setProgress] = useState(0);
 
   const progMessage = (prog) => {
@@ -143,8 +143,7 @@ const MainOrderHistory = () => {
                       <hr />
                       {o.cart.map(c =>
                         <div key={c._id} style={{ margin: 5, paddingBottom: 5, paddingTop: 0 }}>
-                          <Typography variant='body2' style={{ display: 'inline-flex', lineHeight: 1.75 }}>
-                            {c.selectedVariant ? <LocalPizzaOutlined /> : null}
+                          <Typography variant='body2' style={{ display: 'inline-flex' }}>
                             {c.selectedVariant ? <em>{c.selectedVariant}</em> : null}
                           </Typography>
                           <div style={{ display: 'block' }}>
@@ -153,8 +152,7 @@ const MainOrderHistory = () => {
                                 {c.selectedPremiumToppings.map(t => <span key={t}> {t} </span>)}</small>
                             </Typography>
                           </div>
-                          {c.itemType === 'beverages' ? c.selectedBeverages.map(b => <div key={b}><Typography variant='body2' style={{ display: 'inline-flex', lineHeight: 1.75 }}>
-                            {<LocalDrink />}
+                          {c.itemType === 'beverages' ? c.selectedBeverages.map(b => <div key={b}><Typography variant='body2' style={{ display: 'inline-flex' }}>
                             {<em> {b}</em>}
                           </Typography></div>)
                             : null}

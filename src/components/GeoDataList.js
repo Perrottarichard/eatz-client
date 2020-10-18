@@ -86,13 +86,13 @@ const GeoDataList = () => {
         <Card key={place.place_id}>
           <CardHeader titleTypographyProps={{ variant: 'h4' }} title={place.name} subheader={calcDistance(lat, place.geometry.location.lat, lon, place.geometry.location.lng).toFixed(2) + ' km'} />
           <CardActions>
-            <Button variant='outlined' size='small' onClick={() => handleClick(place.place_id)}>Show Details
-            </Button>
             {place.opening_hours.open_now
               ?
-              <Chip style={{ fontSize: 10, marginTop: 7 }} label="Open" icon={<CheckCircleOutline style={{ color: 'green' }} />} />
+              <Chip style={{ fontSize: 10, marginTop: 12, float: 'left', marginLeft: 10 }} size='small' label="Open" icon={<CheckCircleOutline style={{ color: 'green' }} />} />
               :
-              <Chip style={{ fontSize: 10, marginTop: 7 }} label="Closed" icon={<RemoveCircleOutline style={{ color: 'red', fontSize: 18 }} />} />}
+              <Chip style={{ fontSize: 10, marginTop: 12, float: 'left', marginLeft: 10 }} label="Closed" size='small' icon={<RemoveCircleOutline style={{ color: 'red', fontSize: 18 }} />} />}
+            <Button variant='outlined' size='small' onClick={() => handleClick(place.place_id)}>Show Details
+            </Button>
             <IconButton aria-label="add to favorites" onClick={() => addToFavorites(place.place_id)}>
               <FavoriteIcon />
             </IconButton>

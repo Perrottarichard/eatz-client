@@ -61,9 +61,9 @@ const Favorites = () => {
             </Button>
               {place.opening_hours.open_now
                 ?
-                <Chip style={{ fontSize: 10, marginTop: 7 }} label="Open" icon={<CheckCircleOutline style={{ color: 'green' }} />} />
+                <Chip style={{ fontSize: 10, marginTop: 12, float: 'left', marginLeft: 10 }} size='small' label="Open" icon={<CheckCircleOutline style={{ color: 'green' }} />} />
                 :
-                <Chip style={{ fontSize: 10, marginTop: 7 }} label="Closed" icon={<RemoveCircleOutline style={{ color: 'red', fontSize: 18 }} />} />}
+                <Chip style={{ fontSize: 10, marginTop: 12, float: 'left', marginLeft: 10 }} size='small' label="Closed" icon={<RemoveCircleOutline style={{ color: 'red', fontSize: 18 }} />} />}
               <IconButton aria-label="add to favorites" onClick={() => removeFromFavorites(place.place_id)}>
                 <ClearIcon />
               </IconButton>

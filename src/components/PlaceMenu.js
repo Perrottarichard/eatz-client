@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import Collapse from '@material-ui/core/Collapse';
-import { Typography, Container } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -11,8 +11,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import Pizza from './Pizza';
 import Beverage from './Beverage';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import clsx from 'clsx';
-import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles((theme) => ({
   expand: {
@@ -31,6 +29,7 @@ const PlaceMenu = ({ items, place }) => {
   const beverages = items.filter(i => i.type === 'beverages')
   const pizza = items.filter(i => i.type === 'pizza')
   const [activeStep, setActiveStep] = useState(0)
+  // eslint-disable-next-line no-unused-vars
   const [open, setOpen] = useState(false)
   const history = useHistory()
 
@@ -39,19 +38,15 @@ const PlaceMenu = ({ items, place }) => {
     setExpanded(!expanded)
   }
 
-  //handle confirmation dialog
-  const handleClickOpen = () => {
-    setOpen(true);
-  }
   const getSteps = () => {
     return ['Build your pizzas', '...and to drink?'];
   }
   function getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
-        return <Pizza pizza={pizza} place={place} user={user} handleClickOpen={handleClickOpen} open={open} setOpen={setOpen} handleNext={handleNext} handleExpandClick={handleExpandClick} expanded={expanded} setExpanded={setExpanded} />
+        return <Pizza pizza={pizza} place={place} user={user} />
       case 1:
-        return <Beverage beverages={beverages} user={user} place={place} handleClickOpen={handleClickOpen} open={open} setOpen={setOpen} handleNext={handleNext} sendToCart={sendToCart} />
+        return <Beverage beverages={beverages} user={user} place={place} setOpen={setOpen} sendToCart={sendToCart} />
       default:
         return 'Unknown stepIndex';
     }
@@ -75,11 +70,11 @@ const PlaceMenu = ({ items, place }) => {
     return (
       <div>
         <h5 className='sticky-head'>Order</h5>
-        <Container>
+        <div style={{ margin: 10, width: 'auto' }}>
           <Typography variant='body1'>
             Sorry, this restaurant is closed.
         </Typography>
-        </Container>
+        </div>
       </div>
     )
   }
@@ -94,8 +89,10 @@ const PlaceMenu = ({ items, place }) => {
           aria-expanded={expanded}
           aria-label="show more"
           startIcon={<ExpandMoreIcon />}
+          variant='outlined'
+          style={{ margin: 10 }}
         >
-          Order Now!
+          Show Menu
         </Button>
       </div>
       <Collapse in={expanded} timeout="auto" unmountOnExit>

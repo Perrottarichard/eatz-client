@@ -12,6 +12,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 // import DialogContentText from '@material-ui/core/DialogContentText';
 // import DialogTitle from '@material-ui/core/DialogTitle';
 import { FormControl, FormControlLabel, FormLabel, RadioGroup, Radio } from '@material-ui/core'
+import CartEmpty from './CartEmpty';
 
 
 
@@ -21,7 +22,7 @@ const CartRestaurant = ({ place, setTotalPrice, setCodeEntered }) => {
   const user = useSelector(state => state.activeUser.user)
   const addresses = user.addresses
   const [modalOrderOpen, setModalOrderOpen] = useState(false)
-  const [deliverTo, setDeliverTo] = useState(addresses ? addresses[0] : null)
+  const [deliverTo, setDeliverTo] = useState(addresses ? addresses[0].locationName : null)
 
   const handleModalOrderOpen = () => {
     setModalOrderOpen(true)
@@ -69,7 +70,7 @@ const CartRestaurant = ({ place, setTotalPrice, setCodeEntered }) => {
               </div>}
           </CardContent>
         </Card>
-        : <h3>Loading...</h3>}
+        : <CartEmpty />}
       <Dialog open={modalOrderOpen} onClose={handleModalOrderClose} aria-labelledby="form-dialog-title">
         {/* <DialogTitle id="form-dialog-title">Deliver to:</DialogTitle> */}
         <DialogContent>

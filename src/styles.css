@@ -18,8 +18,7 @@
   background-color: #202020;
   color: white;
   z-index: 1000;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-radius: 0px;
 }
 .dashDiv .MuiCard-root {
 height: auto;
@@ -48,10 +47,8 @@ margin: 0px;
   margin-right: 20px;
 }
 .dashDiv .MuiButton-root {
-  float: left;
   line-height: 2.5;
   text-transform: none;
-  margin-left: 20px;
   font-weight: 400;
 }
 
@@ -64,8 +61,8 @@ margin: 0px;
   background-color: #202020;
   color: white;
   z-index: 1000;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-top-left-radius: 1px;
+  border-top-right-radius: 1px;
 }
 .placeReviewsCard {
   display: block;

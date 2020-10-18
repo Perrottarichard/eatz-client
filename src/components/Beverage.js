@@ -4,7 +4,7 @@ import { Container } from '@material-ui/core'
 import { FormGroup, FormControlLabel, Checkbox, Grid, CardActions, Typography, CardContent, Card, Button } from '@material-ui/core'
 import { addBeverage } from '../reducers/activeUserReducer'
 
-const Beverage = ({ beverages, user, place, handleClickOpen, open, setOpen, handleNext, sendToCart }) => {
+const Beverage = ({ beverages, user, place, setOpen, sendToCart }) => {
   const dispatch = useDispatch()
 
   const choicesInitial = [beverages[0].choices.map(b => [b, false])]
