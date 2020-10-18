@@ -22,6 +22,7 @@ import MainDashboard from '../components/MainDashboard';
 import MainPlaceDetails from '../components/MainPlaceDetails';
 import MainCart from '../components/MainCart';
 import MainOrderHistory from '../components/MainOrderHistory';
+import MainAccount from '../components/MainAccount';
 
 
 const drawerWidth = 240;
@@ -182,6 +183,7 @@ export default function Dashboard() {
             <Route path='/dashboard/restaurant/:id' component={MainPlaceDetails} />
             <Route path='/dashboard/orders' component={MainOrderHistory} />
             <Route path='/dashboard/cart' component={MainCart} />
+            <Route path='/dashboard/account' component={MainAccount} />
           </Switch>
         </Container>
       </main>

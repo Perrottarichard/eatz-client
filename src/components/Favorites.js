@@ -49,11 +49,13 @@ const Favorites = () => {
 
   return (
     <div className='dashDiv'>
-      <h5 className='sticky-head'>My Favorites</h5>
+      <h5 className='sticky-head'>Favorites</h5>
       {geoData ? geoData.map(place =>
         <div key={place.place_id} style={{ marginTop: 10 }}>
           <Card>
-            <CardHeader title={place.name} subheader={calcDistance(lat, place.geometry.location.lat, lon, place.geometry.location.lng).toFixed(2) + ' km'} />
+            <div>
+              <CardHeader title={place.name} subheader={calcDistance(lat, place.geometry.location.lat, lon, place.geometry.location.lng).toFixed(2) + ' km'} />
+            </div>
             <CardActions>
               <Button variant='outlined' size='small' onClick={() => handleClick(place.place_id)}>Show Details
             </Button>

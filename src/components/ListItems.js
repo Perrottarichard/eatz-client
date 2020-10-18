@@ -3,36 +3,36 @@ import { Link } from 'react-router-dom'
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import { Receipt } from '@material-ui/icons';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import { Place, Receipt } from '@material-ui/icons';
 
 export const mainListItems = (
   <div>
     <ListItem button component={Link} to="/dashboard">
       <ListItemIcon>
-        <DashboardIcon />
+        <Place />
       </ListItemIcon>
-      <ListItemText primary="My Dashboard" />
+      <ListItemText primary="Places" />
     </ListItem>
     <ListItem button component={Link} to="/dashboard/cart">
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
-      <ListItemText primary="My Cart" />
+      <ListItemText primary="Cart" />
     </ListItem>
     <ListItem button component={Link} to="/dashboard/orders">
       <ListItemIcon>
         <Receipt />
       </ListItemIcon>
-      <ListItemText primary="My Orders" />
+      <ListItemText primary="Orders" />
     </ListItem>
-    {/* <ListItem button component={Link} to="/dashboard/promotions">
+    <ListItem button component={Link} to="/dashboard/account">
       <ListItemIcon>
-        <Loyalty />
+        <AccountBoxIcon />
       </ListItemIcon>
-      <ListItemText primary="My Promotions" />
-    </ListItem> */}
+      <ListItemText primary="Account" />
+    </ListItem>
     {/* <ListItem button>
       <ListItemIcon>
         <LayersIcon />
