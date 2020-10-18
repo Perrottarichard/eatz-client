@@ -143,6 +143,17 @@ const addNewAddress = async (user_id, addressObject) => {
   })
   return response.data
 }
+const editExistingAddress = async (user_id, indexToEdit, addressObject) => {
+  const response = await axios.put(`${baseUrl}/account/editAddress`, { user_id: user_id, indexToEdit: indexToEdit, addressObject: addressObject }, {
+    withCredentials: true,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true
+    },
+  })
+  return response.data
+}
 
 export default {
   getUser,
@@ -156,5 +167,6 @@ export default {
   updateActiveCartBilling,
   clearCart,
   addNewOrder,
-  addNewAddress
+  addNewAddress,
+  editExistingAddress
 }

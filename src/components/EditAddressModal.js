@@ -6,23 +6,23 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Button, TextField } from '@material-ui/core'
 import { Formik } from 'formik';
-import { addAddress } from '../reducers/activeUserReducer'
+import { editAddress } from '../reducers/activeUserReducer'
 
-const UserAddressesModal = ({ user, titleMessage, openOnClick, setOpenOnClick }) => {
+const EditAddressesModal = ({ user, titleMessage, editOnClick, setEditOnClick }) => {
 
   const dispatch = useDispatch()
-
-  const [modalOpen, setModalOpen] = useState(user.addresses.length === 0);
+  const addressToEdit = user.addresses[editOnClick.indexToEdit]
+  const [modalOpen, setModalOpen] = useState(editOnClick.open)
 
   useEffect(() => {
-    if (openOnClick) {
+    if (editOnClick.isOpen) {
       setModalOpen(true)
     }
-  }, [setModalOpen, openOnClick])
+  }, [setModalOpen, editOnClick])
 
   const handleModalClose = () => {
     setModalOpen(false)
-    setOpenOnClick(false)
+    setEditOnClick({ isOpen: false, indexToEdit: null })
   };
 
   return (
@@ -33,14 +33,7 @@ const UserAddressesModal = ({ user, titleMessage, openOnClick, setOpenOnClick })
           <DialogContent>
             <Formik
               initialValues={{
-                locationName: '',
-                addressNumber: '',
-                street: '',
-                city: '',
-                state: '',
-                country: '',
-                zip: '',
-                specialInstructions: ''
+                ...addressToEdit
               }}
               validate={values => {
                 const errors = {};
@@ -69,7 +62,7 @@ const UserAddressesModal = ({ user, titleMessage, openOnClick, setOpenOnClick })
               }}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 setSubmitting(true)
-                dispatch(addAddress(user._id, {
+                dispatch(editAddress(user._id, editOnClick.indexToEdit, {
                   locationName: values.locationName,
                   addressNumber: values.addressNumber,
                   street: values.street,
@@ -203,4 +196,4 @@ const UserAddressesModal = ({ user, titleMessage, openOnClick, setOpenOnClick })
     </div>
   )
 }
-export default UserAddressesModal
+export default EditAddressesModal

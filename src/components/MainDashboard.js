@@ -28,7 +28,7 @@ const MainDashboard = () => {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const user = useSelector(state => state.activeUser.user)
-  const [openOnClick, setOpenOnClick] = useState(null)
+  const [openOnClick, setOpenOnClick] = useState(false)
 
   return (
     <React.Fragment>

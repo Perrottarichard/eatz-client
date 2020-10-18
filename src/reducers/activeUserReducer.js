@@ -28,6 +28,8 @@ const activeUserReducer = (state = initialState, action) => {
       return { ...state, user: action.data }
     case 'ADD_ADDRESS':
       return { ...state, user: action.data }
+    case 'EDIT_ADDRESS':
+      return { ...state, user: action.data }
     default:
       return state
   }
@@ -182,6 +184,19 @@ export const addAddress = (user_id, addressObject) => {
       let res = await userService.addNewAddress(user_id, addressObject)
       dispatch({
         type: 'ADD_ADDRESS',
+        data: res
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+export const editAddress = (user_id, indexToEdit, addressObject) => {
+  return async dispatch => {
+    try {
+      let res = await userService.editExistingAddress(user_id, indexToEdit, addressObject)
+      dispatch({
+        type: 'EDIT_ADDRESS',
         data: res
       })
     } catch (error) {

@@ -1,11 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Container, Button, CardActionArea, CardActions } from '@material-ui/core'
-import { FormControl, FormGroup, FormControlLabel, FormLabel, Radio, RadioGroup, Checkbox, Grid, Card, CardHeader, CardContent, Typography } from '@material-ui/core'
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
+import { Container, Button, CardActions } from '@material-ui/core'
+import { FormControl, FormGroup, FormControlLabel, FormLabel, Radio, RadioGroup, Checkbox, Grid, Card, CardContent, Typography } from '@material-ui/core'
 import { addCart } from '../reducers/activeUserReducer'
 
 
