@@ -10,6 +10,8 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 import FavoriteIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import IconButton from '@material-ui/core/IconButton';
+import Chip from '@material-ui/core/Chip';
+import { CheckCircleOutline, RemoveCircleOutline } from '@material-ui/icons';
 
 export const calcDistance = (lat1, lat2, lng1, lng2) => {
   const pi = Math.PI
@@ -84,8 +86,13 @@ const GeoDataList = () => {
         <Card key={place.place_id}>
           <CardHeader titleTypographyProps={{ variant: 'h4' }} title={place.name} subheader={calcDistance(lat, place.geometry.location.lat, lon, place.geometry.location.lng).toFixed(2) + ' km'} />
           <CardActions>
-            <Button variant='outlined' size='small' onClick={() => handleClick(place.place_id)} disabled={place.opening_hours.open_now === true ? false : true}>{place.opening_hours.open_now === true ? 'Show Details' : 'Closed'}
+            <Button variant='outlined' size='small' onClick={() => handleClick(place.place_id)}>Show Details
             </Button>
+            {place.opening_hours.open_now
+              ?
+              <Chip style={{ fontSize: 10, marginTop: 7 }} label="Open" icon={<CheckCircleOutline style={{ color: 'green' }} />} />
+              :
+              <Chip style={{ fontSize: 10, marginTop: 7 }} label="Closed" icon={<RemoveCircleOutline style={{ color: 'red', fontSize: 18 }} />} />}
             <IconButton aria-label="add to favorites" onClick={() => addToFavorites(place.place_id)}>
               <FavoriteIcon />
             </IconButton>

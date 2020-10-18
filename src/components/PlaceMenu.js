@@ -74,10 +74,10 @@ const PlaceMenu = ({ items, place }) => {
   if (!place.opening_hours.open_now) {
     return (
       <div>
-        <h5 className='sticky-head'>Menu</h5>
+        <h5 className='sticky-head'>Order</h5>
         <Container>
-          <Typography variant='h6' component='h6'>
-            Sorry, this restaurant is closed. Come back again during operating hours to view the menu and place an order.
+          <Typography variant='body1'>
+            Sorry, this restaurant is closed.
         </Typography>
         </Container>
       </div>
@@ -86,7 +86,7 @@ const PlaceMenu = ({ items, place }) => {
 
   return (
     <React.Fragment>
-      <h5 className='sticky-head'>Menu</h5>
+      <h5 className='sticky-head'>Order</h5>
       <div style={{ textAlign: 'center' }}>
         <Button
           className={classes.expand}

@@ -9,6 +9,8 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
 import { calcDistance } from './GeoDataList'
+import Chip from '@material-ui/core/Chip';
+import { CheckCircleOutline, RemoveCircleOutline } from '@material-ui/icons';
 
 const Favorites = () => {
   const dispatch = useDispatch()
@@ -53,8 +55,13 @@ const Favorites = () => {
           <Card>
             <CardHeader title={place.name} subheader={calcDistance(lat, place.geometry.location.lat, lon, place.geometry.location.lng).toFixed(2) + ' km'} />
             <CardActions>
-              <Button variant='outlined' size='small' onClick={() => handleClick(place.place_id)} disabled={place.opening_hours.open_now === true ? false : true}>{place.opening_hours.open_now === true ? 'Show Details' : 'Closed'}
-              </Button>
+              <Button variant='outlined' size='small' onClick={() => handleClick(place.place_id)}>Show Details
+            </Button>
+              {place.opening_hours.open_now
+                ?
+                <Chip style={{ fontSize: 10, marginTop: 7 }} label="Open" icon={<CheckCircleOutline style={{ color: 'green' }} />} />
+                :
+                <Chip style={{ fontSize: 10, marginTop: 7 }} label="Closed" icon={<RemoveCircleOutline style={{ color: 'red', fontSize: 18 }} />} />}
               <IconButton aria-label="add to favorites" onClick={() => removeFromFavorites(place.place_id)}>
                 <ClearIcon />
               </IconButton>

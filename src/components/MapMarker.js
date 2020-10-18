@@ -13,7 +13,7 @@ const MapMarker = (props) => {
   }
   return (
     <div className="marker"
-      style={{ fontSize: 20 }}
+      style={{ fontSize: 18 }}
       title={name}>
       <IconButton onClick={() => handleClick(place_id)}>
         <FontAwesomeIcon icon={faPizzaSlice} style={{ color: '#ff430a' }} />
