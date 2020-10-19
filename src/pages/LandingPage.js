@@ -58,7 +58,7 @@ export default function LandingPage() {
     // window.open("http://localhost:3001/auth/google", "_self");
 
     //prod
-    window.open("https://pizza-pizza-server/auth/google", "_self");
+    window.open("https://pizza-pizza-server.herokuapp.com/auth/google", "_self");
 
   }
   const authWithFacebook = () => {
@@ -74,7 +74,7 @@ export default function LandingPage() {
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
-          <img src={pizzapizza} alt='pizza' />
+          <img src={pizzapizza} alt='pizza big' />
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
