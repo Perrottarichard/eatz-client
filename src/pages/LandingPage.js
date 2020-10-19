@@ -66,7 +66,7 @@ export default function LandingPage() {
     // window.open("http://localhost:3001/auth/facebook", "_self");
 
     //prod
-    window.open("https://pizza-pizza-server/auth/facebook", "_self");
+    window.open("https://pizza-pizza-server.herokuapp.com/auth/facebook", "_self");
   }
   return (
     <Grid container component="main" className={classes.root}>
@@ -94,7 +94,7 @@ export default function LandingPage() {
               variant="contained"
               style={{ backgroundColor: '#3b5998', color: 'white', height: 60 }}
               className={classes.submit}
-              disabled={true}
+              disabled={false}
             >
               <FontAwesomeIcon icon={faFacebook} style={{ fontSize: 30, marginRight: 20 }} />
               Continue with Facebook
