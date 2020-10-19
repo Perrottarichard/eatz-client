@@ -50,7 +50,7 @@ const Favorites = () => {
   return (
     <div className='dashDiv'>
       <h5 className='sticky-head'>Favorites</h5>
-      {geoData.length > 0 ? geoData.map(place =>
+      {geoData && geoData.length > 0 ? geoData.map(place =>
         <div key={place.place_id} style={{ marginTop: 10 }}>
           <Card>
             <div>
