@@ -54,10 +54,19 @@ export default function LandingPage() {
   }, [dispatch])
 
   const authWithGoogle = () => {
-    window.open("http://localhost:3001/auth/google", "_self");
+    //dev
+    // window.open("http://localhost:3001/auth/google", "_self");
+
+    //prod
+    window.open("https://pizza-pizza-server/auth/google", "_self");
+
   }
   const authWithFacebook = () => {
-    window.open("http://localhost:3001/auth/facebook", "_self");
+    //dev
+    // window.open("http://localhost:3001/auth/facebook", "_self");
+
+    //prod
+    window.open("https://pizza-pizza-server/auth/facebook", "_self");
   }
   return (
     <Grid container component="main" className={classes.root}>
@@ -88,9 +97,13 @@ export default function LandingPage() {
               disabled={true}
             >
               <FontAwesomeIcon icon={faFacebook} style={{ fontSize: 30, marginRight: 20 }} />
-              <small style={{ fontSize: 9 }}>under construction</small>
+              Continue with Facebook
             </Button>
-            {/* <TextField
+            {/* 
+            
+            can use if I want to add local registration
+            
+            <TextField
               variant="outlined"
               margin="normal"
               required
