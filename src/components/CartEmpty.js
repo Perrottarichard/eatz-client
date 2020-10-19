@@ -1,9 +1,11 @@
 import React from 'react'
-import EmptyCart from '../assets/empty-cart.png'
+import { Typography } from '@material-ui/core'
 
 const CartEmpty = () => (
-  <div style={{ display: 'flex', justifyContent: 'center' }}>
-    <img style={{ width: 280, height: 150 }} alt='empty cart' src={EmptyCart}></img>
+  <div style={{ display: 'inline-flex', height: '90%', width: '100%', margin: 'auto', justifyContent: 'center', alignItems: 'center' }}>
+    <Typography variant='h6' color='textSecondary'>
+      Such emptiness...
+  </Typography>
   </div>
 )
 

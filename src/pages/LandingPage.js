@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons'
+import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import pizzapizza from '../assets/pizzapizza200.png'
 import pizzaBackground from '../assets/pizzapizzalarge.jpg'
 import { isAuthenticated } from '../reducers/activeUserReducer'
@@ -54,11 +54,12 @@ export default function LandingPage() {
   }, [dispatch])
 
   const authWithGoogle = () => {
-    window.open("http://localhost:3001/auth/google", "_self");
+    // window.open("http://localhost:3001/auth/google", "_self");
+    window.open("https://pizzapizzadeliver.herokuapp.com/auth/google", "_self");
   }
-  const authWithFacebook = () => {
-    window.open("http://localhost:3001/auth/facebook", "_self");
-  }
+  // const authWithFacebook = () => {
+  //   window.open("http://localhost:3001/auth/facebook", "_self");
+  // }
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -79,7 +80,7 @@ export default function LandingPage() {
             >
               <FontAwesomeIcon icon={faGoogle} style={{ fontSize: 30, marginRight: 20, color: 'white' }} />Continue with Google
             </Button>
-            <Button
+            {/* <Button
               onClick={authWithFacebook}
               fullWidth
               variant="contained"
@@ -89,7 +90,7 @@ export default function LandingPage() {
             >
               <FontAwesomeIcon icon={faFacebook} style={{ fontSize: 30, marginRight: 20 }} />
               <small style={{ fontSize: 9 }}>under construction</small>
-            </Button>
+            </Button> */}
             {/* <TextField
               variant="outlined"
               margin="normal"
