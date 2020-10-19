@@ -58,7 +58,7 @@ export default function LandingPage() {
     // window.open("http://localhost:3001/auth/google", "_self");
 
     //prod
-    window.open("https://pizza-pizza-server.herokuapp.com/auth/google", "_self");
+    window.open("https://pizzapizzadelivery.herokuapp.com/auth/google", "_self");
 
   }
   const authWithFacebook = () => {
@@ -66,7 +66,7 @@ export default function LandingPage() {
     // window.open("http://localhost:3001/auth/facebook", "_self");
 
     //prod
-    window.open("https://pizza-pizza-server.herokuapp.com/auth/facebook", "_self");
+    window.open("https://pizzapizzadelivery.herokuapp.com/auth/facebook", "_self");
   }
   return (
     <Grid container component="main" className={classes.root}>

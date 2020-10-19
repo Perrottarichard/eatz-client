@@ -4,7 +4,7 @@ import axios from 'axios'
 // const baseUrl = 'http://localhost:3001'
 
 //production
-const baseUrl = 'https://pizza-pizza-server.herokuapp.com/'
+const baseUrl = 'https://pizzapizzadelivery.herokuapp.com/'
 
 
 const getUser = async () => {
