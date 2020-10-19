@@ -61,8 +61,8 @@ margin: 0px;
   background-color: #202020;
   color: white;
   z-index: 1000;
-  border-top-left-radius: 1px;
-  border-top-right-radius: 1px;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
 }
 .placeReviewsCard {
   display: block;

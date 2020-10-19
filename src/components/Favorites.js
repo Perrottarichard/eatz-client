@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Button } from '@material-ui/core'
+import { Button, Typography } from '@material-ui/core'
 import { removeFavorite } from '../reducers/activeUserReducer'
 import { useHistory } from 'react-router'
 import Card from '@material-ui/core/Card';
@@ -50,7 +50,7 @@ const Favorites = () => {
   return (
     <div className='dashDiv'>
       <h5 className='sticky-head'>Favorites</h5>
-      {geoData ? geoData.map(place =>
+      {geoData.length > 0 ? geoData.map(place =>
         <div key={place.place_id} style={{ marginTop: 10 }}>
           <Card>
             <div>
@@ -71,8 +71,10 @@ const Favorites = () => {
           </Card>
         </div>
       )
-        : <div style={{ height: '100%', width: '100%', margin: 'auto', textAlign: 'center' }}>
-          You don't have any favorites :(
+        : <div style={{ display: 'inline-flex', height: '90%', width: '100%', margin: 'auto', justifyContent: 'center', alignItems: 'center' }}>
+          <Typography variant='h6' color='textSecondary'>
+            No Favorites Yet
+          </Typography>
         </div>
       }
     </div>

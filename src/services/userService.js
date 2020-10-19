@@ -1,5 +1,11 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001'
+
+//development
+// const baseUrl = 'http://localhost:3001'
+
+//production
+const baseUrl = 'https://pizza-pizza-server.herokuapp.com/'
+
 
 const getUser = async () => {
   const response = await axios.get(`${baseUrl}`, {

@@ -52,7 +52,7 @@ const CartRestaurant = ({ place, setTotalPrice, setCodeEntered }) => {
 
   return (
     <div style={{ height: '100%' }}>
-      <h5 className='sticky-head'>Finished?</h5>
+      <h5 className='sticky-head'>Checkout</h5>
       {place !== undefined ?
         <Card style={{ height: 178, textAlign: 'center' }}>
           <CardContent style={{ margin: 'auto' }}>

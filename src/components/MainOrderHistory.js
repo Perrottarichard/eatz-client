@@ -134,7 +134,7 @@ const MainOrderHistory = () => {
                       </Typography>
                       <Typography variant='subtitle2' style={{ height: 20 }}>
                         <div style={{ float: 'left' }}>
-                          {`${getProgress(o.date) === 'Completed' ? 'Completed' : getProgress(o.date) + '%'}`}
+                          {`${getProgress(o.date) === 'Completed' ? 'Delivered' : getProgress(o.date) + '%'}`}
                         </div>
                         <div style={{ float: 'right' }}>
                           {`ID: ${o.confirmation}`}

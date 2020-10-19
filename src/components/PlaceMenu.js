@@ -71,7 +71,7 @@ const PlaceMenu = ({ items, place }) => {
       <div>
         <h5 className='sticky-head'>Order</h5>
         <div style={{ margin: 10, width: 'auto' }}>
-          <Typography variant='body1'>
+          <Typography variant='body1' color='textSecondary'>
             Sorry, this restaurant is closed.
         </Typography>
         </div>
