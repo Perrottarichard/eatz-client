@@ -55,7 +55,7 @@ export default function LandingPage() {
 
   const authWithGoogle = () => {
     // window.open("http://localhost:3001/auth/google", "_self");
-    window.open("https://pizzapizzadeliver.herokuapp.com/auth/google", "_self");
+    window.open("https://pizzapizzadelivery.herokuapp.com/auth/google", "_self");
   }
   // const authWithFacebook = () => {
   //   window.open("http://localhost:3001/auth/facebook", "_self");
@@ -66,7 +66,7 @@ export default function LandingPage() {
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
-          <img src={pizzapizza} alt='pizza' />
+          <img src={pizzapizza} alt='pizza big' />
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
@@ -86,7 +86,7 @@ export default function LandingPage() {
               variant="contained"
               style={{ backgroundColor: '#3b5998', color: 'white', height: 60 }}
               className={classes.submit}
-              disabled={true}
+              disabled={false}
             >
               <FontAwesomeIcon icon={faFacebook} style={{ fontSize: 30, marginRight: 20 }} />
               <small style={{ fontSize: 9 }}>under construction</small>
