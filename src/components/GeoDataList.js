@@ -132,7 +132,7 @@ const GeoDataList = () => {
                 <IconButton className='iconBtn' aria-label="add to favorites" onClick={() => addToFavorites(place.place_id)}>
                   <FavoriteIcon />
                 </IconButton>
-                {place.opening_hours.open_now
+                {place && place.opening_hours && place.opening_hours.open_now
                   ?
                   <Chip style={{ fontSize: 10 }} size='small' label="Open" icon={<CheckCircleOutline style={{ color: 'green' }} />} />
                   :
