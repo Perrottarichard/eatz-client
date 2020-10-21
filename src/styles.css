@@ -1,3 +1,4 @@
+
 .outerDashDiv {
   display: flex;
   width: 100%;
@@ -18,7 +19,7 @@
 .dashDiv {
   display: flex;
   flex-wrap: nowrap;
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: hidden;
   justify-content: flex-start;
   text-align: center;
@@ -32,7 +33,6 @@
 }
 .dashDiv::-webkit-scrollbar {
   display: none;
-  height: 1px;
 }
 .dashDiv::-webkit-scrollbar-track {
   background: transparent;
@@ -146,3 +146,4 @@ circle {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
