@@ -19,7 +19,7 @@
 .dashDiv {
   display: flex;
   flex-wrap: nowrap;
-  overflow-x: hidden;
+  overflow-x: auto;
   overflow-y: hidden;
   justify-content: flex-start;
   text-align: center;
@@ -29,8 +29,14 @@
   margin-right: 10px;
   align-items: center;
   scroll-behavior: smooth;
-  /* background-color: #575551; */
 }
+
+/* handle firefox */
+.dashDiv {
+  scrollbar-width: none;
+}
+
+
 .dashDiv::-webkit-scrollbar {
   display: none;
 }
@@ -102,11 +108,11 @@ border-radius: 0px;
   flex-basis: 100%;
   padding-top: 0px;
 }
-
-.placeReviewsCard {
-  display: block;
-  width: 100%;
+.dashDiv .MuiIconButton-root:hover{
+  background-color: transparent;
 }
+
+
 #pizza-button {
   background-color: #ff2f0a;
   color: white;
@@ -125,9 +131,6 @@ span.MuiSvgIcon-root.MuiStepIcon-root.MuiStepIcon-completed {
 .MuiStepIcon{
   color: #ff2f0a;
 }
-.MuiStepIcon-completed {
-  color: purple;
-}
 circle {
   color:  #ff2f0a;
 }
@@ -145,5 +148,45 @@ circle {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.placeDetailsDiv {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  justify-content: space-evenly;
+  text-align: center;
+  height: 200px;
+  width: 100%;
+  align-items: center;
+  scroll-behavior: smooth;
+}
+
+.placeReviewsInnerDiv {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  flex-basis: content;
+  overflow-x: hidden;
+  overflow-y: auto;
+  justify-content: space-evenly;
+  text-align: left;
+  height: auto;
+  width: 90%;
+  margin: auto;
+  align-items: center;
+  scroll-behavior: smooth;
+}
+.placeReviewsCard {
+  margin-bottom: 18px;
+}
+.placeDetailsCard {
+  width: 90%;
+  height: 200px;
+}
+
+.pizzaMenuContainer {
+  background-color: white;
 }
 

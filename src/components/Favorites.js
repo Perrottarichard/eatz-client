@@ -9,14 +9,17 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import { calcDistance } from './GeoDataList'
 import Chip from '@material-ui/core/Chip';
-import { CheckCircleOutline, ChevronLeft, ChevronRight, FavoriteRounded, RemoveCircleOutline } from '@material-ui/icons';
+import { CheckCircleOutline, ChevronLeft, ChevronRight, Favorite, FavoriteRounded, RemoveCircleOutline } from '@material-ui/icons';
 import Rating from '@material-ui/lab/Rating'
+import Skeleton from '@material-ui/lab/Skeleton'
+import Grow from '@material-ui/core/Grow';
 
 const Favorites = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.activeUser.user)
   const geoData = useSelector(state => state.placesReducer.nearbyPlaces ? state.placesReducer.nearbyPlaces.filter(p => user.favoriteRestaurants.includes(p.place_id)) : null)
 
+  const [waiting, setWaiting] = useState(false)
   const [lat, setLat] = useState(0)
   const [lon, setLon] = useState(0)
   const history = useHistory()
@@ -36,11 +39,22 @@ const Favorites = () => {
     return () => isMountedRef.current = false
   }, [lat, lon])
 
+  useEffect(() => {
+    if (!geoData) {
+      setWaiting(true)
+    }
+  }, [setWaiting, geoData])
+
   const removeFromFavorites = (place_id) => {
+    setWaiting(true)
     try {
       dispatch(removeFavorite(place_id, user._id))
+      setTimeout(() => {
+        setWaiting(false)
+      }, 2000);
     } catch (error) {
       console.log(error)
+      setWaiting(false)
     }
   }
 
@@ -51,41 +65,66 @@ const Favorites = () => {
     scrollRef.current.scrollLeft += scrollOffset;
   };
 
+  if (waiting) {
+    return (
+      <div className='sticky-head'>
+        <Typography variant='body1' style={{ textAlign: 'center', fontSize: 26, marginTop: 20 }}><strong>Favorites</strong></Typography>
+        <div className='outerDashDiv'>
+          <Button className='btn' onClick={() => scroll(-400)}>
+            <ChevronLeft style={{ fontSize: 50 }} />
+          </Button>
+          <div className='dashDiv' ref={scrollRef} >
+            <Card>
+              <Skeleton variant="rect" width={200} height={200} style={{ backgroundColor: 'darkgrey' }} />
+            </Card>
+            <Card>
+              <Skeleton variant="rect" width={200} height={200} style={{ backgroundColor: 'darkgrey' }} />
+            </Card>
+          </div>
+          <Button className='btn' onClick={() => scroll(400)}>
+            <ChevronRight style={{ fontSize: 50 }} />
+          </Button>
+        </div>
+      </div>
+    )
+  }
   return (
     <div className='sticky-head'>
       <Typography variant='body1' style={{ textAlign: 'center', fontSize: 26, marginTop: 20 }}><strong>Favorites</strong></Typography>
       <div className='outerDashDiv'>
         <Button className='btn' onClick={() => scroll(-400)}>
-          <ChevronLeft style={{ fontSize: 30 }} />
+          <ChevronLeft style={{ fontSize: 50 }} />
         </Button>
         <div className='dashDiv' ref={scrollRef} >
           {geoData && geoData.length > 0 ? geoData.map(place =>
-            <Card key={place.place_id} >
-              <CardHeader titleTypographyProps={{ variant: 'h4' }} title={place.name} subheader={calcDistance(lat, place.geometry.location.lat, lon, place.geometry.location.lng).toFixed(2) + ' km'} />
-              <CardActions>
-                <IconButton className='iconBtn' aria-label="add to favorites" onClick={() => removeFromFavorites(place.place_id)}>
-                  <FavoriteRounded />
-                </IconButton>
-                {place.opening_hours.open_now
-                  ?
-                  <Chip style={{ fontSize: 10 }} size='small' label="Open" icon={<CheckCircleOutline style={{ color: 'green' }} />} />
-                  :
-                  <Chip style={{ fontSize: 10 }} size='small' label="Closed" icon={<RemoveCircleOutline style={{ color: 'red', fontSize: 18 }} />} />}
-                <Rating style={{ marginBottom: 10 }} name="read-only" value={place.rating} readOnly size='small' precision={0.5} />
-                <Button className='detailsBtn' fullWidth size='small' onClick={() => handleClick(place.place_id)}>Order
+            <Grow key={place.place_id} in={!waiting}>
+              <Card >
+                <CardHeader titleTypographyProps={{ variant: 'h4' }} title={place.name} subheader={calcDistance(lat, place.geometry.location.lat, lon, place.geometry.location.lng).toFixed(2) + ' km'} />
+                <CardActions>
+                  <IconButton className='iconBtn' aria-label="add to favorites" onClick={() => removeFromFavorites(place.place_id)}>
+                    <FavoriteRounded />
+                  </IconButton>
+                  {place.opening_hours.open_now
+                    ?
+                    <Chip style={{ fontSize: 10 }} size='small' label="Open" icon={<CheckCircleOutline style={{ color: 'green' }} />} />
+                    :
+                    <Chip style={{ fontSize: 10 }} size='small' label="Closed" icon={<RemoveCircleOutline style={{ color: 'red', fontSize: 18 }} />} />}
+                  <Rating style={{ marginBottom: 10 }} name="read-only" value={place.rating} readOnly size='small' precision={0.5} />
+                  <Button className='detailsBtn' fullWidth size='small' onClick={() => handleClick(place.place_id)}>Order
             </Button>
-              </CardActions>
-            </Card>
+                </CardActions>
+              </Card>
+            </Grow>
           )
             : <div style={{ display: 'inline-flex', height: '90%', width: '100%', margin: 'auto', justifyContent: 'center', alignItems: 'center' }}>
               <Typography variant='caption' style={{ color: 'white' }}>
-                Click the heart to add or remove favorites
+                Click the  <Favorite style={{ fontSize: 14 }} />  to add or remove favorites
           </Typography>
             </div>
           }
         </div>
         <Button className='btn' onClick={() => scroll(400)}>
-          <ChevronRight style={{ fontSize: 30 }} />
+          <ChevronRight style={{ fontSize: 50 }} />
         </Button>
       </div>
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Button, Typography } from '@material-ui/core'
 import { setPlaces, setHomeGPS } from '../reducers/placesReducer'
@@ -13,6 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Chip from '@material-ui/core/Chip';
 import Rating from '@material-ui/lab/Rating';
 import Skeleton from '@material-ui/lab/Skeleton';
+import Grow from '@material-ui/core/Grow';
 import { CheckCircleOutline, ChevronLeft, ChevronRight, RemoveCircleOutline } from '@material-ui/icons';
 
 export const calcDistance = (lat1, lat2, lng1, lng2) => {
@@ -36,12 +37,12 @@ const GeoDataList = () => {
   const user = useSelector(state => state.activeUser.user)
   const geoData = useSelector(state => state.placesReducer.nearbyPlaces ? state.placesReducer.nearbyPlaces.filter(p => !user.favoriteRestaurants.includes(p.place_id)) : null)
   const homeGPS = useSelector(state => state.placesReducer.homeGPS)
+  const [waiting, setWaiting] = useState(false)
 
   const dispatch = useDispatch()
   const history = useHistory()
   const isMountedRef = useRef(null)
   const scrollRef = useRef(null);
-  // const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     isMountedRef.current = true
@@ -70,10 +71,15 @@ const GeoDataList = () => {
   }, [dispatch, homeGPS])
 
   const addToFavorites = (place_id) => {
+    setWaiting(true)
     try {
       dispatch(addFavorite(place_id, user._id))
+      setTimeout(() => {
+        setWaiting(false)
+      }, 2000);
     } catch (error) {
       console.log(error)
+      setWaiting(false)
     }
   }
   const handleClick = (place_id) => {
@@ -84,33 +90,36 @@ const GeoDataList = () => {
   };
 
   //handle loading state with Skeleton
-  if (!geoData || (!homeGPS)) {
+  if (!geoData || !homeGPS || waiting) {
     return (
       <div className='sticky-head'>
         <Typography variant='body1' style={{ textAlign: 'center', fontSize: 26, marginTop: 20 }}><strong>Near Me</strong></Typography>
         <div className='outerDashDiv'>
           <Button className='btn' onClick={() => scroll(-400)}>
-            <ChevronLeft style={{ fontSize: 30 }} />
+            <ChevronLeft style={{ fontSize: 50 }} />
           </Button>
           <div className='dashDiv' ref={scrollRef} >
             <Card>
-              <Skeleton variant="rect" width={200} height={200} />
+              <Skeleton variant="rect" width={200} height={200} style={{ backgroundColor: 'darkgrey' }} />
             </Card>
             <Card>
-              <Skeleton variant="rect" width={200} height={200} />
+              <Skeleton variant="rect" width={200} height={200} style={{ backgroundColor: 'darkgrey' }} />
             </Card>
             <Card>
-              <Skeleton variant="rect" width={200} height={200} />
+              <Skeleton variant="rect" width={200} height={200} style={{ backgroundColor: 'darkgrey' }} />
             </Card>
             <Card>
-              <Skeleton variant="rect" width={200} height={200} />
+              <Skeleton variant="rect" width={200} height={200} style={{ backgroundColor: 'darkgrey' }} />
             </Card>
             <Card>
-              <Skeleton variant="rect" width={200} height={200} />
+              <Skeleton variant="rect" width={200} height={200} style={{ backgroundColor: 'darkgrey' }} />
+            </Card>
+            <Card>
+              <Skeleton variant="rect" width={200} height={200} style={{ backgroundColor: 'darkgrey' }} />
             </Card>
           </div>
           <Button className='btn' onClick={() => scroll(400)}>
-            <ChevronRight style={{ fontSize: 30 }} />
+            <ChevronRight style={{ fontSize: 50 }} />
           </Button>
         </div>
       </div>
@@ -122,33 +131,35 @@ const GeoDataList = () => {
       <Typography variant='body1' style={{ textAlign: 'center', fontSize: 26, marginTop: 20 }}><strong>Near Me</strong></Typography>
       <div className='outerDashDiv'>
         <Button className='btn' onClick={() => scroll(-400)}>
-          <ChevronLeft style={{ fontSize: 30 }} />
+          <ChevronLeft style={{ fontSize: 50 }} />
         </Button>
         <div className='dashDiv' ref={scrollRef} >
           {geoData && homeGPS ? geoData.map(place =>
-            <Card key={place.place_id}>
-              <CardHeader titleTypographyProps={{ variant: 'h4' }} title={place.name} subheader={calcDistance(homeGPS.lat, place.geometry.location.lat, homeGPS.lon, place.geometry.location.lng).toFixed(2) + ' km'} />
-              <CardActions>
-                <IconButton className='iconBtn' aria-label="add to favorites" onClick={() => addToFavorites(place.place_id)}>
-                  <FavoriteIcon />
-                </IconButton>
-                {place && place.opening_hours && place.opening_hours.open_now
-                  ?
-                  <Chip style={{ fontSize: 10 }} size='small' label="Open" icon={<CheckCircleOutline style={{ color: 'green' }} />} />
-                  :
-                  <Chip style={{ fontSize: 10 }} label="Closed" size='small' icon={<RemoveCircleOutline style={{ color: 'red', fontSize: 18 }} />} />}
-                <Rating style={{ marginBottom: 10 }} name="read-only" value={place.rating} readOnly size='small' precision={0.5} />
-                <Button className='detailsBtn' fullWidth size='small' onClick={() => handleClick(place.place_id)}>Order
+            <Grow key={place.place_id} in={!waiting}>
+              <Card key={place.place_id}>
+                <CardHeader titleTypographyProps={{ variant: 'h4' }} title={place.name} subheader={calcDistance(homeGPS.lat, place.geometry.location.lat, homeGPS.lon, place.geometry.location.lng).toFixed(2) + ' km'} />
+                <CardActions>
+                  <IconButton className='iconBtn' aria-label="add to favorites" onClick={() => addToFavorites(place.place_id)}>
+                    <FavoriteIcon />
+                  </IconButton>
+                  {place && place.opening_hours && place.opening_hours.open_now
+                    ?
+                    <Chip style={{ fontSize: 10 }} size='small' label="Open" icon={<CheckCircleOutline style={{ color: 'green' }} />} />
+                    :
+                    <Chip style={{ fontSize: 10 }} label="Closed" size='small' icon={<RemoveCircleOutline style={{ color: 'red', fontSize: 18 }} />} />}
+                  <Rating style={{ marginBottom: 10 }} name="read-only" value={place.rating} readOnly size='small' precision={0.5} />
+                  <Button className='detailsBtn' fullWidth size='small' onClick={() => handleClick(place.place_id)}>Order
             </Button>
-              </CardActions>
-            </Card>
+                </CardActions>
+              </Card>
+            </Grow>
           )
             :
             null
           }
         </div>
         <Button className='btn' onClick={() => scroll(400)}>
-          <ChevronRight style={{ fontSize: 30 }} />
+          <ChevronRight style={{ fontSize: 50 }} />
         </Button>
       </div>
     </div>

@@ -1,10 +1,10 @@
 import axios from 'axios'
 
 //development
-// const baseUrl = 'http://localhost:3001/api'
+const baseUrl = 'http://localhost:3001/api'
 
 //production
-const baseUrl = 'https://pizzapizzadelivery.herokuapp.com/api'
+// const baseUrl = 'https://pizzapizzadelivery.herokuapp.com/api'
 
 export const getByCoordinates = async (lat, lon) => {
   console.log('getbycoord running')

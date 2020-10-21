@@ -1,17 +1,21 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { getPlaceDetails } from '../reducers/placesReducer'
 import { initMenu } from '../reducers/placesReducer'
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import PlaceNameAddress from './PlaceNameAddress';
 import PlaceHoursContact from './PlaceHoursContact';
+import Promos from './Promos'
 import PlaceReviews from './PlaceReviews';
 import PlaceMenu from './PlaceMenu'
 import { LinearProgress } from '@material-ui/core'
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -25,31 +29,62 @@ const useStyles = makeStyles((theme) => ({
   },
   menu: {
     height: 'auto',
+  },
+  appBar: {
+    color: 'white',
+    backgroundColor: 'black'
+  },
+  indicator: {
+    backgroundColor: '#ff2f0a'
   }
 }))
+
+const TabPanel = (props) => {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          {children}
+        </Box>
+      )}
+    </div>
+  );
+}
 
 const MainPlaceDetails = () => {
 
   const classes = useStyles();
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const menu = clsx(classes.paper, classes.menu)
   const user = useSelector(state => state.activeUser.user)
   let place_id = useParams()
   const dispatch = useDispatch()
   const place = useSelector(state => state.placesReducer.placeDetails)
+  const items = useSelector(state => state.placesReducer.menu ? state.placesReducer.menu : undefined)
+
+  const [value, setValue] = useState(0);
 
   useEffect(() => {
     if (!place || place.place_id !== place_id.id)
       dispatch(getPlaceDetails(place_id))
   }, [dispatch, place, place_id])
 
-  const items = useSelector(state => state.placesReducer.menu ? state.placesReducer.menu : undefined)
 
   useEffect(() => {
     if (!items) {
       dispatch(initMenu())
     }
   }, [dispatch, items])
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   if (!place) {
     return <LinearProgress color="secondary" />
@@ -60,29 +95,36 @@ const MainPlaceDetails = () => {
   }
   return (
     <React.Fragment>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6} md={4} lg={4}>
-          <Paper className={fixedHeightPaper}>
-            <PlaceNameAddress place={place} />
-          </Paper>
+      <Grid container direction='row' justify='space-evenly' spacing={2}>
+        <Grid item xs={12} sm={12} md={6} lg={6}>
+          <PlaceNameAddress place={place} />
         </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={4}>
-          <Paper className={fixedHeightPaper}>
-            <PlaceHoursContact place={place} />
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={12} md={4} lg={4}>
-          <Paper className={fixedHeightPaper}>
-            <PlaceReviews place={place} />
-          </Paper>
+        <Grid item xs={12} sm={12} md={6} lg={6}>
+          <PlaceHoursContact place={place} />
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <Paper className={menu}>
+          <AppBar position="static" className={classes.appBar}>
+            <Tabs value={value} onChange={handleChange} centered classes={{ indicator: classes.indicator }}>
+              <Tab label="Menu" style={{ textTransform: 'none', fontSize: 16 }} />
+              <Tab label="Promotions" style={{ textTransform: 'none', fontSize: 16 }} />
+              <Tab label="Reviews" style={{ textTransform: 'none', fontSize: 16 }} />
+            </Tabs>
+          </AppBar>
+          <TabPanel value={value} index={0}>
             {user.cart.length === 0 || user.cart[0].restaurantId === place.place_id ?
               <PlaceMenu items={items} place={place} />
               :
               `You already have items from ${user.cart[0].restaurantName} in your cart.  Please complete your order from that restaurant first, or remove those items from your cart.`}
-          </Paper>
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <Promos />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <PlaceReviews place={place} />
+          </TabPanel>
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+
         </Grid>
       </Grid>
     </React.Fragment>

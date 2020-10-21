@@ -38,9 +38,6 @@ const MainDashboard = () => {
         <Grid className={classes.mapGrid} item xs={12} sm={12} md={12} lg={12}>
           <GeoDisplay />
         </Grid>
-        {/* <Grid item xs={12} sm={6} md={6} lg={6}>
-          <Promos />
-        </Grid> */}
       </Grid>
       <UserAddressesModal user={user} titleMessage={`Tell us where to deliver your pizza, and we'll save your information so you only have to do this once.`} openOnClick={openOnClick} setOpenOnClick={setOpenOnClick} />
     </React.Fragment>

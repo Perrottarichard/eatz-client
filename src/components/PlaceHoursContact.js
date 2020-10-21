@@ -8,34 +8,24 @@ import { CheckCircleOutline, Phone, RemoveCircleOutline, Schedule } from '@mater
 
 const PlaceHoursContact = ({ place }) => {
   return (
-    <div>
-      <h5 className='sticky-head'>Hours and Contact</h5>
-      {place !== undefined ?
-        <Card style={{ textAlign: 'center', height: 'auto', marginTop: 10 }}>
-          {place.opening_hours.open_now
-            ?
-            <Chip label="Open" icon={<CheckCircleOutline style={{ color: 'green' }} />} />
-            :
-            <Chip label="Closed" icon={<RemoveCircleOutline style={{ color: 'red' }} />} />}
-          <CardContent>
-
-            <Typography variant='body1' color='textPrimary'>
-              <Schedule />
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="ul" style={{ listStyleType: 'none', padding: 0 }}>
-              {place.opening_hours.weekday_text.map(d => <li key={d}>{d}</li>)}
-            </Typography>
-            <br />
-            <Typography variant='body1' color='textPrimary'>
-              <Phone />
-            </Typography>
-            <Typography variant="body2" color='textSecondary' component="p">
-              {place.formatted_phone_number}
-            </Typography>
-          </CardContent>
-        </Card>
-        : <h3>Loading...</h3>}
-
+    <div className='sticky-head'>
+      <Typography variant='body1' style={{ textAlign: 'center', fontSize: 16, marginTop: 20 }}><strong>Hours</strong></Typography>
+      <div className='placeDetailsDiv'>
+        {place !== undefined ?
+          <Card className='placeDetailsCard'>
+            <CardContent>
+              {place.opening_hours.open_now
+                ?
+                <Chip label="Open Now" size='small' icon={<CheckCircleOutline style={{ color: 'green' }} />} style={{ marginBottom: 10 }} />
+                :
+                <Chip label="Closed Now" size='small' icon={<RemoveCircleOutline style={{ color: 'red' }} />} style={{ marginBottom: 10 }} />}
+              <Typography variant="caption" color="textSecondary" component="ul" style={{ listStyleType: 'none', padding: 0 }}>
+                {place.opening_hours.weekday_text.map(d => <li key={d}>{d}</li>)}
+              </Typography>
+            </CardContent>
+          </Card>
+          : <h3>Loading...</h3>}
+      </div>
     </div >
   )
 }
