@@ -84,7 +84,7 @@ const GeoDataList = () => {
   };
 
   //handle loading state with Skeleton
-  if (!geoData || (!homeGPS && (!homeGPS.lat && !homeGPS.lon))) {
+  if (!geoData || (!homeGPS)) {
     return (
       <div className='sticky-head'>
         <Typography variant='body1' style={{ textAlign: 'center', fontSize: 26, marginTop: 20 }}><strong>Near Me</strong></Typography>
