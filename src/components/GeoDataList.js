@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Button } from '@material-ui/core'
-import { setPlaces } from '../reducers/placesReducer'
+import { Button, Typography } from '@material-ui/core'
+import { setPlaces, setHomeGPS } from '../reducers/placesReducer'
 import { addFavorite } from '../reducers/activeUserReducer'
 import { getByCoordinates } from '../services/dataService'
 import { useHistory } from 'react-router'
@@ -11,7 +11,9 @@ import CardActions from '@material-ui/core/CardActions';
 import FavoriteIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import IconButton from '@material-ui/core/IconButton';
 import Chip from '@material-ui/core/Chip';
-import { CheckCircleOutline, RemoveCircleOutline } from '@material-ui/icons';
+import Rating from '@material-ui/lab/Rating';
+import Skeleton from '@material-ui/lab/Skeleton';
+import { CheckCircleOutline, ChevronLeft, ChevronRight, RemoveCircleOutline } from '@material-ui/icons';
 
 export const calcDistance = (lat1, lat2, lng1, lng2) => {
   const pi = Math.PI
@@ -33,39 +35,39 @@ export const calcDistance = (lat1, lat2, lng1, lng2) => {
 const GeoDataList = () => {
   const user = useSelector(state => state.activeUser.user)
   const geoData = useSelector(state => state.placesReducer.nearbyPlaces ? state.placesReducer.nearbyPlaces.filter(p => !user.favoriteRestaurants.includes(p.place_id)) : null)
+  const homeGPS = useSelector(state => state.placesReducer.homeGPS)
 
-  const [showList, setShowList] = useState(false)
   const dispatch = useDispatch()
-  const [lat, setLat] = useState(0)
-  const [lon, setLon] = useState(0)
   const history = useHistory()
   const isMountedRef = useRef(null)
+  const scrollRef = useRef(null);
+  // const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     isMountedRef.current = true
-    if (navigator.geolocation && !lat && !lon) {
+    if (navigator.geolocation && (!homeGPS || (!homeGPS.lat || !homeGPS.lon))) {
       navigator.geolocation.getCurrentPosition(function (position) {
+        console.log('georunning')
         if (isMountedRef.current) {
-          setLat(position.coords.latitude)
-          setLon(position.coords.longitude)
+          dispatch(setHomeGPS(position.coords.latitude, position.coords.longitude))
         }
       })
     }
     return () => isMountedRef.current = false
-  }, [lat, lon])
+  }, [dispatch, homeGPS])
 
   useEffect(() => {
     isMountedRef.current = true
     const loadData = async () => {
-      if (showList && isMountedRef.current) {
-        const res = await getByCoordinates(lat, lon)
+      if (homeGPS && isMountedRef.current) {
+        const res = await getByCoordinates(homeGPS.lat, homeGPS.lon)
         if (isMountedRef.current)
           dispatch(setPlaces(res.results))
       }
     }
     loadData()
     return () => isMountedRef.current = false
-  }, [dispatch, showList, lat, lon])
+  }, [dispatch, homeGPS])
 
   const addToFavorites = (place_id) => {
     try {
@@ -77,32 +79,78 @@ const GeoDataList = () => {
   const handleClick = (place_id) => {
     history.push(`/dashboard/restaurant/${place_id}`)
   }
+  const scroll = (scrollOffset) => {
+    scrollRef.current.scrollLeft += scrollOffset;
+  };
+
+  //handle loading state with Skeleton
+  if (!geoData || (!homeGPS && (!homeGPS.lat && !homeGPS.lon))) {
+    return (
+      <div className='sticky-head'>
+        <Typography variant='body1' style={{ textAlign: 'center', fontSize: 26, marginTop: 20 }}><strong>Near Me</strong></Typography>
+        <div className='outerDashDiv'>
+          <Button className='btn' onClick={() => scroll(-400)}>
+            <ChevronLeft style={{ fontSize: 30 }} />
+          </Button>
+          <div className='dashDiv' ref={scrollRef} >
+            <Card>
+              <Skeleton variant="rect" width={200} height={200} />
+            </Card>
+            <Card>
+              <Skeleton variant="rect" width={200} height={200} />
+            </Card>
+            <Card>
+              <Skeleton variant="rect" width={200} height={200} />
+            </Card>
+            <Card>
+              <Skeleton variant="rect" width={200} height={200} />
+            </Card>
+            <Card>
+              <Skeleton variant="rect" width={200} height={200} />
+            </Card>
+          </div>
+          <Button className='btn' onClick={() => scroll(400)}>
+            <ChevronRight style={{ fontSize: 30 }} />
+          </Button>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <div className='dashDiv'>
-      <h5 className='sticky-head'>Near Me
-      </h5>
-      {geoData ? geoData.map(place =>
-        <Card key={place.place_id}>
-          <CardHeader titleTypographyProps={{ variant: 'h4' }} title={place.name} subheader={calcDistance(lat, place.geometry.location.lat, lon, place.geometry.location.lng).toFixed(2) + ' km'} />
-          <CardActions>
-            {place.opening_hours.open_now
-              ?
-              <Chip style={{ fontSize: 10, marginTop: 12, float: 'left', marginLeft: 10 }} size='small' label="Open" icon={<CheckCircleOutline style={{ color: 'green' }} />} />
-              :
-              <Chip style={{ fontSize: 10, marginTop: 12, float: 'left', marginLeft: 10 }} label="Closed" size='small' icon={<RemoveCircleOutline style={{ color: 'red', fontSize: 18 }} />} />}
-            <Button variant='outlined' size='small' onClick={() => handleClick(place.place_id)}>Show Details
+    <div className='sticky-head'>
+      <Typography variant='body1' style={{ textAlign: 'center', fontSize: 26, marginTop: 20 }}><strong>Near Me</strong></Typography>
+      <div className='outerDashDiv'>
+        <Button className='btn' onClick={() => scroll(-400)}>
+          <ChevronLeft style={{ fontSize: 30 }} />
+        </Button>
+        <div className='dashDiv' ref={scrollRef} >
+          {geoData && homeGPS ? geoData.map(place =>
+            <Card key={place.place_id}>
+              <CardHeader titleTypographyProps={{ variant: 'h4' }} title={place.name} subheader={calcDistance(homeGPS.lat, place.geometry.location.lat, homeGPS.lon, place.geometry.location.lng).toFixed(2) + ' km'} />
+              <CardActions>
+                <IconButton className='iconBtn' aria-label="add to favorites" onClick={() => addToFavorites(place.place_id)}>
+                  <FavoriteIcon />
+                </IconButton>
+                {place.opening_hours.open_now
+                  ?
+                  <Chip style={{ fontSize: 10 }} size='small' label="Open" icon={<CheckCircleOutline style={{ color: 'green' }} />} />
+                  :
+                  <Chip style={{ fontSize: 10 }} label="Closed" size='small' icon={<RemoveCircleOutline style={{ color: 'red', fontSize: 18 }} />} />}
+                <Rating style={{ marginBottom: 10 }} name="read-only" value={place.rating} readOnly size='small' precision={0.5} />
+                <Button className='detailsBtn' fullWidth size='small' onClick={() => handleClick(place.place_id)}>Order
             </Button>
-            <IconButton aria-label="add to favorites" onClick={() => addToFavorites(place.place_id)}>
-              <FavoriteIcon />
-            </IconButton>
-          </CardActions>
-        </Card>
-      )
-        : <div style={{ height: '100%', width: '100%', margin: 'auto', textAlign: 'center' }}>
-          <Button style={{ width: '100%', height: '100%', margin: 'auto' }} onClick={() => setShowList(true)}>Show me nearby restaurants</Button>
+              </CardActions>
+            </Card>
+          )
+            :
+            null
+          }
         </div>
-      }
+        <Button className='btn' onClick={() => scroll(400)}>
+          <ChevronRight style={{ fontSize: 30 }} />
+        </Button>
+      </div>
     </div>
   )
 }

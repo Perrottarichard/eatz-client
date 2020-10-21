@@ -14,7 +14,7 @@ import Container from '@material-ui/core/Container';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems } from '../components/ListItems';
+import MainListItems from '../components/ListItems';
 import { useSelector, useDispatch } from 'react-redux'
 import logo from '../assets/pizzapizza50trans.png'
 import { clearUser } from '../reducers/activeUserReducer'
@@ -30,7 +30,7 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    backgroundColor: '#575551',
+    backgroundColor: 'black',
     fontWeight: 500
   },
   toolbar: {
@@ -161,19 +161,22 @@ export default function Dashboard() {
         </Toolbar>
       </AppBar>
       <Drawer
-        variant={window.innerWidth >= 500 ? 'permanent' : 'temporary'}
+        variant='temporary'
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
         }}
         open={open}
       >
         <div className={classes.toolbarIcon}>
+          <img alt='logo' src={logo} style={{ marginRight: 50 }}></img>
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>
+          <MainListItems handleDrawerClose={handleDrawerClose} />
+        </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

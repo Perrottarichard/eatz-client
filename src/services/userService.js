@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 //development
-// const baseUrl = 'http://localhost:3001'
+// const baseUrl = 'http://localhost:3001/api'
 
 //production
 const baseUrl = 'https://pizzapizzadelivery.herokuapp.com/api'

@@ -2,6 +2,7 @@ import { postRequestAddRestaurant, getPlaceDetailsRequest, loadMenu, loadPromos 
 
 const initialState = {
   nearbyPlaces: undefined,
+  homeGPS: undefined,
   placeDetails: undefined,
   menu: undefined,
   promos: undefined
@@ -11,6 +12,8 @@ const placesReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'CLEAR_PLACES':
       return initialState
+    case 'SET_HOME_GPS':
+      return { ...state, homeGPS: action.data }
     case 'SET_PLACES':
       return { ...state, nearbyPlaces: action.data }
     case 'GET_PLACE_DETAILS':
@@ -36,6 +39,12 @@ export const clearPlaces = () => {
   return {
     type: 'USER_LOGOUT',
     data: null
+  }
+}
+export const setHomeGPS = (lat, lon) => {
+  return {
+    type: 'SET_HOME_GPS',
+    data: { lat: lat, lon: lon }
   }
 }
 export const requestAddRestaurant = (name, city, country) => {
