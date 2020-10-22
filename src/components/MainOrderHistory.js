@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
   cardStyle: {
     display: 'block',
     height: 'auto',
+    width: '90%',
     margin: 'auto'
   },
   cardHeader: {
@@ -105,7 +106,7 @@ const MainOrderHistory = () => {
           </Paper>
         </Grid> */}
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <Grid container spacing={1}>
+          <Grid container spacing={2}>
             {user.orders.sort((a, b) => new Date(b.date) - new Date(a.date)).map(o =>
               <Grow key={o._id} in={true}>
                 <Grid item xs={12} sm={6} md={3} lg={3}>

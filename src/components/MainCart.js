@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     height: 240,
+    width: '90%',
     margin: 'auto',
     paddingBottom: 0
   },
@@ -101,7 +102,7 @@ const MainCart = () => {
           <div>
             <Typography variant='h5' style={{ textAlign: 'center', fontSize: 20, marginTop: 20, color: 'white', marginBottom: 28 }}><strong>Items</strong></Typography>
           </div>
-          <Grid container spacing={1}>
+          <Grid container spacing={1} style={{ justifyContent: 'center' }}>
             {pizza.map(c =>
               <Grid key={c._id} item xs={12} sm={6} md={3} lg={3}>
                 <Card className={classes.cardStyle}>

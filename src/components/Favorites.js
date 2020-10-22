@@ -68,7 +68,7 @@ const Favorites = () => {
   if (waiting) {
     return (
       <div className='sticky-head'>
-        <Typography variant='body1' style={{ textAlign: 'center', fontSize: 26, marginTop: 20 }}><strong>Favorites</strong></Typography>
+        <Typography variant='body1' style={{ textAlign: 'center', fontSize: 20, marginTop: 20 }}><strong>Favorites</strong></Typography>
         <div className='outerDashDiv'>
           <Button className='btn' onClick={() => scroll(-400)}>
             <ChevronLeft style={{ fontSize: 50 }} />
@@ -90,7 +90,7 @@ const Favorites = () => {
   }
   return (
     <div className='sticky-head'>
-      <Typography variant='body1' style={{ textAlign: 'center', fontSize: 26, marginTop: 20 }}><strong>Favorites</strong></Typography>
+      <Typography variant='body1' style={{ textAlign: 'center', fontSize: 20, marginTop: 20 }}><strong>Favorites</strong></Typography>
       <div className='outerDashDiv'>
         <Button className='btn' onClick={() => scroll(-400)}>
           <ChevronLeft style={{ fontSize: 50 }} />

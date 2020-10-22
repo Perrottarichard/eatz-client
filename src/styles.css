@@ -211,9 +211,32 @@ circle {
 .MuiStepIcon-root.MuiStepIcon-completed {
  color: gray !important;
 }
-/* .MuiCircularProgress-root { 
-  left: 43%; 
-  position: absolute; 
-  top: 44vh; 
-} */
 
+.accountDetailsDiv {
+  display: flex;
+  flex-wrap: wrap;
+  overflow-x: auto;
+  overflow-y: auto;
+  justify-content: center;
+  text-align: center;
+  height: auto;
+  width: 100%;
+  align-items: center;
+  margin-top: 0px;
+}
+
+.accountDetailsCard {
+  width: 90%;
+  height: 140px;
+  margin: 15px;
+  padding-bottom: 10px;
+}
+.accountDetailsCard .MuiCardActions-root {
+  padding: 0px;
+}
+
+.accountAddDiv {
+  display: flex;
+  flex-basis: 100%;
+  justify-content: center;
+}

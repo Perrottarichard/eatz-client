@@ -21,38 +21,41 @@ const AccountAddresses = ({ user }) => {
     })
   }
   return (
-    <div >
-      <h5 className='sticky-head'>Addresses
-      </h5>
-      {addresses ? addresses.map((a, i) =>
-        <Card key={a._id} style={{ marginBottom: 10 }} >
-          <CardContent >
-            <Typography variant='body1' color="textPrimary">
-              {a.locationName}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {a.addressNumber} {a.street}
-            </Typography >
-            <Typography variant="body2" color="textSecondary" component="p">
-              {a.city}, {a.state},  {a.country}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {a.zip}
-            </Typography>
-          </CardContent>
-          <CardActions style={{ display: 'block' }}>
-            <IconButton aria-label="edit address" onClick={() => handleEditAddress(i)} style={{ color: 'rgb(221, 68, 68)', float: 'right', padding: 6, marginRight: 20, fontSize: 16 }}>
-              <Edit style={{ marginRight: 10, float: 'right' }} />Edit
+    <div className='sticky-head'>
+      <Typography variant='body1' style={{ textAlign: 'center', fontSize: 20, marginTop: 20 }}><strong>Addresses</strong></Typography>
+      <div className='accountDetailsDiv'>
+        {addresses ? addresses.map((a, i) =>
+          <Card key={a._id} className='accountDetailsCard' >
+            <CardContent style={{ paddingBottom: 0 }} >
+              <Typography variant='body1' color="textPrimary">
+                {a.locationName}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                {a.addressNumber} {a.street}
+              </Typography >
+              <Typography variant="body2" color="textSecondary" component="p">
+                {a.city}, {a.state},  {a.country}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                {a.zip}
+              </Typography>
+            </CardContent>
+            <CardActions style={{ display: 'block' }}>
+              <IconButton aria-label="edit address" onClick={() => handleEditAddress(i)} style={{ color: 'rgb(221, 68, 68)', float: 'right', padding: 6, marginRight: 20, fontSize: 16 }}>
+                <Edit style={{ marginRight: 10, float: 'right' }} />Edit
             </IconButton>
-          </CardActions>
-        </Card>
-      )
-        : null}
-      <IconButton aria-label="add an address" style={{ fontSize: 16, color: 'white' }} onClick={() => setOpenOnClick(true)}>
-        <AddBox style={{ fontSize: 30, marginRight: 10 }} />Add
+            </CardActions>
+          </Card>
+        )
+          : null}
+        <div className='accountAddDiv'>
+          <IconButton aria-label="add an address" style={{ fontSize: 16, color: 'white' }} onClick={() => setOpenOnClick(true)}>
+            <AddBox style={{ fontSize: 30, marginRight: 10 }} />Add
       </IconButton>
-      <UserAddressesModal user={user} titleMessage={`Be sure to use a descriptive name`} openOnClick={openOnClick} setOpenOnClick={setOpenOnClick} />
-      <EditAddressesModal user={user} titleMessage={``} editOnClick={editOnClick} setEditOnClick={setEditOnClick} />
+        </div>
+        <UserAddressesModal user={user} titleMessage={`Be sure to use a descriptive name`} openOnClick={openOnClick} setOpenOnClick={setOpenOnClick} />
+        <EditAddressesModal user={user} titleMessage={``} editOnClick={editOnClick} setEditOnClick={setEditOnClick} />
+      </div>
     </div>
   )
 }

@@ -36,7 +36,7 @@ const GeoDisplay = () => {
   }
   return (
     <div className='mapDiv'>
-      <Typography variant='body1' style={{ textAlign: 'center', fontSize: 26 }}><strong>Locations</strong></Typography>
+      <Typography variant='body1' style={{ textAlign: 'center', fontSize: 20 }}><strong>Locations</strong></Typography>
       <GoogleMapReact
         bootstrapURLKeys={{ key: key }}
         defaultCenter={dCent}

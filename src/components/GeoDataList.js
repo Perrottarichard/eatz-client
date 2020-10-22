@@ -91,7 +91,7 @@ const GeoDataList = () => {
   if (!geoData || !homeGPS || waiting) {
     return (
       <div className='sticky-head'>
-        <Typography variant='body1' style={{ textAlign: 'center', fontSize: 26, marginTop: 20 }}><strong>Near Me</strong></Typography>
+        <Typography variant='body1' style={{ textAlign: 'center', fontSize: 20, marginTop: 20 }}><strong>Near Me</strong></Typography>
         <div className='outerDashDiv'>
           <Button className='btn' onClick={() => scroll(-400)}>
             <ChevronLeft style={{ fontSize: 50 }} />
@@ -126,7 +126,7 @@ const GeoDataList = () => {
 
   return (
     <div className='sticky-head'>
-      <Typography variant='body1' style={{ textAlign: 'center', fontSize: 26, marginTop: 20 }}><strong>Near Me</strong></Typography>
+      <Typography variant='body1' style={{ textAlign: 'center', fontSize: 20, marginTop: 20 }}><strong>Near Me</strong></Typography>
       <div className='outerDashDiv'>
         <Button className='btn' onClick={() => scroll(-400)}>
           <ChevronLeft style={{ fontSize: 50 }} />
