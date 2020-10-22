@@ -105,42 +105,44 @@ const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice, activeCartB
 
 
   return (
-    <div style={{ height: '100%' }}>
-      <h5 className='sticky-head'>Billing  </h5>
-      <Card style={{ height: 178, textAlign: 'center' }}>
-        <CardContent style={{ padding: 10 }}>
-          <Typography variant='body1'>
-            Total Due: ${activeCartBillingObject ? formatPrice(activeCartBillingObject.afterPromoPrice.toFixed(2)) : Number(formatPrice(totalPrice)).toFixed(2)}
-          </Typography>
-          <Typography variant='caption' style={{ listStyleType: 'none' }}>
-            {activeCartBillingObject ? `original price: $${formatPrice(activeCartBillingObject.beforePromoPrice.toFixed(2))}` : null}
-          </Typography><br />
-          <Typography variant='caption' style={{ listStyleType: 'none' }}>
-            {activeCartBillingObject ? `discount: $${formatPrice(activeCartBillingObject.priceDiff.toFixed(2))}` : null}
-          </Typography>
-        </CardContent>
-        <div>
-          <form>
-            <TextField
-              id="outlined-helperText"
-              label="Promo Code *case-sensitive"
-              variant="outlined"
-              size='small'
-              value={codeEntered}
-              onChange={(e) => handleChange(e)}
-              disabled={activeCartBillingObject ? true : false}
-            />
-            <Button disabled={activeCartBillingObject ? true : false} onClick={() => checkPromo(codeEntered)}>
-              Apply
+    <div className='sticky-head'>
+      <Typography variant='body1' style={{ textAlign: 'center', fontSize: 16, marginTop: 20 }}><strong></strong></Typography>
+      <div className='placeDetailsDiv'>
+        <Card className='placeDetailsCard'>
+          <CardContent style={{ padding: 10, paddingTop: 30 }}>
+            <Typography variant='body1'>
+              Total Due: ${activeCartBillingObject ? formatPrice(activeCartBillingObject.afterPromoPrice.toFixed(2)) : Number(formatPrice(totalPrice)).toFixed(2)}
+            </Typography>
+            <Typography variant='caption' style={{ listStyleType: 'none' }}>
+              {activeCartBillingObject ? `original price: $${formatPrice(activeCartBillingObject.beforePromoPrice.toFixed(2))}` : `original price: $${Number(formatPrice(totalPrice)).toFixed(2)}`}
+            </Typography><br />
+            <Typography variant='caption' style={{ listStyleType: 'none' }}>
+              {activeCartBillingObject ? `discount: $${formatPrice(activeCartBillingObject.priceDiff.toFixed(2))}` : `discount: no promotion applied`}
+            </Typography>
+          </CardContent>
+          <div>
+            <form>
+              <TextField
+                id="outlined-helperText"
+                label="Promo Code *case-sensitive"
+                variant="outlined"
+                size='small'
+                value={codeEntered}
+                onChange={(e) => handleChange(e)}
+                disabled={activeCartBillingObject ? true : false}
+              />
+              <Button disabled={activeCartBillingObject ? true : false} onClick={() => checkPromo(codeEntered)}>
+                Apply
           </Button>
-          </form>
-          <Snackbar open={openNotify} autoHideDuration={5000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity={notifyPromo.severity}>
-              {notifyPromo.message}
-            </Alert>
-          </Snackbar>
-        </div>
-      </Card>
+            </form>
+            <Snackbar open={openNotify} autoHideDuration={3000} onClose={handleClose}>
+              <Alert onClose={handleClose} severity={notifyPromo.severity}>
+                {notifyPromo.message}
+              </Alert>
+            </Snackbar>
+          </div>
+        </Card>
+      </div>
     </div>
   )
 }

@@ -52,8 +52,11 @@ const PlaceMenu = ({ items, place }) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  //settimeout to avoid transition error with tabpanel/box/stepper render conflicts
   const sendToCart = () => {
-    history.push('/dashboard/cart')
+    setTimeout(() => {
+      history.push('/dashboard/cart')
+    }, 1000);
   }
 
   if (!place.opening_hours.open_now) {

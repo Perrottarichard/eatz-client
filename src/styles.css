@@ -209,9 +209,8 @@ circle {
   color: #ff2f0a;
 }
 .MuiStepIcon-root.MuiStepIcon-completed {
- color: gray;
+ color: gray !important;
 }
-
 /* .MuiCircularProgress-root { 
   left: 43%; 
   position: absolute; 

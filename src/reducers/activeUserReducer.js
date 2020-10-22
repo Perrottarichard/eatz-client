@@ -177,10 +177,6 @@ export const removeCart = (user_id, item_id) => {
         type: 'REMOVE_CART',
         data: res
       })
-      dispatch({
-        type: 'NOTIFY',
-        data: { open: true, severity: 'success', message: 'Removed' }
-      })
     } catch (error) {
       console.log(error)
       dispatch({

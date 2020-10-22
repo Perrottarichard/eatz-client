@@ -13,7 +13,7 @@ import PlaceMenu from './PlaceMenu'
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Box from '@material-ui/core/Box';
+import TabPanel from './TabPanel'
 import PlaceInfoSkeleton from './PlaceInfoSkeleton'
 
 const useStyles = makeStyles((theme) => ({
@@ -37,26 +37,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#ff2f0a'
   }
 }))
-
-const TabPanel = (props) => {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          {children}
-        </Box>
-      )}
-    </div>
-  );
-}
 
 const MainPlaceDetails = () => {
 

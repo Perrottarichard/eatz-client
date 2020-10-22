@@ -9,9 +9,7 @@ import { addOrder, resetCart } from '../reducers/activeUserReducer'
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-// import DialogContentText from '@material-ui/core/DialogContentText';
-// import DialogTitle from '@material-ui/core/DialogTitle';
-import { FormControl, FormControlLabel, FormLabel, RadioGroup, Radio } from '@material-ui/core'
+import { FormControl, FormControlLabel, FormLabel, RadioGroup, Radio, Typography } from '@material-ui/core'
 import CartEmpty from './CartEmpty';
 
 
@@ -51,26 +49,28 @@ const CartRestaurant = ({ place, setTotalPrice, setCodeEntered }) => {
   }
 
   return (
-    <div style={{ height: '100%' }}>
-      <h5 className='sticky-head'>Checkout</h5>
-      {place !== undefined ?
-        <Card style={{ height: 178, textAlign: 'center' }}>
-          <CardContent style={{ margin: 'auto' }}>
-            {!user.activeCartBilling ?
-              <div>
-                <Button onClick={() => handleBackToPlaceClick(place._id)} style={{ textTransform: 'none', backgroundColor: 'lightgray', height: 60 }} fullWidth>{`Order more items from ${place.name}`}</Button>
-                <hr />
-                <Button onClick={handleModalOrderOpen} style={{ textTransform: 'none', backgroundColor: '#ff430a', color: 'white', height: 60 }} fullWidth>{`I'm hungry! Place my order please.`}</Button>
-              </div>
-              :
-              <div>
-                <Button onClick={() => clearCart()} style={{ textTransform: 'none', backgroundColor: '#575551', color: 'white', height: 60 }} fullWidth>Reset Cart</Button>
-                <hr />
-                <Button onClick={handleModalOrderOpen} style={{ textTransform: 'none', backgroundColor: '#ff430a', color: 'white', height: 60 }} fullWidth>{`I'm hungry! Place my order please.`}</Button>
-              </div>}
-          </CardContent>
-        </Card>
-        : <CartEmpty />}
+    <div className='sticky-head'>
+      <Typography variant='body1' style={{ textAlign: 'center', fontSize: 16, marginTop: 20 }}><strong></strong></Typography>
+      <div className='placeDetailsDiv'>
+        {place !== undefined ?
+          <Card className='placeDetailsCard'>
+            <CardContent style={{ margin: 'auto' }}>
+              {!user.activeCartBilling ?
+                <div>
+                  <Button onClick={() => handleBackToPlaceClick(place._id)} style={{ textTransform: 'none', backgroundColor: '#575551', color: 'white', height: 60, marginTop: 16, fontWeight: 'bold' }} fullWidth>{`Add more items from ${place.name}`}</Button>
+                  <hr />
+                  <Button onClick={handleModalOrderOpen} style={{ textTransform: 'none', backgroundColor: '#ff430a', color: 'white', height: 60, fontWeight: 'bold' }} fullWidth>{`Place Order`}</Button>
+                </div>
+                :
+                <div>
+                  <Button onClick={() => clearCart()} style={{ textTransform: 'none', backgroundColor: '#575551', color: 'white', height: 60, marginTop: 16, fontWeight: 'bold' }} fullWidth>Reset Cart</Button>
+                  <hr />
+                  <Button onClick={handleModalOrderOpen} style={{ textTransform: 'none', backgroundColor: '#ff430a', color: 'white', height: 60, fontWeight: 'bold' }} fullWidth>{`Place Order`}</Button>
+                </div>}
+            </CardContent>
+          </Card>
+          : <CartEmpty />}
+      </div>
       <Dialog open={modalOrderOpen} onClose={handleModalOrderClose} aria-labelledby="form-dialog-title">
         {/* <DialogTitle id="form-dialog-title">Deliver to:</DialogTitle> */}
         <DialogContent>
@@ -93,7 +93,6 @@ const CartRestaurant = ({ place, setTotalPrice, setCodeEntered }) => {
           </Button>
         </DialogActions>
       </Dialog>
-
     </div>
   )
 }

@@ -1,29 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import { Typography } from '@material-ui/core'
+import { Typography, Grow } from '@material-ui/core'
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent'
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    paddingLeft: theme.spacing(0),
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  fixedHeight: {
-    height: 200,
-
-  },
-  itemsContainer: {
-    minHeight: 500,
-    backgroundColor: '#575551'
-  },
   cardStyle: {
     display: 'block',
     height: 'auto',
@@ -73,7 +58,6 @@ export const formatPrice = (number) => {
 const MainOrderHistory = () => {
 
   const classes = useStyles();
-  const itemsContainer = clsx(classes.paper, classes.itemsContainer)
   const user = useSelector(state => state.activeUser.user)
   // eslint-disable-next-line no-unused-vars
   const [progress, setProgress] = useState(0);
@@ -121,10 +105,10 @@ const MainOrderHistory = () => {
           </Paper>
         </Grid> */}
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <Paper className={itemsContainer}>
-            <Grid container spacing={1}>
-              {user.orders.sort((a, b) => new Date(b.date) - new Date(a.date)).map(o =>
-                <Grid key={o._id} item xs={12} sm={6} md={3} lg={3}>
+          <Grid container spacing={1}>
+            {user.orders.sort((a, b) => new Date(b.date) - new Date(a.date)).map(o =>
+              <Grow key={o._id} in={true}>
+                <Grid item xs={12} sm={6} md={3} lg={3}>
                   <Card className={classes.cardStyle}>
                     <CardHeader className={classes.cardHeader} titleTypographyProps={{ variant: 'subtitle1' }} title={`${o.cart[0].restaurantName}`} subheader={getProgress(o.date) === 'Completed' ? new Date(o.date).toString().slice(0, 25) : <LinearProgress variant="determinate" value={getProgress(o.date)} />} />
                     <CardContent style={{ listStyleType: 'none', paddingTop: 0, height: 180, overflow: 'auto' }}>
@@ -144,7 +128,7 @@ const MainOrderHistory = () => {
                       {o.cart.map(c =>
                         <div key={c._id} style={{ margin: 5, paddingBottom: 5, paddingTop: 0 }}>
                           <Typography variant='body2' style={{ display: 'inline-flex' }}>
-                            {c.selectedVariant ? <em>{c.selectedVariant}</em> : null}
+                            {c.selectedVariant ? <em>{c.selectedVariant} pizza</em> : null}
                           </Typography>
                           <div style={{ display: 'block' }}>
                             <Typography variant='caption'>
@@ -159,14 +143,14 @@ const MainOrderHistory = () => {
                         </div>
                       )}
                     </CardContent>
-                    <div style={{ textAlign: 'center', height: '50px', lineHeight: 4 }}>
+                    <div style={{ textAlign: 'center', height: '50px', lineHeight: 4, backgroundColor: '#ff2f0a', color: 'white', fontWeight: 'bold' }}>
                       {o.activeCartBilling ? `Total: $${formatPrice(o.activeCartBilling.afterPromoPrice)}` : `Total: $${formatPrice(o.cart.reduce((a, b) => a + b.totalPrice, 0))}`}
                     </div>
                   </Card>
                 </Grid>
-              )}
-            </Grid>
-          </Paper>
+              </Grow>
+            )}
+          </Grid>
         </Grid>
       </Grid>
     </React.Fragment >
