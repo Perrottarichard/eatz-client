@@ -10,11 +10,11 @@ import PlaceHoursContact from './PlaceHoursContact';
 import Promos from './Promos'
 import PlaceReviews from './PlaceReviews';
 import PlaceMenu from './PlaceMenu'
-import { LinearProgress } from '@material-ui/core'
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
+import PlaceInfoSkeleton from './PlaceInfoSkeleton'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -85,47 +85,51 @@ const MainPlaceDetails = () => {
     setValue(newValue);
   };
 
-  if (!place) {
-    return <LinearProgress color="secondary" />
-  }
-
-  if (!items) {
-    return <LinearProgress color="secondary" />
-  }
   return (
     <React.Fragment>
       <Grid container direction='row' justify='space-evenly' spacing={2}>
         <Grid item xs={12} sm={12} md={6} lg={6}>
-          <PlaceNameAddress place={place} />
+          {!place || !items ?
+            <PlaceInfoSkeleton />
+            :
+            <PlaceNameAddress place={place} />
+          }
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6}>
-          <PlaceHoursContact place={place} />
+          {!place || !items ?
+            <PlaceInfoSkeleton />
+            :
+            <PlaceHoursContact place={place} />
+          }
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <AppBar position="static" className={classes.appBar}>
-            <Tabs value={value} onChange={handleChange} centered classes={{ indicator: classes.indicator }}>
-              <Tab label="Menu" style={{ textTransform: 'none', fontSize: 16, fontWeight: 'bold' }} />
-              <Tab label="Promotions" style={{ textTransform: 'none', fontSize: 16, fontWeight: 'bold' }} />
-              <Tab label="Reviews" style={{ textTransform: 'none', fontSize: 16, fontWeight: 'bold' }} />
-            </Tabs>
-          </AppBar>
-          <TabPanel value={value} index={0}>
-            {user.cart.length === 0 || user.cart[0].restaurantId === place.place_id ?
-              <PlaceMenu items={items} place={place} />
-              :
-              <div style={{ color: 'white' }}>
-                You already have items from {user.cart[0].restaurantName} in your cart.  Please complete your order from that restaurant first, or remove those items from your cart.
+          {!place || !items ?
+            null
+            :
+            <div>
+              <AppBar position="static" className={classes.appBar}>
+                <Tabs value={value} onChange={handleChange} centered classes={{ indicator: classes.indicator }}>
+                  <Tab label="Menu" style={{ textTransform: 'none', fontSize: 16, fontWeight: 'bold' }} />
+                  <Tab label="Promotions" style={{ textTransform: 'none', fontSize: 16, fontWeight: 'bold' }} />
+                  <Tab label="Reviews" style={{ textTransform: 'none', fontSize: 16, fontWeight: 'bold' }} />
+                </Tabs>
+              </AppBar>
+              <TabPanel value={value} index={0}>
+                {user.cart.length === 0 || user.cart[0].restaurantId === place.place_id ?
+                  <PlaceMenu items={items} place={place} />
+                  :
+                  <div style={{ color: 'white' }}>
+                    You already have items from {user.cart[0].restaurantName} in your cart.  Please complete your order from that restaurant first, or remove those items from your cart.
               </div>}
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <Promos />
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            <PlaceReviews place={place} />
-          </TabPanel>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={12}>
-
+              </TabPanel>
+              <TabPanel value={value} index={1}>
+                <Promos />
+              </TabPanel>
+              <TabPanel value={value} index={2}>
+                <PlaceReviews place={place} />
+              </TabPanel>
+            </div>
+          }
         </Grid>
       </Grid>
     </React.Fragment>

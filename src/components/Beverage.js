@@ -39,10 +39,6 @@ const Beverage = ({ beverages, user, place, setOpen, sendToCart }) => {
 
   const handleAddBeverage = (item_id, type, selectedBeverages, restaurantName, restaurantId) => {
     setWaiting(true)
-    setTimeout(() => {
-      setWaiting(false)
-    }, 3000);
-
     const totalPrice = ((selectedBeverages.length * 1.75) * (1.07)).toFixed(2)
 
     const beverageToAdd = {
@@ -57,6 +53,7 @@ const Beverage = ({ beverages, user, place, setOpen, sendToCart }) => {
       dispatch(addBeverage(user._id, beverageToAdd))
       handleClose()
       clearSelection()
+      setWaiting(false)
     } catch (error) {
       console.log(error)
       handleClose()

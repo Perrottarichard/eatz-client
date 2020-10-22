@@ -166,6 +166,23 @@ border-radius: 0px;
   width: 90%;
   height: 200px;
 }
+.placeDetailsCardSkeleton {
+  width: 90%;
+  height: 200px;
+  background-color: inherit;
+}
+.placeDetailsDivSkeleton {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  justify-content: space-evenly;
+  text-align: center;
+  height: 200px;
+  width: 100%;
+  align-items: center;
+  background-color: inherit;
+}
 
 .pizzaMenuContainer {
   background-color: white;

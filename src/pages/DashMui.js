@@ -23,6 +23,9 @@ import MainPlaceDetails from '../components/MainPlaceDetails';
 import MainCart from '../components/MainCart';
 import MainOrderHistory from '../components/MainOrderHistory';
 import MainAccount from '../components/MainAccount';
+import Snackbar from '@material-ui/core/Snackbar';
+import { Alert } from '@material-ui/lab'
+import { closeNotify } from '../reducers/activeUserReducer'
 
 
 const drawerWidth = 240;
@@ -119,6 +122,7 @@ export default function Dashboard() {
   const dispatch = useDispatch()
   const [open, setOpen] = React.useState(false);
   const user = useSelector(state => state.activeUser.user)
+  const notify = useSelector(state => state.activeUser.notify)
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -191,7 +195,20 @@ export default function Dashboard() {
           </Switch>
         </Container>
       </main>
-
+      <Snackbar
+        open={notify.open}
+        autoHideDuration={2000}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        onClose={() => dispatch(closeNotify())}>
+        {notify.open ?
+          <Alert severity={notify.severity} style={notify.severity === 'success' ? { backgroundColor: 'white', border: 'solid', borderColor: 'green', width: 260 } : { backgroundColor: 'lightgrey', border: 'solid', borderColor: 'red', width: 260 }} >
+            {notify.message}
+          </Alert>
+          : null}
+      </Snackbar>
     </div>
   );
 }

@@ -91,11 +91,7 @@ const Pizza = ({ pizza, place, user }) => {
   }
 
   const handleAddPizza = (itemId, type, size, variant, restaurantName, restaurantId, selectedRegularToppings, selectedPremiumToppings) => {
-
     setWaiting(true)
-    setTimeout(() => {
-      setWaiting(false)
-    }, 3000);
     const totalPrice = calcPizzaPrice(pizza, size, variant, selectedRegularToppings, selectedPremiumToppings)
 
     const itemToAdd = {
@@ -112,6 +108,7 @@ const Pizza = ({ pizza, place, user }) => {
     try {
       dispatch(addCart(user._id, itemToAdd))
       clearSelection()
+      setWaiting(false)
     } catch (error) {
       console.log(error)
       setWaiting(false)

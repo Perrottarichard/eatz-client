@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { initPromos } from '../reducers/placesReducer'
-import { Card, CardHeader, CardContent, Typography } from '@material-ui/core';
+import { Card, Button, CardContent, CardActions, Typography } from '@material-ui/core';
+import { ChevronLeft, ChevronRight } from '@material-ui/icons';
+import Grow from '@material-ui/core/Grow';
 
 
 const Promos = () => {
@@ -10,6 +12,7 @@ const Promos = () => {
 
   const dispatch = useDispatch()
   const isMountedRef = useRef(null)
+  const scrollRef = useRef(null);
 
   useEffect(() => {
     isMountedRef.current = true
@@ -19,22 +22,42 @@ const Promos = () => {
     return () => isMountedRef.current = false
   }, [dispatch, promos])
 
+  const scroll = (scrollOffset) => {
+    scrollRef.current.scrollLeft += scrollOffset;
+  };
+
   return (
-    <div className='dashDiv'>
-      <h5 className='sticky-head'>Promotions
-      {/* <Button style={{ float: 'right', height: 'auto', textTransform: 'none', lineHeight: 0.5, color: 'white' }}>next page</Button> */}
-      </h5>
-      {promos ? promos.map(p =>
-        <Card key={p._id}>
-          <CardHeader title={`Promo Code: ${p.code}`} />
-          <CardContent>
-            <Typography variant="body2" color="textPrimary" component="p">
-              {p.description}
-            </Typography>
-          </CardContent>
-        </Card>
-      )
-        : null}
+    <div className='sticky-head'>
+      <div className='outerDashDiv'>
+        <Button className='btn' onClick={() => scroll(-400)}>
+          <ChevronLeft style={{ fontSize: 50 }} />
+        </Button>
+        <div className='dashDiv' ref={scrollRef} >
+          {promos ? promos.map(p =>
+            <Grow key={p._id} in={promos !== undefined}>
+              <Card>
+                <CardContent>
+                  <Typography variant='body2'>
+                    {p.description}
+                  </Typography>
+                  <br />
+                </CardContent>
+                <CardActions style={{ display: 'flex', justifyContent: 'center', backgroundColor: '#ff2f0a', color: 'white', marginTop: 'auto', paddingBottom: 20 }}>
+                  <Typography variant='body1' style={{ paddingTop: 20 }}>
+                    Code: <strong>{p.code}</strong>
+                  </Typography>
+                </CardActions>
+              </Card>
+            </Grow>
+          )
+            :
+            null
+          }
+        </div>
+        <Button className='btn' onClick={() => scroll(400)}>
+          <ChevronRight style={{ fontSize: 50 }} />
+        </Button>
+      </div>
     </div>
   )
 }
