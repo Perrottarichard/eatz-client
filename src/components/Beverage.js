@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Container } from '@material-ui/core'
+import { CircularProgress, Container } from '@material-ui/core'
 import { FormGroup, FormControlLabel, Checkbox, Grid, CardActions, Typography, CardContent, Card, Button } from '@material-ui/core'
 import { addBeverage } from '../reducers/activeUserReducer'
 
 const Beverage = ({ beverages, user, place, setOpen, sendToCart }) => {
   const dispatch = useDispatch()
-
+  const [waiting, setWaiting] = useState(false)
   const choicesInitial = [beverages[0].choices.map(b => [b, false])]
   const choicesObj = Object.fromEntries(choicesInitial[0])
 
@@ -38,6 +38,11 @@ const Beverage = ({ beverages, user, place, setOpen, sendToCart }) => {
   }
 
   const handleAddBeverage = (item_id, type, selectedBeverages, restaurantName, restaurantId) => {
+    setWaiting(true)
+    setTimeout(() => {
+      setWaiting(false)
+    }, 3000);
+
     const totalPrice = ((selectedBeverages.length * 1.75) * (1.07)).toFixed(2)
 
     const beverageToAdd = {
@@ -52,7 +57,6 @@ const Beverage = ({ beverages, user, place, setOpen, sendToCart }) => {
       dispatch(addBeverage(user._id, beverageToAdd))
       handleClose()
       clearSelection()
-      sendToCart()
     } catch (error) {
       console.log(error)
       handleClose()
@@ -71,30 +75,36 @@ const Beverage = ({ beverages, user, place, setOpen, sendToCart }) => {
   }
 
   return (
-    <Container>
-      <h2>{`Beverages ($${beverages[0].beverage_base_prices} each)`}</h2>
+    <Container className='pizzaMenuContainer'>
+      <br />
+      <Typography variant='h5'><strong>{`Beverages`}</strong></Typography>
+      <Typography variant='caption'>{`($${beverages[0].beverage_base_prices} each)`}</Typography>
+      <br />
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={6} lg={6}>
           <FormGroup row>
             {beverages[0].choices.map(b =>
-              <FormControlLabel key={b} control={<Checkbox style={{ color: '#575551' }} checked={choicesChecked[b]} name={b} onChange={handleChoicesChecked} />} label={b} />
+              <FormControlLabel key={b} control={<Checkbox style={{ color: 'black' }} checked={choicesChecked[b]} name={b} onChange={handleChoicesChecked} />} label={b} />
             )}
           </FormGroup>
         </Grid>
         <Grid item xs={12} sm={6} md={6} lg={6}>
-          <Container style={{ paddingTop: 70, paddingBottom: 70 }}>
-            <Card style={{ backgroundColor: '#575551', color: 'white' }}>
+          <Container style={{ paddingTop: 30, paddingBottom: 30, textAlign: 'center' }}>
+            <Typography variant='body1' style={{ backgroundColor: '#ff2f0a', color: 'white', paddingTop: 5, borderTopLeftRadius: 3, borderTopRightRadius: 3 }}>Confirm your selection</Typography>
+            <Card style={{ color: 'black', border: 'solid', borderColor: '#ff2f0a', borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
               <CardContent>
-                <Typography variant='body1'>
-                  {selectedBeverages.length > 0 ?
-                    `Add ${selectedBevGrammar()}`
-                    : `No drink selected`}
-                </Typography>
+                {!waiting ?
+                  <Typography variant='body1'>
+                    {selectedBeverages.length > 0 ?
+                      `Add ${selectedBevGrammar()}`
+                      : `No drink selected`}
+                  </Typography>
+                  : <CircularProgress />}
               </CardContent>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <CardActions style={{ textAlign: 'center' }}>
                   {selectedBeverages.length > 0 ?
-                    <Button onClick={() => handleAddBeverage(beverages[0]._id, beverages[0].type, selectedBeverages, place.name, place.place_id)} variant='outlined' style={{ backgroundColor: '#ff430a', color: 'white' }}>Add</Button>
+                    <Button onClick={() => handleAddBeverage(beverages[0]._id, beverages[0].type, selectedBeverages, place.name, place.place_id)} variant='contained' style={{ backgroundColor: '#ff2f0a', color: 'white' }} disabled={waiting}>Add</Button>
                     : null}
                 </CardActions>
               </div>

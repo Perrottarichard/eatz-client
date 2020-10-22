@@ -118,25 +118,7 @@ border-radius: 0px;
   color: white;
 }
 
-span.MuiStepLabel-label {
-  color: black;
-}
-span.MuiStepLabel-label.MuiStepLabel-active {
-  color: black;
-}
 
-span.MuiSvgIcon-root.MuiStepIcon-root.MuiStepIcon-completed {
-  color:  #ff2f0a;
-}
-.MuiStepIcon{
-  color: #ff2f0a;
-}
-circle {
-  color:  #ff2f0a;
-}
-.MuiSvgIcon-root .MuiStepIcon-root .MuiStepIcon-completed {
-  color: #ff2f0a;
-}
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -167,7 +149,7 @@ circle {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  flex-basis: content;
+  flex-basis: 100%;
   overflow-x: hidden;
   overflow-y: auto;
   justify-content: space-evenly;
@@ -175,7 +157,6 @@ circle {
   height: auto;
   width: 90%;
   margin: auto;
-  align-items: center;
   scroll-behavior: smooth;
 }
 .placeReviewsCard {
@@ -189,4 +170,34 @@ circle {
 .pizzaMenuContainer {
   background-color: white;
 }
+.pizzaMenuContainer .MuiCircularProgress-colorSecondary {
+  color: black !important;
+}
+.pizzaMenuContainer .MuiCircularProgress-circle {
+  color: black !important;
+}
+.pizzaMenuContainer .MuiCircularProgress-svg {
+  color: black !important;
+}
+.pizzaMenuContainer .MuiStepLabel-label-completed {
+  color: gray;
+}
+.pizzaMenuContainer .MuiStepLabel-label.MuiStepLabel-active {
+  color: black;
+}
+circle {
+  color:  #ff2f0a;
+}
+.pizzaMenuContainer .MuiSvgIcon-root .MuiStepIcon-root .MuiStepIcon-completed {
+  color: #ff2f0a;
+}
+.MuiStepIcon-root.MuiStepIcon-completed {
+ color: gray;
+}
+
+/* .MuiCircularProgress-root { 
+  left: 43%; 
+  position: absolute; 
+  top: 44vh; 
+} */
 

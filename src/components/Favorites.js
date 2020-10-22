@@ -42,6 +42,8 @@ const Favorites = () => {
   useEffect(() => {
     if (!geoData) {
       setWaiting(true)
+    } else {
+      setWaiting(false)
     }
   }, [setWaiting, geoData])
 
@@ -49,9 +51,7 @@ const Favorites = () => {
     setWaiting(true)
     try {
       dispatch(removeFavorite(place_id, user._id))
-      setTimeout(() => {
-        setWaiting(false)
-      }, 2000);
+      setWaiting(false)
     } catch (error) {
       console.log(error)
       setWaiting(false)
@@ -106,9 +106,9 @@ const Favorites = () => {
                   </IconButton>
                   {place.opening_hours.open_now
                     ?
-                    <Chip style={{ fontSize: 10 }} size='small' label="Open" icon={<CheckCircleOutline style={{ color: 'green' }} />} />
+                    <Chip style={{ fontSize: 10 }} size='small' variant='outlined' label="Open" icon={<CheckCircleOutline style={{ color: 'green' }} />} />
                     :
-                    <Chip style={{ fontSize: 10 }} size='small' label="Closed" icon={<RemoveCircleOutline style={{ color: 'red', fontSize: 18 }} />} />}
+                    <Chip style={{ fontSize: 10 }} size='small' variant='outlined' label="Closed" icon={<RemoveCircleOutline style={{ color: 'red', fontSize: 18 }} />} />}
                   <Rating style={{ marginBottom: 10 }} name="read-only" value={place.rating} readOnly size='small' precision={0.5} />
                   <Button className='detailsBtn' fullWidth size='small' onClick={() => handleClick(place.place_id)}>Order
             </Button>
@@ -127,7 +127,6 @@ const Favorites = () => {
           <ChevronRight style={{ fontSize: 50 }} />
         </Button>
       </div>
-
     </div >
   )
 }

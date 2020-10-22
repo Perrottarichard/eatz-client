@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { Typography } from '@material-ui/core'
+import { Typography, Card, CardContent } from '@material-ui/core'
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles'
 import Pizza from './Pizza';
 import Beverage from './Beverage';
+import { ChevronLeftOutlined, ChevronRightOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   stepper: {
@@ -28,7 +29,7 @@ const PlaceMenu = ({ items, place }) => {
   const history = useHistory()
 
   const getSteps = () => {
-    return ['Build your pizzas', '...and to drink?'];
+    return ['Build your pizzas...', '...and to drink?'];
   }
   function getStepContent(stepIndex) {
     switch (stepIndex) {
@@ -57,13 +58,15 @@ const PlaceMenu = ({ items, place }) => {
 
   if (!place.opening_hours.open_now) {
     return (
-      <div>
-        <h5 className='sticky-head'>Order</h5>
-        <div style={{ margin: 10, width: 'auto' }}>
-          <Typography variant='body1' color='textSecondary'>
-            Sorry, this restaurant is closed.
-        </Typography>
-        </div>
+      <div className='placeDetailsDiv'>
+        {place !== undefined ?
+          <Card className='placeDetailsCard'>
+            <CardContent>
+              <Typography variant='body1' color='textPrimary'>Sorry, this restaurant is closed.</Typography>
+              <br />
+            </CardContent>
+          </Card>
+          : <h3>Loading...</h3>}
       </div>
     )
   }
@@ -81,16 +84,16 @@ const PlaceMenu = ({ items, place }) => {
         {activeStep === steps.length ? sendToCart() : (
           <React.Fragment>
             {getStepContent(activeStep)}
-            <div style={{ textAlign: 'center' }}>
+            <div style={{ textAlign: 'center', backgroundColor: 'white' }}>
               <Button
                 disabled={activeStep === 0}
                 onClick={handleBack}
-                style={{ marginRight: 20, marginBottom: 20, marginTop: 20 }}
+                style={activeStep !== 0 ? { marginRight: 15, marginBottom: 20, marginTop: 20, backgroundColor: 'white', color: 'black', width: 100, border: 'solid', borderColor: 'black', borderWidth: 2 } : { display: 'none' }}
               >
-                Back
+                <ChevronLeftOutlined />
               </Button>
-              <Button style={{ marginBottom: 20, marginTop: 20, marginLeft: 20 }} color='default' variant="outlined" onClick={handleNext}>
-                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+              <Button style={{ marginBottom: 20, marginTop: 20, marginLeft: 15, backgroundColor: 'white', color: 'black', width: 100, border: 'solid', borderColor: 'black', borderWidth: 2 }} color='primary' variant="contained" onClick={handleNext}>
+                {activeStep === steps.length - 1 ? 'Finish' : <ChevronRightOutlined />}
               </Button>
             </div>
           </React.Fragment>

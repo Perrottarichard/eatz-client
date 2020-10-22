@@ -2,6 +2,7 @@ import userService from "../services/userService"
 
 const initialState = {
   user: undefined,
+  notify: { open: false, severity: '', message: '' }
 }
 
 const activeUserReducer = (state = initialState, action) => {
@@ -30,8 +31,18 @@ const activeUserReducer = (state = initialState, action) => {
       return { ...state, user: action.data }
     case 'EDIT_ADDRESS':
       return { ...state, user: action.data }
+    case 'NOTIFY':
+      return { ...state, notify: action.data }
     default:
       return state
+  }
+}
+
+export const closeNotify = () => {
+  const clear = { open: false, severity: '', message: '' }
+  return {
+    type: 'NOTIFY',
+    data: clear
   }
 }
 export const isAuthenticated = () => {
@@ -81,8 +92,16 @@ export const addFavorite = (place_id, user_id) => {
         type: 'ADD_FAVORITE',
         data: res
       })
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'success', message: 'Added' }
+      })
     } catch (error) {
       console.log(error)
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'error', message: 'Something went wrong' }
+      })
     }
   }
 }
@@ -94,8 +113,16 @@ export const removeFavorite = (place_id, user_id) => {
         type: 'REMOVE_FAVORITE',
         data: res
       })
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'success', message: 'Removed' }
+      })
     } catch (error) {
       console.log(error)
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'error', message: 'Something went wrong' }
+      })
     }
   }
 }
@@ -107,8 +134,16 @@ export const addCart = (user_id, item) => {
         type: 'ADD_PIZZA_TO_CART',
         data: res
       })
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'success', message: 'Added' }
+      })
     } catch (error) {
       console.log(error)
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'error', message: 'Something went wrong' }
+      })
     }
   }
 }
@@ -121,8 +156,16 @@ export const addBeverage = (user_id, beveragesToAddObj) => {
         type: 'ADD_BEVERAGES_TO_CART',
         data: res
       })
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'success', message: 'Added' }
+      })
     } catch (error) {
       console.log(error)
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'error', message: 'Something went wrong' }
+      })
     }
   }
 }
@@ -134,8 +177,16 @@ export const removeCart = (user_id, item_id) => {
         type: 'REMOVE_CART',
         data: res
       })
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'success', message: 'Removed' }
+      })
     } catch (error) {
       console.log(error)
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'error', message: 'Something went wrong' }
+      })
     }
   }
 }
@@ -149,6 +200,10 @@ export const setActiveCartBilling = (user_id, totalPrice, newTotal, diff, promoA
       })
     } catch (error) {
       console.log(error)
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'error', message: 'Something went wrong' }
+      })
     }
   }
 }
@@ -162,6 +217,10 @@ export const resetCart = (user_id) => {
       })
     } catch (error) {
       console.log(error)
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'error', message: 'Something went wrong' }
+      })
     }
   }
 }
@@ -173,8 +232,16 @@ export const addOrder = (user_id) => {
         type: 'ADD_ORDER',
         data: res
       })
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'success', message: 'Success' }
+      })
     } catch (error) {
       console.log(error)
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'error', message: 'Something went wrong' }
+      })
     }
   }
 }
@@ -188,6 +255,10 @@ export const addAddress = (user_id, addressObject) => {
       })
     } catch (error) {
       console.log(error)
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'error', message: 'Something went wrong' }
+      })
     }
   }
 }
@@ -199,8 +270,16 @@ export const editAddress = (user_id, indexToEdit, addressObject) => {
         type: 'EDIT_ADDRESS',
         data: res
       })
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'success', message: 'Updated' }
+      })
     } catch (error) {
       console.log(error)
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'error', message: 'Something went wrong' }
+      })
     }
   }
 }

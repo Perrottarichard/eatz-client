@@ -1,21 +1,16 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import Rating from '@material-ui/lab/Rating';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { Avatar, Button } from '@material-ui/core';
-import { ChevronLeft, ChevronRight } from '@material-ui/icons';
+import { Avatar } from '@material-ui/core';
+
 
 const PlaceReviews = ({ place }) => {
 
-  const scrollRef = useRef(null);
-  const scroll = (scrollOffset) => {
-    scrollRef.current.scrollLeft += scrollOffset;
-  };
-
   return (
     <div className='sticky-head'>
-      <div className='placeReviewsInnerDiv' ref={scrollRef}>
+      <div className='placeReviewsInnerDiv' >
         {place.reviews !== undefined ?
           place.reviews.map(r =>
             < Card key={r.author_name} className='placeReviewsCard'>

@@ -74,9 +74,7 @@ const GeoDataList = () => {
     setWaiting(true)
     try {
       dispatch(addFavorite(place_id, user._id))
-      setTimeout(() => {
-        setWaiting(false)
-      }, 2000);
+      setWaiting(false)
     } catch (error) {
       console.log(error)
       setWaiting(false)
@@ -135,7 +133,7 @@ const GeoDataList = () => {
         </Button>
         <div className='dashDiv' ref={scrollRef} >
           {geoData && homeGPS ? geoData.map(place =>
-            <Grow key={place.place_id} in={!waiting}>
+            <Grow key={place.place_id} in={geoData !== undefined}>
               <Card key={place.place_id}>
                 <CardHeader titleTypographyProps={{ variant: 'h4' }} title={place.name} subheader={calcDistance(homeGPS.lat, place.geometry.location.lat, homeGPS.lon, place.geometry.location.lng).toFixed(2) + ' km'} />
                 <CardActions>
@@ -144,9 +142,9 @@ const GeoDataList = () => {
                   </IconButton>
                   {place && place.opening_hours && place.opening_hours.open_now
                     ?
-                    <Chip style={{ fontSize: 10 }} size='small' label="Open" icon={<CheckCircleOutline style={{ color: 'green' }} />} />
+                    <Chip style={{ fontSize: 10 }} size='small' variant='outlined' label="Open" icon={<CheckCircleOutline style={{ color: 'green' }} />} />
                     :
-                    <Chip style={{ fontSize: 10 }} label="Closed" size='small' icon={<RemoveCircleOutline style={{ color: 'red', fontSize: 18 }} />} />}
+                    <Chip style={{ fontSize: 10 }} variant='outlined' label="Closed" size='small' icon={<RemoveCircleOutline style={{ color: 'red', fontSize: 18 }} />} />}
                   <Rating style={{ marginBottom: 10 }} name="read-only" value={place.rating} readOnly size='small' precision={0.5} />
                   <Button className='detailsBtn' fullWidth size='small' onClick={() => handleClick(place.place_id)}>Order
             </Button>
