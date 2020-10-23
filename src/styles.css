@@ -1,3 +1,22 @@
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: rgb(150, 146, 146);
+  margin-top: 30px;
+  width: 96%;
+}
+.separator::before, .separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid rgb(150, 146, 146);
+}
+.separator::before {
+  margin-right: .25em;
+}
+.separator::after {
+  margin-left: .25em;
+}
 
 .outerDashDiv {
   display: flex;

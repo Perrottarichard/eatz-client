@@ -2,13 +2,22 @@ import userService from "../services/userService"
 
 const initialState = {
   user: undefined,
-  notify: { open: false, severity: '', message: '' }
+  notify: { open: false, severity: '', message: '' },
+  redirectTo: undefined
 }
 
 const activeUserReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'USER_LOGOUT':
       return initialState
+    case 'LOCAL_SIGN_IN':
+      return { ...state, user: action.data }
+    case 'REDIRECT':
+      return { ...state, redirectTo: action.data }
+    case 'CLEAR_REDIRECT':
+      return { ...state, redirectTo: action.data }
+    case 'REGISTER':
+      return { ...state, user: action.data }
     case 'GET_USER':
       return { ...state, user: action.data }
     case 'ADD_FAVORITE':
@@ -43,6 +52,56 @@ export const closeNotify = () => {
   return {
     type: 'NOTIFY',
     data: clear
+  }
+}
+export const redirect = link => {
+  return {
+    type: 'REDIRECT',
+    data: link
+  }
+}
+export const clearRedirect = () => {
+  return {
+    type: 'CLEAR_REDIRECT',
+    data: undefined
+  }
+}
+export const signIn = (userObj) => {
+  return async dispatch => {
+    try {
+      let res = await userService.localSignIn(userObj)
+      dispatch({
+        type: 'LOCAL_SIGN_IN',
+        data: res
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+export const register = (newUserObj) => {
+  return async dispatch => {
+    try {
+      let res = await userService.localRegister(newUserObj)
+      dispatch({
+        type: 'LOCAL_REGISTER',
+        data: res
+      })
+      dispatch({
+        type: 'REDIRECT',
+        data: '/'
+      })
+      dispatch({
+        type: 'CLEAR_REDIRECT',
+        data: undefined
+      })
+    } catch (error) {
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'error', message: error.message }
+      })
+      console.log(error)
+    }
   }
 }
 export const isAuthenticated = () => {

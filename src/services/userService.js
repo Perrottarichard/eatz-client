@@ -2,10 +2,37 @@ import axios from 'axios'
 
 //development
 const baseUrl = 'http://localhost:3001/api'
+const authUrl = 'http://localhost:3001'
 
 //production
 // const baseUrl = 'https://pizzapizzadelivery.herokuapp.com/api'
 
+const localSignIn = async (userObj) => {
+  const response = await axios.post(`${authUrl}/auth/local/signin`, userObj, {
+    withCredentials: true,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+
+    },
+  })
+  console.log(response.data)
+  return response.data
+}
+
+const localRegister = async (newUserObj) => {
+  const response = await axios.post(`${authUrl}/auth/local/register`, newUserObj, {
+    withCredentials: true,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+
+    },
+  })
+  return response.data
+}
 
 const getUser = async () => {
   const response = await axios.get(`${baseUrl}`, {
@@ -163,6 +190,8 @@ const editExistingAddress = async (user_id, indexToEdit, addressObject) => {
 }
 
 export default {
+  localSignIn,
+  localRegister,
   getUser,
   getUserFromDash,
   logoutUser,

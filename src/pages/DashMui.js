@@ -27,10 +27,10 @@ import Snackbar from '@material-ui/core/Snackbar';
 import { Alert } from '@material-ui/lab'
 import { closeNotify } from '../reducers/activeUserReducer'
 
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
+
   root: {
     display: 'flex',
     backgroundColor: 'black',

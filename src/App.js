@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import DashMui from './pages/DashMui'
+import SignUp from './pages/SignUp'
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
+          <Route path='/signup' component={SignUp} />
           <Route path='/dashboard'>
             {!user ? <Redirect to='/' />
               :
