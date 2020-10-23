@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -12,6 +12,9 @@ import pizzapizza from '../assets/pizzapizza200.png'
 import pizzaBackground from '../assets/pizzapizzalarge.jpg'
 import { isAuthenticated, signIn } from '../reducers/activeUserReducer'
 import { Formik } from 'formik'
+import Snackbar from '@material-ui/core/Snackbar';
+import { Alert } from '@material-ui/lab'
+import { closeNotify } from '../reducers/activeUserReducer'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -49,14 +52,15 @@ const useStyles = makeStyles((theme) => ({
 export default function LandingPage() {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const notify = useSelector(state => state.activeUser.notify)
 
   useEffect(() => {
     dispatch(isAuthenticated())
   }, [dispatch])
 
   const authWithGoogle = () => {
-    window.open("http://localhost:3001/auth/google", "_self");
-    // window.open("https://pizzapizzadelivery.herokuapp.com/auth/google", "_self");
+    // window.open("http://localhost:3001/auth/google", "_self");
+    window.open("https://pizzapizzadelivery.herokuapp.com/auth/google", "_self");
   }
 
   return (
@@ -169,6 +173,20 @@ export default function LandingPage() {
               )}
           </Formik>
         </div>
+        <Snackbar
+          open={notify && notify.open}
+          autoHideDuration={2000}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          onClose={() => dispatch(closeNotify())}>
+          {notify && notify.open ?
+            <Alert severity={notify.severity} style={notify.severity === 'success' ? { backgroundColor: 'white', border: 'solid', borderColor: 'green', width: 260 } : { backgroundColor: 'lightgrey', border: 'solid', borderColor: 'red', width: 260 }} >
+              {notify.message}
+            </Alert>
+            : null}
+        </Snackbar>
       </Grid>
     </Grid>
   );

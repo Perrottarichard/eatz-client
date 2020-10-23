@@ -95,11 +95,17 @@ export const register = (newUserObj) => {
         type: 'CLEAR_REDIRECT',
         data: undefined
       })
-    } catch (error) {
       dispatch({
         type: 'NOTIFY',
-        data: { open: true, severity: 'error', message: error.message }
+        data: { open: true, severity: 'success', message: 'Account created. You can sign in now.' }
       })
+    } catch (error) {
+      if (error.statusCode === 400) {
+        dispatch({
+          type: 'NOTIFY',
+          data: { open: true, severity: 'error', message: error.response.data.error }
+        })
+      }
       console.log(error)
     }
   }

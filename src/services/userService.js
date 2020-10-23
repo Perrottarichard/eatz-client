@@ -1,11 +1,12 @@
 import axios from 'axios'
 
 //development
-const baseUrl = 'http://localhost:3001/api'
-const authUrl = 'http://localhost:3001'
+// const baseUrl = 'http://localhost:3001/api'
+// const authUrl = 'http://localhost:3001'
 
 //production
-// const baseUrl = 'https://pizzapizzadelivery.herokuapp.com/api'
+const baseUrl = 'https://pizzapizzadelivery.herokuapp.com/api'
+const authUrl = 'https://pizzapizzadelivery.herokuapp.com'
 
 const localSignIn = async (userObj) => {
   const response = await axios.post(`${authUrl}/auth/local/signin`, userObj, {
@@ -17,7 +18,6 @@ const localSignIn = async (userObj) => {
 
     },
   })
-  console.log(response.data)
   return response.data
 }
 
