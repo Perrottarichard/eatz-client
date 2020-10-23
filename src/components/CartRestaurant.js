@@ -18,9 +18,15 @@ const CartRestaurant = ({ place, setTotalPrice, setCodeEntered }) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const user = useSelector(state => state.activeUser.user)
-  const addresses = user.addresses
+
+  let addresses
+  if (user.addresses.length > 0) {
+    addresses = user.addresses
+  } else {
+    addresses = []
+  }
   const [modalOrderOpen, setModalOrderOpen] = useState(false)
-  const [deliverTo, setDeliverTo] = useState(addresses ? addresses[0].locationName : null)
+  const [deliverTo, setDeliverTo] = useState(addresses.length > 0 ? addresses[0].locationName : [])
 
   const handleModalOrderOpen = () => {
     setModalOrderOpen(true)
@@ -77,10 +83,10 @@ const CartRestaurant = ({ place, setTotalPrice, setCodeEntered }) => {
           <FormControl component="fieldset">
             <FormLabel style={{ color: '#575551' }} component="legend">Deliver to:</FormLabel>
             <RadioGroup aria-label="style" name="Style" value={deliverTo} onChange={handleDeliverToChange}>
-              {addresses.map(p =>
+              {addresses.length > 0 ? addresses.map(p =>
                 <FormControlLabel key={p.locationName} value={p.locationName} control={<Radio required={true} style={{ color: '#575551' }} />} label={p.locationName} />
               )
-              }
+                : 'Add an address then come back'}
             </RadioGroup>
           </FormControl>
         </DialogContent>
@@ -88,7 +94,7 @@ const CartRestaurant = ({ place, setTotalPrice, setCodeEntered }) => {
           <Button onClick={handleModalOrderClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={submitOrder} color="primary">
+          <Button onClick={submitOrder} color="primary" disabled={addresses.length === 0}>
             Submit
           </Button>
         </DialogActions>

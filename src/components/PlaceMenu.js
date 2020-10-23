@@ -54,9 +54,7 @@ const PlaceMenu = ({ items, place }) => {
 
   //settimeout to avoid transition error with tabpanel/box/stepper render conflicts
   const sendToCart = () => {
-    setTimeout(() => {
-      history.push('/dashboard/cart')
-    }, 1000);
+    history.push('/dashboard/cart')
   }
 
   if (!place.opening_hours.open_now) {
@@ -84,23 +82,29 @@ const PlaceMenu = ({ items, place }) => {
         ))}
       </Stepper>
       <div>
-        {activeStep === steps.length ? sendToCart() : (
-          <React.Fragment>
-            {getStepContent(activeStep)}
-            <div style={{ textAlign: 'center', backgroundColor: 'white' }}>
-              <Button
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                style={activeStep !== 0 ? { marginRight: 15, marginBottom: 20, marginTop: 20, backgroundColor: 'white', color: 'black', width: 100, border: 'solid', borderColor: 'black', borderWidth: 2 } : { display: 'none' }}
-              >
-                <ChevronLeftOutlined />
-              </Button>
-              <Button style={{ marginBottom: 20, marginTop: 20, marginLeft: 15, backgroundColor: 'white', color: 'black', width: 100, border: 'solid', borderColor: 'black', borderWidth: 2 }} color='primary' variant="contained" onClick={handleNext}>
-                {activeStep === steps.length - 1 ? 'Finish' : <ChevronRightOutlined />}
-              </Button>
-            </div>
-          </React.Fragment>
-        )}
+        {activeStep === steps.length ? (
+          <div style={{ backgroundColor: 'white', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <Typography style={{ flexBasis: '100%', margin: 'auto' }} variant='h6'>Steps completed</Typography>
+            <br />
+            <Button style={{ flexBasis: '100%', margin: 'auto' }} onClick={() => sendToCart()}>Checkout</Button>
+          </div>
+        ) : (
+            <React.Fragment>
+              {getStepContent(activeStep)}
+              <div style={{ textAlign: 'center', backgroundColor: 'white' }}>
+                <Button
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  style={activeStep !== 0 ? { marginRight: 15, marginBottom: 20, marginTop: 20, backgroundColor: 'white', color: 'black', width: 100, border: 'solid', borderColor: 'black', borderWidth: 2 } : { display: 'none' }}
+                >
+                  <ChevronLeftOutlined />
+                </Button>
+                <Button style={{ marginBottom: 20, marginTop: 20, marginLeft: 15, backgroundColor: 'white', color: 'black', width: 100, border: 'solid', borderColor: 'black', borderWidth: 2 }} color='primary' variant="contained" onClick={handleNext}>
+                  {activeStep === steps.length - 1 ? 'Finish' : <ChevronRightOutlined />}
+                </Button>
+              </div>
+            </React.Fragment>
+          )}
       </div>
     </React.Fragment>
   )

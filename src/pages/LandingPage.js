@@ -8,7 +8,7 @@ import { Link, TextField } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
-import pizzapizza from '../assets/pizzapizza200.png'
+import pizzapizza from '../assets/pizzapizza100.png'
 import pizzaBackground from '../assets/pizzapizzalarge.jpg'
 import { isAuthenticated, signIn } from '../reducers/activeUserReducer'
 import { Formik } from 'formik'
@@ -59,8 +59,8 @@ export default function LandingPage() {
   }, [dispatch])
 
   const authWithGoogle = () => {
-    // window.open("http://localhost:3001/auth/google", "_self");
-    window.open("https://pizzapizzadelivery.herokuapp.com/auth/google", "_self");
+    window.open("http://localhost:3001/auth/google", "_self");
+    // window.open("https://pizzapizzadelivery.herokuapp.com/auth/google", "_self");
   }
 
   return (
