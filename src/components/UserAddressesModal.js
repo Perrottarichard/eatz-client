@@ -12,7 +12,7 @@ const UserAddressesModal = ({ user, titleMessage, openOnClick, setOpenOnClick })
 
   const dispatch = useDispatch()
 
-  const [modalOpen, setModalOpen] = useState(user.addresses.length === 0);
+  const [modalOpen, setModalOpen] = useState(user && user.addresses && user.addresses.length === 0);
 
   useEffect(() => {
     if (openOnClick) {
