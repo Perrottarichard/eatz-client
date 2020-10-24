@@ -198,6 +198,7 @@ export default function Dashboard() {
       <Snackbar
         open={notify && notify.open}
         autoHideDuration={2000}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         onClose={() => dispatch(closeNotify())}>
         {notify && notify.open ?
           <Alert severity={notify.severity} style={notify.severity === 'success' ? { backgroundColor: '#b7e89e', border: 'solid', borderColor: 'green', width: 260 } : { backgroundColor: 'lightgrey', border: 'solid', borderColor: 'red', width: 260 }} >

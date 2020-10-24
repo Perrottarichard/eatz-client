@@ -52,6 +52,7 @@ const CartRestaurant = ({ place, setTotalPrice, setCodeEntered }) => {
     dispatch(addOrder(user._id))
     handleModalOrderClose()
     setCodeEntered('')
+    setTotalPrice(0)
   }
 
   return (

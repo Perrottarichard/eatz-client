@@ -59,8 +59,8 @@ export default function LandingPage() {
   }, [dispatch])
 
   const authWithGoogle = () => {
-    // window.open("http://localhost:3001/auth/google", "_self");
-    window.open("https://pizzapizzadelivery.herokuapp.com/auth/google", "_self");
+    window.open("http://localhost:3001/auth/google", "_self");
+    // window.open("https://pizzapizzadelivery.herokuapp.com/auth/google", "_self");
   }
 
   return (

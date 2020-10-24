@@ -85,7 +85,7 @@ const GeoDataList = () => {
   }
   const scroll = (scrollOffset) => {
     scrollRef.current.scrollLeft += scrollOffset;
-  };
+  }
 
   //handle loading state with Skeleton
   if (!geoData || !homeGPS || waiting) {
@@ -98,22 +98,22 @@ const GeoDataList = () => {
           </Button>
           <div className='dashDiv' ref={scrollRef} >
             <Card>
-              <Skeleton variant="rect" width={200} height={200} style={{ backgroundColor: 'darkgrey' }} />
+              <Skeleton variant="rect" width={200} height={200} style={{ backgroundColor: '#262424' }} />
             </Card>
             <Card>
-              <Skeleton variant="rect" width={200} height={200} style={{ backgroundColor: 'darkgrey' }} />
+              <Skeleton variant="rect" width={200} height={200} style={{ backgroundColor: '#262424' }} />
             </Card>
             <Card>
-              <Skeleton variant="rect" width={200} height={200} style={{ backgroundColor: 'darkgrey' }} />
+              <Skeleton variant="rect" width={200} height={200} style={{ backgroundColor: '#262424' }} />
             </Card>
             <Card>
-              <Skeleton variant="rect" width={200} height={200} style={{ backgroundColor: 'darkgrey' }} />
+              <Skeleton variant="rect" width={200} height={200} style={{ backgroundColor: '#262424' }} />
             </Card>
             <Card>
-              <Skeleton variant="rect" width={200} height={200} style={{ backgroundColor: 'darkgrey' }} />
+              <Skeleton variant="rect" width={200} height={200} style={{ backgroundColor: '#262424' }} />
             </Card>
             <Card>
-              <Skeleton variant="rect" width={200} height={200} style={{ backgroundColor: 'darkgrey' }} />
+              <Skeleton variant="rect" width={200} height={200} style={{ backgroundColor: '#262424' }} />
             </Card>
           </div>
           <Button className='btn' onClick={() => scroll(400)}>
@@ -145,6 +145,15 @@ const GeoDataList = () => {
                     <Chip style={{ fontSize: 10 }} size='small' variant='outlined' label="Open" icon={<CheckCircleOutline style={{ color: 'green' }} />} />
                     :
                     <Chip style={{ fontSize: 10 }} variant='outlined' label="Closed" size='small' icon={<RemoveCircleOutline style={{ color: 'red', fontSize: 18 }} />} />}
+                  {place.price_level ?
+                    <Typography variant='body1' style={{ marginBottom: 8, fontFamily: 'monospace' }} >
+                      {`$`.repeat(place.price_level)}
+                    </Typography>
+                    :
+                    <Typography variant='body1' style={{ marginBottom: 8, fontFamily: 'monospace' }} >
+                      {`$$`}
+                    </Typography>
+                  }
                   <Rating style={{ marginBottom: 10 }} name="read-only" value={place.rating} readOnly size='small' precision={0.5} />
                   <Button className='detailsBtn' fullWidth size='small' onClick={() => handleClick(place.place_id)}>Order
             </Button>

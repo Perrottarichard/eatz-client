@@ -47,7 +47,6 @@ const MainPlaceDetails = () => {
   const items = useSelector(state => state.placesReducer.menu ? state.placesReducer.menu : undefined)
 
   const [value, setValue] = useState(0);
-
   useEffect(() => {
     if (!place || place.place_id !== place_id.id)
       dispatch(getPlaceDetails(place_id))

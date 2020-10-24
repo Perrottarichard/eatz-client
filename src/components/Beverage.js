@@ -27,6 +27,7 @@ const Beverage = ({ beverages, user, place, sendToCart }) => {
       setWaiting(false)
     } catch (error) {
       console.log(error)
+      setWaiting(false)
     }
   }
 

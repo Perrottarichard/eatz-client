@@ -75,6 +75,12 @@ export const signIn = (userObj) => {
         data: res
       })
     } catch (error) {
+      if (error.response.status === 401) {
+        dispatch({
+          type: 'NOTIFY',
+          data: { open: true, severity: 'error', message: 'Incorrect email or password' }
+        })
+      }
       console.log(error)
     }
   }
@@ -100,7 +106,7 @@ export const register = (newUserObj) => {
         data: { open: true, severity: 'success', message: 'Account created. You can sign in now.' }
       })
     } catch (error) {
-      if (error.statusCode === 400) {
+      if (error.response.status === 400) {
         dispatch({
           type: 'NOTIFY',
           data: { open: true, severity: 'error', message: error.response.data.error }

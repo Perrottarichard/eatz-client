@@ -9,20 +9,22 @@ const PlaceNameAddress = ({ place }) => {
 
   return (
     <div className='sticky-head-places'>
-      <Typography variant='body1' style={{ textAlign: 'center', fontSize: 16, marginTop: 20 }}><strong></strong></Typography>
+      <Typography variant='body1' style={{ textAlign: 'center', fontSize: 16, marginTop: 25 }}></Typography>
       <br />
       <div className='placeDetailsDiv'>
         <div className='placeDetailsCard'>
           <CardContent style={{ minWidth: 240, maxWidth: 400 }}>
+            <br />
             <Typography variant='body1' >{place.name}</Typography>
             <Typography variant='body2' >{place.formatted_address}</Typography>
             <br />
-            <Typography variant='body1' >
-              <Phone style={{ color: '#ff2f0a' }} />
-            </Typography>
-            <Typography variant="body2" component="p">
-              {place.formatted_phone_number}
-            </Typography>
+            {place.formatted_phone_number &&
+              <Typography variant='body1' >
+                <Phone style={{ color: '#ff2f0a' }} />
+                <br />
+                {place.formatted_phone_number}
+              </Typography>
+            }
           </CardContent>
         </div>
         <div className='placeDetailsCard'>
