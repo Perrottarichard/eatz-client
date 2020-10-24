@@ -61,12 +61,12 @@ const PlaceMenu = ({ items, place }) => {
     return (
       <div className='placeDetailsDiv'>
         {place !== undefined ?
-          <Card className='placeDetailsCard'>
+          <div className='placeDetailsClosed'>
             <CardContent>
-              <Typography variant='body1' color='textPrimary'>Sorry, this restaurant is closed.</Typography>
+              <Typography variant='body1'>Sorry, this restaurant is closed.</Typography>
               <br />
             </CardContent>
-          </Card>
+          </div>
           : <h3>Loading...</h3>}
       </div>
     )

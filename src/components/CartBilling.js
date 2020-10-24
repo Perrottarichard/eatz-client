@@ -107,8 +107,8 @@ const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice, activeCartB
   return (
     <div className='sticky-head'>
       <Typography variant='body1' style={{ textAlign: 'center', fontSize: 16, marginTop: 20 }}><strong></strong></Typography>
-      <div className='placeDetailsDiv'>
-        <Card className='placeDetailsCard'>
+      <div className='cartDetailsDiv'>
+        <div className='cartDetailsCard'>
           <CardContent style={{ padding: 10, paddingTop: 30 }}>
             <Typography variant='body1'>
               Total Due: ${activeCartBillingObject ? formatPrice(activeCartBillingObject.afterPromoPrice.toFixed(2)) : Number(formatPrice(totalPrice)).toFixed(2)}
@@ -120,18 +120,20 @@ const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice, activeCartB
               {activeCartBillingObject ? `discount: $${formatPrice(activeCartBillingObject.priceDiff.toFixed(2))}` : `discount: no promotion applied`}
             </Typography>
           </CardContent>
-          <div>
+          <div style={{ height: 75, minWidth: 270, backgroundColor: 'white', borderRadius: 3, paddingTop: 10, overflowX: 'hidden', overflowY: 'hidden' }}>
             <form>
               <TextField
+                style={{ width: 180 }}
                 id="outlined-helperText"
-                label="Promo Code *case-sensitive"
+                label="Promo Code"
+                helperText='*case-sensitive'
                 variant="outlined"
                 size='small'
                 value={codeEntered}
                 onChange={(e) => handleChange(e)}
                 disabled={activeCartBillingObject ? true : false}
               />
-              <Button disabled={activeCartBillingObject ? true : false} onClick={() => checkPromo(codeEntered)}>
+              <Button disabled={activeCartBillingObject ? true : false} onClick={() => checkPromo(codeEntered)} style={{ color: '#ff2f0a', lineHeight: 2 }} size='small'>
                 Apply
           </Button>
             </form>
@@ -141,7 +143,7 @@ const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice, activeCartB
               </Alert>
             </Snackbar>
           </div>
-        </Card>
+        </div>
       </div>
     </div>
   )

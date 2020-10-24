@@ -102,7 +102,9 @@ const MainCart = () => {
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <div>
+          {pizza.length > 0 || bevs.length > 0 ?
             <Typography variant='h5' style={{ textAlign: 'center', fontSize: 20, marginTop: 20, color: 'white', marginBottom: 28 }}><strong>Items</strong></Typography>
+            : null}
           </div>
           <Grid container spacing={2} style={{ justifyContent: 'flex-start' }}>
             {pizza.map(c =>

@@ -150,18 +150,40 @@ border-radius: 0px;
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-
+.cartDetailsDiv {
+  display: flex;
+  flex-wrap: wrap;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  justify-content: space-evenly;
+  text-align: center;
+  height: auto;
+  width: 100%;
+  align-items: center;
+  scroll-behavior: smooth;
+}
+.cartDetailsCard {
+  min-width: 280px;
+  height: 200px;
+  margin-bottom: 14px;
+  margin-right: 10px;
+}
 .placeDetailsDiv {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   overflow-x: auto;
   overflow-y: hidden;
   justify-content: space-evenly;
   text-align: center;
-  height: 200px;
+  height: auto;
   width: 100%;
   align-items: center;
   scroll-behavior: smooth;
+}
+.sticky-head-places {
+  height: auto;
+  color: white;
+  padding: 0px;
 }
 
 .placeReviewsInnerDiv {
@@ -182,8 +204,20 @@ border-radius: 0px;
   margin-bottom: 18px;
 }
 .placeDetailsCard {
-  width: 90%;
+  min-width: 240px;
   height: 200px;
+  margin-bottom: 14px;
+  margin-right: 10px;
+  color: white;
+}
+
+.placeDetailsClosed {
+  min-width: 240px;
+  margin-top: 40px;
+  margin-bottom: 14px;
+  margin-right: 10px;
+  background-color: black;
+  color: white;
 }
 .placeDetailsCardSkeleton {
   width: 90%;

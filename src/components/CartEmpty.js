@@ -12,7 +12,7 @@ const quoteToShow = getQuote()
 
 const CartEmpty = () => (
   <div style={{ display: 'inline-flex', height: '90%', width: '100%', margin: 'auto', justifyContent: 'center', alignItems: 'center' }}>
-    <Typography variant='body1' style={{ color: 'white' }}>
+    <Typography variant='body1' style={{ color: 'white', marginTop: 60 }}>
       "{quoteToShow.quote}"<br />
       -{quoteToShow.author}
     </Typography>

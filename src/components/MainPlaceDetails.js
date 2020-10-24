@@ -68,26 +68,29 @@ const MainPlaceDetails = () => {
   return (
     <React.Fragment>
       <Grid container direction='row' justify='space-evenly' spacing={2}>
-        <Grid item xs={12} sm={12} md={6} lg={6}>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
           {!place || !items ?
             <PlaceInfoSkeleton />
             :
-            <PlaceNameAddress place={place} />
+            <div>
+              <PlaceNameAddress place={place} />
+              {/* <PlaceHoursContact place={place} /> */}
+            </div>
           }
         </Grid>
-        <Grid item xs={12} sm={12} md={6} lg={6}>
+        {/* <Grid item xs={12} sm={12} md={6} lg={6}>
           {!place || !items ?
             <PlaceInfoSkeleton />
             :
-            <PlaceHoursContact place={place} />
+            
           }
-        </Grid>
+        </Grid> */}
         <Grid item xs={12} sm={12} md={12} lg={12}>
           {!place || !items ?
             null
             :
             <div>
-              <AppBar position="static" className={classes.appBar}>
+              <AppBar position="relative" className={classes.appBar}>
                 <Tabs value={value} onChange={handleChange} centered classes={{ indicator: classes.indicator }}>
                   <Tab label="Menu" style={{ textTransform: 'none', fontSize: 16, fontWeight: 'bold' }} />
                   <Tab label="Promotions" style={{ textTransform: 'none', fontSize: 16, fontWeight: 'bold' }} />
