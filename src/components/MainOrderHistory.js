@@ -127,19 +127,19 @@ const MainOrderHistory = () => {
                       </Typography>
                       <hr />
                       {o.cart.map(c =>
-                        <div key={c._id} style={{ margin: 5, paddingBottom: 5, paddingTop: 0 }}>
-                          <Typography variant='body2' style={{ display: 'inline-flex' }}>
-                            {c.selectedVariant ? <em>{c.selectedVariant} pizza</em> : null}
-                          </Typography>
+                        <div key={c._id} style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
+                          <li style={{ fontStyle: 'italic' }}>
+                            {c.selectedVariant ? c.selectedVariant + ' pizza ' : null}
+                          </li>
                           <div style={{ display: 'block' }}>
                             <Typography variant='caption'>
-                              <small> {c.selectedRegularToppings.map(t => <span key={t}> {t} </span>)}
-                                {c.selectedPremiumToppings.map(t => <span key={t}> {t} </span>)}</small>
+                              <small> {c.selectedRegularToppings.map(t => <span key={t}>&nbsp;{t}&nbsp;</span>)}
+                                {c.selectedPremiumToppings.map(t => <span key={t}> &nbsp;{t} &nbsp;</span>)}</small>
                             </Typography>
                           </div>
-                          {c.itemType === 'beverages' ? c.selectedBeverages.map(b => <div key={b}><Typography variant='body2' style={{ display: 'inline-flex' }}>
-                            {<em> {b}</em>}
-                          </Typography></div>)
+                          {c.itemType === 'beverages' ? c.selectedBeverages.map(b => <li key={b} style={{ display: 'inline-flex' }}>
+                            {b} &nbsp;
+                          </li>)
                             : null}
                         </div>
                       )}

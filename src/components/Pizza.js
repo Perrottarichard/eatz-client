@@ -172,18 +172,18 @@ const Pizza = ({ pizza, place, user }) => {
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6}>
           <Container style={{ paddingTop: 30, paddingBottom: 30, textAlign: 'center' }}>
-            <Typography variant='body1' style={{ backgroundColor: '#ff2f0a', color: 'white', paddingTop: 5, borderTopLeftRadius: 3, borderTopRightRadius: 3 }}>Confirm your selection</Typography>
+            <Typography variant='body1' style={{ backgroundColor: '#ff2f0a', color: 'white', paddingTop: 5, borderTopLeftRadius: 3, borderTopRightRadius: 3, fontWeight: 'bold' }}>Confirm your selection</Typography>
             <Card style={{ color: 'black', border: 'solid', borderColor: '#ff2f0a', borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
               <CardContent>
                 {waiting ? <CircularProgress color='secondary' /> :
-                  <Typography variant='body1'>
+                  <Typography variant='body1' style={{ fontWeight: 'bold' }}>
                     {`Add a ${size} ${variant} pizza with ${selectedToppingsGrammar()} to your cart?`}
                   </Typography>
                 }
               </CardContent>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <CardActions style={{ textAlign: 'center' }}>
-                  <Button onClick={() => handleAddPizza(pizza.id, pizza[0].type, size, variant, place.name, place.place_id, selectedRegularToppings, selectedPremiumToppings)} variant='contained' style={{ backgroundColor: '#ff2f0a', color: 'white' }} disabled={waiting}>Add</Button>
+                  <Button onClick={() => handleAddPizza(pizza.id, pizza[0].type, size, variant, place.name, place.place_id, selectedRegularToppings, selectedPremiumToppings)} variant='contained' style={{ backgroundColor: '#ff2f0a', color: 'white' }} disabled={waiting}><strong>Add</strong></Button>
                 </CardActions>
               </div>
             </Card>

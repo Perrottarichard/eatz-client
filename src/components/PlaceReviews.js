@@ -10,6 +10,7 @@ const PlaceReviews = ({ place }) => {
 
   return (
     <div className='sticky-head'>
+      <div style={{ width: "100%", height: 20 }}></div>
       <div className='placeReviewsInnerDiv' >
         {place.reviews !== undefined ?
           place.reviews.map(r =>

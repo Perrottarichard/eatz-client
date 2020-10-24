@@ -6,7 +6,6 @@ import { initMenu } from '../reducers/placesReducer'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import PlaceNameAddress from './PlaceNameAddress';
-import PlaceHoursContact from './PlaceHoursContact';
 import Promos from './Promos'
 import PlaceReviews from './PlaceReviews';
 import PlaceMenu from './PlaceMenu'
@@ -74,17 +73,9 @@ const MainPlaceDetails = () => {
             :
             <div>
               <PlaceNameAddress place={place} />
-              {/* <PlaceHoursContact place={place} /> */}
             </div>
           }
         </Grid>
-        {/* <Grid item xs={12} sm={12} md={6} lg={6}>
-          {!place || !items ?
-            <PlaceInfoSkeleton />
-            :
-            
-          }
-        </Grid> */}
         <Grid item xs={12} sm={12} md={12} lg={12}>
           {!place || !items ?
             null
@@ -101,7 +92,7 @@ const MainPlaceDetails = () => {
                 {user.cart.length === 0 || user.cart[0].restaurantId === place.place_id ?
                   <PlaceMenu items={items} place={place} />
                   :
-                  <div style={{ color: 'white' }}>
+                  <div style={{ color: 'white', display: 'flex', justifyContent: 'center', margin: 'auto' }}>
                     You already have items from {user.cart[0].restaurantName} in your cart.  Please complete your order from that restaurant first, or remove those items from your cart.
               </div>}
               </TabPanel>

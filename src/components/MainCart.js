@@ -94,17 +94,17 @@ const MainCart = () => {
   return (
     <React.Fragment>
       <Grid container direction='row' justify='space-evenly' spacing={2}>
-        <Grid item xs={12} sm={12} md={6} lg={6}>
+        <Grid item xs={12} sm={6} md={6} lg={6}>
           <CartRestaurant place={place} setTotalPrice={setTotalPrice} setCodeEntered={setCodeEntered} />
         </Grid>
-        <Grid item xs={12} sm={12} md={6} lg={6}>
+        <Grid item xs={12} sm={6} md={6} lg={6}>
           <CartBilling pizza={pizza} bevs={bevs} user={user} totalPrice={totalPrice} setTotalPrice={setTotalPrice} activeCartBillingObject={activeCartBillingObject} codeEntered={codeEntered} setCodeEntered={setCodeEntered} />
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <div>
-          {pizza.length > 0 || bevs.length > 0 ?
-            <Typography variant='h5' style={{ textAlign: 'center', fontSize: 20, marginTop: 20, color: 'white', marginBottom: 28 }}><strong>Items</strong></Typography>
-            : null}
+            {pizza.length > 0 || bevs.length > 0 ?
+              <Typography variant='h5' style={{ textAlign: 'center', fontSize: 20, marginTop: 20, color: 'white', marginBottom: 28 }}><strong>Items</strong></Typography>
+              : null}
           </div>
           <Grid container spacing={2} style={{ justifyContent: 'flex-start' }}>
             {pizza.map(c =>

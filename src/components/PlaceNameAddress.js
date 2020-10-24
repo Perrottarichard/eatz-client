@@ -1,6 +1,5 @@
 
 import React from 'react'
-import Card from '@material-ui/core/Card';
 import Chip from '@material-ui/core/Chip';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -30,7 +29,7 @@ const PlaceNameAddress = ({ place }) => {
           <CardContent style={{ minWidth: 240, maxWidth: 400 }}>
             {place.opening_hours.open_now
               ?
-              <Chip label="Open Now" size='small' icon={<CheckCircleOutline style={{ color: 'green' }} />} style={{ marginBottom: 10, color: 'white' }} />
+              <Chip label="Open Now" size='small' icon={<CheckCircleOutline style={{ color: 'green' }} />} style={{ marginBottom: 10 }} />
               :
               <Chip label="Closed Now" size='small' icon={<RemoveCircleOutline style={{ color: 'red' }} />} style={{ marginBottom: 10 }} />}
             <Typography variant="caption" component="ul" style={{ listStyleType: 'none', padding: 0 }}>

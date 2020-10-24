@@ -176,13 +176,9 @@ export default function LandingPage() {
         <Snackbar
           open={notify && notify.open}
           autoHideDuration={2000}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
           onClose={() => dispatch(closeNotify())}>
           {notify && notify.open ?
-            <Alert severity={notify.severity} style={notify.severity === 'success' ? { backgroundColor: 'white', border: 'solid', borderColor: 'green', width: 260 } : { backgroundColor: 'lightgrey', border: 'solid', borderColor: 'red', width: 260 }} >
+            <Alert severity={notify.severity} style={notify.severity === 'success' ? { backgroundColor: '#b7e89e', border: 'solid', borderColor: 'green', width: 260 } : { backgroundColor: 'lightgrey', border: 'solid', borderColor: 'red', width: 260 }} >
               {notify.message}
             </Alert>
             : null}

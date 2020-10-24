@@ -238,7 +238,12 @@ border-radius: 0px;
 }
 
 .pizzaMenuContainer {
-  background-color: white;
+  background-color: rgb(231, 228, 228);
+}
+.bevMenuContainer {
+  background-color: rgb(231, 228, 228);
+  height: auto;
+  padding-bottom: 10px;
 }
 .pizzaMenuContainer .MuiCircularProgress-colorSecondary {
   color: black !important;

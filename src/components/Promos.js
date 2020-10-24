@@ -28,6 +28,7 @@ const Promos = () => {
 
   return (
     <div className='sticky-head'>
+      <div style={{ width: "100%", height: 20 }}></div>
       <div className='outerDashDiv'>
         <Button className='btn' onClick={() => scroll(-400)}>
           <ChevronLeft style={{ fontSize: 50 }} />

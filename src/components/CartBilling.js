@@ -1,11 +1,39 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Card, CardContent, Typography, TextField, Button } from '@material-ui/core'
+import { CardContent, Typography, TextField, Button } from '@material-ui/core'
 import { setActiveCartBilling } from '../reducers/activeUserReducer'
-import Snackbar from '@material-ui/core/Snackbar';
+import Snackbar from '@material-ui/core/Snackbar'
 import { Alert } from '@material-ui/lab'
 import { formatPrice } from './MainOrderHistory'
+import { withStyles } from '@material-ui/core/styles'
+import { initPromos } from '../reducers/placesReducer'
 
+const CssTextField = withStyles({
+  root: {
+    '.MuiOutlinedInput-inputMarginDense': {
+      paddingTop: 10,
+      paddingBottom: 10,
+      color: 'white'
+    },
+    '& label.Mui-focused': {
+      color: 'black',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'black',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: '#ff2f0a',
+      },
+      '&:hover fieldset': {
+        borderColor: 'gray',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'black',
+      },
+    },
+  },
+})(TextField);
 
 const checkQualify = (user, qualifyingPromo, pizzaArray, beverageArray, totalPrice) => {
   switch (qualifyingPromo) {
@@ -23,7 +51,16 @@ const checkQualify = (user, qualifyingPromo, pizzaArray, beverageArray, totalPri
 const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice, activeCartBillingObject, codeEntered, setCodeEntered }) => {
 
   const dispatch = useDispatch()
-  const promos = useSelector(state => state.placesReducer.promos)
+  const promos = useSelector(state => state.placesReducer.promos ? state.placesReducer.promos : null)
+  const isMountedRef = useRef(null)
+
+  useEffect(() => {
+    isMountedRef.current = true
+    if (!promos) {
+      dispatch(initPromos())
+    }
+    return () => isMountedRef.current = false
+  }, [dispatch, promos])
 
   const [notifyPromo, setNotifyPromo] = useState({
     severity: '',
@@ -102,8 +139,6 @@ const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice, activeCartB
     setCodeEntered(e.target.value)
   }
 
-
-
   return (
     <div className='sticky-head'>
       <Typography variant='body1' style={{ textAlign: 'center', fontSize: 16, marginTop: 20 }}><strong></strong></Typography>
@@ -122,7 +157,7 @@ const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice, activeCartB
           </CardContent>
           <div style={{ height: 75, minWidth: 270, backgroundColor: 'white', borderRadius: 3, paddingTop: 10, overflowX: 'hidden', overflowY: 'hidden' }}>
             <form>
-              <TextField
+              <CssTextField
                 style={{ width: 180 }}
                 id="outlined-helperText"
                 label="Promo Code"
