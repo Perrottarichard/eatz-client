@@ -35,7 +35,7 @@ export const calcDistance = (lat1, lat2, lng1, lng2) => {
 
 const GeoDataList = () => {
   const user = useSelector(state => state.activeUser.user)
-  const geoData = useSelector(state => state.placesReducer.nearbyPlaces ? state.placesReducer.nearbyPlaces.filter(p => !user.favoriteRestaurants.includes(p.place_id)) : null)
+  const geoData = useSelector(state => (state.placesReducer.nearbyPlaces && user.favoriteRestaurants) ? state.placesReducer.nearbyPlaces.filter(p => !user.favoriteRestaurants.includes(p.place_id)) : null)
   const homeGPS = useSelector(state => state.placesReducer.homeGPS)
   const [waiting, setWaiting] = useState(false)
 

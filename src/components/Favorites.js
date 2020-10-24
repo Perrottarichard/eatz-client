@@ -17,7 +17,7 @@ import Grow from '@material-ui/core/Grow';
 const Favorites = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.activeUser.user)
-  const geoData = useSelector(state => state.placesReducer.nearbyPlaces ? state.placesReducer.nearbyPlaces.filter(p => user.favoriteRestaurants.includes(p.place_id)) : null)
+  const geoData = useSelector(state => state.placesReducer.nearbyPlaces && user.favoriteRestaurants ? state.placesReducer.nearbyPlaces.filter(p => user.favoriteRestaurants.includes(p.place_id)) : null)
 
   const [waiting, setWaiting] = useState(false)
   const [lat, setLat] = useState(0)
