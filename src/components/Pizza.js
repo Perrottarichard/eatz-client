@@ -110,7 +110,7 @@ const Pizza = ({ pizza, place, user }) => {
     pizzaClickRef.current = 'Updating'
     setTimeout(() => {
       pizzaClickRef.current = null
-    }, 5000);
+    }, 2000);
     const totalPrice = calcPizzaPrice(pizza, size, variant, selectedRegularToppings, selectedPremiumToppings)
 
     const itemToAdd = {

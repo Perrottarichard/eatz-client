@@ -33,7 +33,7 @@ const Beverage = ({ beverages, user, place, sendToCart }) => {
     bevClickRef.current = selectedBeverages
     setTimeout(() => {
       bevClickRef.current = null
-    }, 5000);
+    }, 2000);
 
     dispatch(setLoading())
     const totalPrice = ((1.75) * (1.07)).toFixed(2)
