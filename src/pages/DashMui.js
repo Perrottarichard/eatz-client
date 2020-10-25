@@ -134,6 +134,7 @@ export default function Dashboard() {
   const logout = () => {
     dispatch(clearUser())
   }
+  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   return (
     <div className={classes.root}>
@@ -173,6 +174,8 @@ export default function Dashboard() {
         open={open}
         onClose={handleDrawerClose}
         onOpen={handleDrawerOpen}
+        disableBackdropTransition={!iOS}
+        disableDiscovery={iOS}
       >
         <div className={classes.toolbarIcon}>
           <img alt='logo' src={logo} style={{ marginRight: 50 }}></img>
