@@ -1,4 +1,4 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk'
@@ -25,7 +25,13 @@ const persistConfig = {
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
+let tempStore
+if (process.env.NODE_ENV === 'production') {
+  tempStore = createStore(persistedReducer, compose(applyMiddleware(thunk)))
+} else {
+  tempStore = createStore(persistedReducer, composeWithDevTools(applyMiddleware(thunk)))
+}
 
-export const store = createStore(persistedReducer, composeWithDevTools(applyMiddleware(thunk)))
+export const store = tempStore
 
 export const persistor = persistStore(store)
