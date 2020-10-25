@@ -76,10 +76,9 @@ export default function SignUp() {
             else if (!values.password) {
               errors.password = 'Required'
             }
-            else if (!/^(?=.{6,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/i.test(values.password)) {
-              errors.password = 'Password must be 6 characters long, and must not contain any special characters'
-            }
-
+            // else if (!/^(?=.{6,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/i.test(values.password)) {
+            //   errors.password = 'Password must be 6 characters long, and must not contain any special characters'
+            // }
             return errors;
           }}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
