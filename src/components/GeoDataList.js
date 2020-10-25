@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Button, Typography } from '@material-ui/core'
-import { setPlaces, setHomeGPS, geoActive } from '../reducers/placesReducer'
+import { setPlaces, setHomeGPS } from '../reducers/placesReducer'
 import { addFavorite } from '../reducers/activeUserReducer'
 import { getByCoordinates } from '../services/dataService'
 import { useHistory } from 'react-router'
