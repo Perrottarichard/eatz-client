@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useRef, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { geoActive } from '../reducers/placesReducer'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import GeoDataList from './GeoDataList';
@@ -24,8 +25,21 @@ const useStyles = makeStyles((theme) => ({
 const MainDashboard = () => {
   const classes = useStyles();
   const user = useSelector(state => state.activeUser.user)
-
+  const dispatch = useDispatch()
+  const isMountedRef = useRef(null)
   const [openOnClick, setOpenOnClick] = useState(false)
+
+  useEffect(() => {
+    isMountedRef.current = true
+    navigator.geolocation.getCurrentPosition((position) => {
+      dispatch(geoActive(true))
+    }, (error) => {
+      console.log(error)
+      dispatch(geoActive(false))
+    })
+    return () => isMountedRef.current = false
+  }, [dispatch])
+
 
   return (
     <React.Fragment>

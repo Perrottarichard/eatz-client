@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Button, Typography } from '@material-ui/core'
 import { removeFavorite } from '../reducers/activeUserReducer'
+import { geoActive } from '../reducers/placesReducer'
 import { useHistory } from 'react-router'
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -28,6 +29,11 @@ const Favorites = () => {
 
   useEffect(() => {
     isMountedRef.current = true
+    if (!navigator.geolocation) {
+      dispatch(geoActive(false))
+    } else {
+      dispatch(geoActive(true))
+    }
     if (navigator.geolocation && !lat && !lon) {
       navigator.geolocation.getCurrentPosition(function (position) {
         if (isMountedRef.current) {
@@ -37,7 +43,7 @@ const Favorites = () => {
       })
     }
     return () => isMountedRef.current = false
-  }, [lat, lon])
+  }, [lat, lon, dispatch])
 
   useEffect(() => {
     if (!geoData) {
@@ -126,8 +132,8 @@ const Favorites = () => {
             </Grow>
           )
             : <div style={{ display: 'inline-flex', height: '90%', width: '100%', margin: 'auto', justifyContent: 'center', alignItems: 'center' }}>
-              <Typography variant='caption' style={{ color: 'white' }}>
-                Click the  <Favorite style={{ fontSize: 14 }} />  to add or remove favorites
+              <Typography variant='caption' style={{ display: 'flex', color: 'white', lineHeight: 1.3 }}>
+                Click the  <span style={{ marginLeft: 5, marginRight: 5 }}><Favorite style={{ fontSize: 14 }} /></span>  to add or remove favorites
           </Typography>
             </div>
           }

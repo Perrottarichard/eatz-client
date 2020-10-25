@@ -3,13 +3,18 @@ import userService from "../services/userService"
 const initialState = {
   user: undefined,
   notify: { open: false, severity: '', message: '' },
-  redirectTo: undefined
+  redirectTo: undefined,
+  loading: false
 }
 
 const activeUserReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'USER_LOGOUT':
       return initialState
+    case 'SET_LOADING':
+      return { ...state, loading: action.data }
+    case 'CLEAR_LOADING':
+      return { ...state, loading: action.data }
     case 'LOCAL_SIGN_IN':
       return { ...state, user: action.data }
     case 'REDIRECT':
@@ -64,6 +69,18 @@ export const clearRedirect = () => {
   return {
     type: 'CLEAR_REDIRECT',
     data: undefined
+  }
+}
+export const setLoading = () => {
+  return {
+    type: 'SET_LOADING',
+    data: true
+  }
+}
+export const clearLoading = () => {
+  return {
+    type: 'CLEAR_LOADING',
+    data: false
   }
 }
 export const signIn = (userObj) => {
@@ -157,6 +174,7 @@ export const clearUser = () => {
 }
 export const addFavorite = (place_id, user_id) => {
   return async dispatch => {
+    dispatch(setLoading())
     try {
       let res = await userService.addFavoriteRestaurant(place_id, user_id)
       dispatch({
@@ -167,17 +185,20 @@ export const addFavorite = (place_id, user_id) => {
         type: 'NOTIFY',
         data: { open: true, severity: 'success', message: 'Added' }
       })
+      dispatch(clearLoading())
     } catch (error) {
       console.log(error)
       dispatch({
         type: 'NOTIFY',
         data: { open: true, severity: 'error', message: 'Something went wrong' }
       })
+      dispatch(clearLoading())
     }
   }
 }
 export const removeFavorite = (place_id, user_id) => {
   return async dispatch => {
+    dispatch(setLoading())
     try {
       let res = await userService.removeFavoriteRestaurant(place_id, user_id)
       dispatch({
@@ -188,17 +209,20 @@ export const removeFavorite = (place_id, user_id) => {
         type: 'NOTIFY',
         data: { open: true, severity: 'success', message: 'Removed' }
       })
+      dispatch(clearLoading())
     } catch (error) {
       console.log(error)
       dispatch({
         type: 'NOTIFY',
         data: { open: true, severity: 'error', message: 'Something went wrong' }
       })
+      dispatch(clearLoading())
     }
   }
 }
 export const addCart = (user_id, item) => {
   return async dispatch => {
+    dispatch(setLoading())
     try {
       let res = await userService.addPizzaToCart(user_id, item)
       dispatch({
@@ -209,12 +233,14 @@ export const addCart = (user_id, item) => {
         type: 'NOTIFY',
         data: { open: true, severity: 'success', message: 'Added' }
       })
+      dispatch(clearLoading())
     } catch (error) {
       console.log(error)
       dispatch({
         type: 'NOTIFY',
         data: { open: true, severity: 'error', message: 'Something went wrong' }
       })
+      dispatch(clearLoading())
     }
   }
 }
@@ -222,6 +248,7 @@ export const addCart = (user_id, item) => {
 export const addBeverage = (user_id, beveragesToAddObj) => {
   return async dispatch => {
     try {
+      dispatch(setLoading())
       let res = await userService.addBeveragesToCart(user_id, beveragesToAddObj)
       dispatch({
         type: 'ADD_BEVERAGES_TO_CART',
@@ -231,46 +258,54 @@ export const addBeverage = (user_id, beveragesToAddObj) => {
         type: 'NOTIFY',
         data: { open: true, severity: 'success', message: 'Added' }
       })
+      dispatch(clearLoading())
     } catch (error) {
       console.log(error)
       dispatch({
         type: 'NOTIFY',
         data: { open: true, severity: 'error', message: 'Something went wrong' }
       })
+      dispatch(clearLoading())
     }
   }
 }
 export const removeCart = (user_id, item_id) => {
   return async dispatch => {
+    dispatch(setLoading())
     try {
       let res = await userService.removeItemFromCart(user_id, item_id)
       dispatch({
         type: 'REMOVE_CART',
         data: res
       })
+      dispatch(clearLoading())
     } catch (error) {
       console.log(error)
       dispatch({
         type: 'NOTIFY',
         data: { open: true, severity: 'error', message: 'Something went wrong' }
       })
+      dispatch(clearLoading())
     }
   }
 }
 export const setActiveCartBilling = (user_id, totalPrice, newTotal, diff, promoApplied) => {
   return async dispatch => {
     try {
+      dispatch(setLoading())
       let res = await userService.updateActiveCartBilling(user_id, totalPrice, newTotal, diff, promoApplied)
       dispatch({
         type: 'SET_ACTIVE_CART_BILLING',
         data: res
       })
+      dispatch(clearLoading())
     } catch (error) {
       console.log(error)
       dispatch({
         type: 'NOTIFY',
         data: { open: true, severity: 'error', message: 'Something went wrong' }
       })
+      dispatch(clearLoading())
     }
   }
 }
@@ -293,6 +328,7 @@ export const resetCart = (user_id) => {
 }
 export const addOrder = (user_id) => {
   return async dispatch => {
+    dispatch(setLoading())
     try {
       let res = await userService.addNewOrder(user_id)
       dispatch({
@@ -303,29 +339,34 @@ export const addOrder = (user_id) => {
         type: 'NOTIFY',
         data: { open: true, severity: 'success', message: 'Success' }
       })
+      dispatch(clearLoading())
     } catch (error) {
       console.log(error)
       dispatch({
         type: 'NOTIFY',
         data: { open: true, severity: 'error', message: 'Something went wrong' }
       })
+      dispatch(clearLoading())
     }
   }
 }
 export const addAddress = (user_id, addressObject) => {
   return async dispatch => {
+    dispatch(setLoading())
     try {
       let res = await userService.addNewAddress(user_id, addressObject)
       dispatch({
         type: 'ADD_ADDRESS',
         data: res
       })
+      dispatch(clearLoading())
     } catch (error) {
       console.log(error)
       dispatch({
         type: 'NOTIFY',
         data: { open: true, severity: 'error', message: 'Something went wrong' }
       })
+      dispatch(clearLoading())
     }
   }
 }

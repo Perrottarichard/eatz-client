@@ -5,13 +5,21 @@ const initialState = {
   homeGPS: undefined,
   placeDetails: undefined,
   menu: undefined,
-  promos: undefined
+  promos: undefined,
+  loading: false,
+  geoActive: false
 }
 
 const placesReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'CLEAR_PLACES':
       return initialState
+    case 'SET_LOADING':
+      return { ...state, loading: action.data }
+    case 'CLEAR_LOADING':
+      return { ...state, loading: action.data }
+    case 'GEO_ACTIVE':
+      return { ...state, geoActive: action.data }
     case 'SET_HOME_GPS':
       return { ...state, homeGPS: action.data }
     case 'SET_PLACES':
@@ -41,6 +49,24 @@ export const clearPlaces = () => {
     data: null
   }
 }
+export const setLoading = () => {
+  return {
+    type: 'SET_LOADING',
+    data: true
+  }
+}
+export const clearLoading = () => {
+  return {
+    type: 'CLEAR_LOADING',
+    data: false
+  }
+}
+export const geoActive = (bool) => {
+  return {
+    type: 'GEO_ACTIVE',
+    data: bool
+  }
+}
 export const setHomeGPS = (lat, lon) => {
   return {
     type: 'SET_HOME_GPS',
@@ -49,14 +75,17 @@ export const setHomeGPS = (lat, lon) => {
 }
 export const requestAddRestaurant = (name, city, country) => {
   return async dispatch => {
+    dispatch(setLoading())
     try {
       await postRequestAddRestaurant(name, city, country)
       dispatch({
         type: 'REQUEST_ADD_RESTAURANT',
         data: null
       })
+      dispatch(clearLoading())
     } catch (error) {
       console.log(error)
+      dispatch(clearLoading())
     }
   }
 }

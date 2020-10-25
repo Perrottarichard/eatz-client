@@ -14,6 +14,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import TabPanel from './TabPanel'
 import PlaceInfoSkeleton from './PlaceInfoSkeleton'
+import { Typography } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -91,9 +92,12 @@ const MainPlaceDetails = () => {
                 {user.cart.length === 0 || user.cart[0].restaurantId === place.place_id ?
                   <PlaceMenu items={items} place={place} />
                   :
-                  <div style={{ color: 'white', display: 'flex', justifyContent: 'center', margin: 'auto' }}>
-                    You already have items from {user.cart[0].restaurantName} in your cart.  Please complete your order from that restaurant first, or remove those items from your cart.
-              </div>}
+                  <div style={{ color: 'white', display: 'flex', flexDirection: 'column', justifyContent: 'center', margin: 'auto', width: 300, marginTop: 30 }}>
+                    <Typography variant='h5' style={{ flexBasis: '100%', textAlign: 'center', color: '#ff2f0a' }}>Oops...</Typography>
+                    <Typography variant='body1' style={{ textAlign: 'center', color: 'gray' }}>
+                      You already have items from <em style={{ color: 'white' }}>{user.cart[0].restaurantName}</em> in your cart.  Please complete your order from that restaurant first, or remove those items from your cart.
+                    </Typography>
+                  </div>}
               </TabPanel>
               <TabPanel value={value} index={1}>
                 <Promos />

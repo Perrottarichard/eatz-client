@@ -19,14 +19,14 @@ const PlaceMenu = ({ items, place }) => {
   if (!place.opening_hours.open_now) {
     return (
       <div className='placeDetailsDiv'>
-        {place !== undefined ?
+        {place !== undefined &&
           <div className='placeDetailsClosed'>
             <CardContent>
               <Typography variant='body1'>Sorry, this restaurant is closed.</Typography>
               <br />
             </CardContent>
           </div>
-          : <h3>Loading...</h3>}
+        }
       </div>
     )
   }

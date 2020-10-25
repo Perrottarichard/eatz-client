@@ -1,9 +1,23 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Container, Button, CardActions } from '@material-ui/core'
 import { FormControl, FormGroup, FormControlLabel, FormLabel, Radio, RadioGroup, Checkbox, Grid, Card, CardContent, Typography } from '@material-ui/core'
 import { addCart } from '../reducers/activeUserReducer'
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStylesProgress = makeStyles(() => ({
+  root: {
+    position: 'relative',
+    height: 25,
+    width: 25,
+    animationDuration: '350ms',
+  },
+  circle: {
+    strokeLinecap: 'round',
+    color: 'black',
+  }
+}));
 
 const calcPizzaPrice = (pizza, size, variant, selectedRegularToppings, selectedPremiumToppings) => {
   let sizePrice = 0
@@ -35,10 +49,12 @@ const calcPizzaPrice = (pizza, size, variant, selectedRegularToppings, selectedP
 
 const Pizza = ({ pizza, place, user }) => {
 
+  const classes = useStylesProgress()
   const dispatch = useDispatch()
   const [size, setSize] = useState('large')
   const [variant, setVariant] = useState('regular')
-  const [waiting, setWaiting] = useState(false)
+  const pizzaClickRef = useRef(null)
+  const loading = useSelector(state => state.activeUser.loading)
 
   //dynamically intialize an object from the array of topping choices to use for the checkbox with key/value pairs set initially to false. When checked, corresponding key item's value will change to true
   const regInitial = [pizza.map(p => p.regular_toppings.map(x => [x, false]))]
@@ -91,7 +107,10 @@ const Pizza = ({ pizza, place, user }) => {
   }
 
   const handleAddPizza = (itemId, type, size, variant, restaurantName, restaurantId, selectedRegularToppings, selectedPremiumToppings) => {
-    setWaiting(true)
+    pizzaClickRef.current = 'Updating'
+    setTimeout(() => {
+      pizzaClickRef.current = null
+    }, 5000);
     const totalPrice = calcPizzaPrice(pizza, size, variant, selectedRegularToppings, selectedPremiumToppings)
 
     const itemToAdd = {
@@ -108,10 +127,8 @@ const Pizza = ({ pizza, place, user }) => {
     try {
       dispatch(addCart(user._id, itemToAdd))
       clearSelection()
-      setWaiting(false)
     } catch (error) {
       console.log(error)
-      setWaiting(false)
     }
   }
   const selectedToppingsGrammar = () => {
@@ -175,7 +192,9 @@ const Pizza = ({ pizza, place, user }) => {
             <Typography variant='body1' style={{ backgroundColor: '#ff2f0a', color: 'white', paddingTop: 5, borderTopLeftRadius: 3, borderTopRightRadius: 3, fontWeight: 'bold' }}>Confirm your selection</Typography>
             <Card style={{ color: 'black', border: 'solid', borderColor: '#ff2f0a', borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
               <CardContent>
-                {waiting ? <CircularProgress color='secondary' /> :
+                {loading && pizzaClickRef.current === 'Updating' ?
+                  <Typography variant='body1' color='textSecondary'> Updating... </Typography>
+                  :
                   <Typography variant='body1' style={{ fontWeight: 'bold' }}>
                     {`Add a ${size} ${variant} pizza with ${selectedToppingsGrammar()} to your cart?`}
                   </Typography>
@@ -183,7 +202,12 @@ const Pizza = ({ pizza, place, user }) => {
               </CardContent>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <CardActions style={{ textAlign: 'center' }}>
-                  <Button onClick={() => handleAddPizza(pizza.id, pizza[0].type, size, variant, place.name, place.place_id, selectedRegularToppings, selectedPremiumToppings)} variant='contained' style={{ backgroundColor: '#ff2f0a', color: 'white' }} disabled={waiting}><strong>Add</strong></Button>
+                  <Button ref={pizzaClickRef} onClick={() => handleAddPizza(pizza.id, pizza[0].type, size, variant, place.name, place.place_id, selectedRegularToppings, selectedPremiumToppings)} variant='contained' style={{ backgroundColor: '#ff2f0a', color: 'white' }} disabled={loading}>
+                    {loading && pizzaClickRef.current === 'Updating' ?
+                      <CircularProgress size='small' classes={{
+                        root: classes.root, circle: classes.circle
+                      }} /> :
+                      <strong>Add</strong>}</Button>
                 </CardActions>
               </div>
             </Card>

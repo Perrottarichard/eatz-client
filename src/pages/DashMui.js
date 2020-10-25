@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Avatar from '@material-ui/core/Avatar'
@@ -165,12 +165,14 @@ export default function Dashboard() {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Drawer
+      <SwipeableDrawer
         variant='temporary'
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
         }}
         open={open}
+        onClose={handleDrawerClose}
+        onOpen={handleDrawerOpen}
       >
         <div className={classes.toolbarIcon}>
           <img alt='logo' src={logo} style={{ marginRight: 50 }}></img>
@@ -182,7 +184,7 @@ export default function Dashboard() {
         <List>
           <MainListItems handleDrawerClose={handleDrawerClose} />
         </List>
-      </Drawer>
+      </SwipeableDrawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

@@ -15,11 +15,11 @@ const PlaceNameAddress = ({ place }) => {
         <div className='placeDetailsCard'>
           <CardContent style={{ minWidth: 240, maxWidth: 400 }}>
             <br />
-            <Typography variant='body1' >{place.name}</Typography>
-            <Typography variant='body2' >{place.formatted_address}</Typography>
+            <Typography variant='body1' ><strong>{place.name}</strong></Typography>
+            <Typography variant='body2' style={{ color: 'gray' }}>{place.formatted_address}</Typography>
             <br />
             {place.formatted_phone_number &&
-              <Typography variant='body1' >
+              <Typography variant='body1' style={{ color: 'gray' }}>
                 <Phone style={{ color: '#ff2f0a' }} />
                 <br />
                 {place.formatted_phone_number}
@@ -28,13 +28,13 @@ const PlaceNameAddress = ({ place }) => {
           </CardContent>
         </div>
         <div className='placeDetailsCard'>
-          <CardContent style={{ minWidth: 240, maxWidth: 400 }}>
+          <CardContent style={{ minWidth: 240, maxWidth: 400, marginTop: 20 }}>
             {place.opening_hours.open_now
               ?
               <Chip label="Open Now" size='small' icon={<CheckCircleOutline style={{ color: 'green' }} />} style={{ marginBottom: 10 }} />
               :
               <Chip label="Closed Now" size='small' icon={<RemoveCircleOutline style={{ color: 'red' }} />} style={{ marginBottom: 10 }} />}
-            <Typography variant="caption" component="ul" style={{ listStyleType: 'none', padding: 0 }}>
+            <Typography variant="caption" component="ul" style={{ listStyleType: 'none', padding: 0, color: 'gray' }}>
               {place.opening_hours.weekday_text.map(d => <li key={d}>{d}</li>)}
             </Typography>
           </CardContent>

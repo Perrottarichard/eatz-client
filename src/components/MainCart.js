@@ -28,21 +28,24 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: 0
   },
   cardHeader: {
-    paddingTop: 10,
-    paddingBottom: 10,
     textTransform: 'capitalize',
+    maxHeight: 50,
+    minHeight: 50,
+    margin: 'auto'
+
   },
   cardActions: {
     justifyContent: 'center',
     marginTop: 'auto',
     height: 'auto',
-    maxHeight: 50,
-    minHeight: 50,
-    backgroundColor: '#ff430a'
+    maxHeight: 30,
+    minHeight: 30,
+    backgroundColor: '#ff430a',
+    paddingTop: 10
   },
   priceText: {
     fontStyle: 'bold',
-    padding: 10
+    padding: 5
   }
 }))
 
@@ -112,15 +115,17 @@ const MainCart = () => {
               : null}
           </div>
           <div className='outerDashDiv'>
-            <Button className='btn' onClick={() => scroll(-400)}>
-              <ChevronLeft style={{ fontSize: 50 }} />
-            </Button>
+            {pizza.length > 0 || bevs.length > 0 ?
+              <Button className='btn' onClick={() => scroll(-400)}>
+                <ChevronLeft style={{ fontSize: 50 }} />
+              </Button>
+              : null}
             <div className='dashDiv' ref={scrollRef} >
               {pizza.map(c =>
                 <Grow key={c._id} in={pizza.length > 0}>
                   <Card className={classes.cardStyle}>
                     <CardHeader className={classes.cardHeader} titleTypographyProps={{ variant: 'h6' }} title={`${c.selectedVariant} ${c.itemType}`} subheader={`size: ${c.selectedSize}`} />
-                    <CardContent style={{ listStyleType: 'none', paddingTop: 0, height: '35%', overflow: 'auto' }}>
+                    <CardContent style={{ listStyleType: 'none', paddingTop: 0, height: 'auto', overflow: 'auto', margin: 'auto' }}>
                       <Typography variant='caption'>
                         {c.selectedRegularToppings.length + c.selectedPremiumToppings.length === 0 ?
                           'No toppings' : null}
@@ -138,9 +143,9 @@ const MainCart = () => {
                       <CardActions className={classes.cardActions}>
                         {!activeCartBillingObject ?
                           <IconButton aria-label="remove from cart" onClick={() => removeFromCart(c._id, c.totalPrice)} disabled={activeCartBillingObject ? true : false}>
-                            <ClearIcon style={{ color: 'white', fontSize: 25 }} />
+                            <ClearIcon style={{ color: 'white', fontSize: 25, marginTop: 4 }} />
                           </IconButton>
-                          : <Typography variant='caption' style={{ color: 'white' }}>*item locked after promotion applied</Typography>
+                          : <Typography variant='caption' style={{ color: 'white', margin: 'auto' }}>*promo applied</Typography>
                         }
                       </CardActions>
                     </div>
@@ -160,18 +165,20 @@ const MainCart = () => {
                       <CardActions className={classes.cardActions}>
                         {!activeCartBillingObject ?
                           <IconButton aria-label="remove from cart" onClick={() => removeFromCart(b._id)}>
-                            <ClearIcon style={{ color: 'white', fontSize: 25 }} />
+                            <ClearIcon style={{ color: 'white', fontSize: 25, marginTop: 4 }} />
                           </IconButton>
-                          : <Typography variant='caption' style={{ color: 'white' }}>*item locked after promotion applied</Typography>}
+                          : <Typography variant='caption' style={{ color: 'white', margin: 'auto' }}>*promo applied</Typography>}
                       </CardActions>
                     </div>
                   </Card>
                 </Grow>
               )}
             </div>
-            <Button className='btn' onClick={() => scroll(400)}>
-              <ChevronRight style={{ fontSize: 50 }} />
-            </Button>
+            {pizza.length > 0 || bevs.length > 0 ?
+              <Button className='btn' onClick={() => scroll(400)}>
+                <ChevronRight style={{ fontSize: 50 }} />
+              </Button>
+              : null}
           </div>
         </Grid>
       </Grid>
