@@ -101,9 +101,9 @@ export default function LandingPage() {
               else if (!values.password) {
                 errors.password = 'Required'
               }
-              // else if (!/^(?=.{6,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/i.test(values.password)) {
-              //   errors.password = 'Password must be 6 characters long, and must not contain any special characters'
-              // }
+              else if (!/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/i.test(values.password)) {
+                errors.password = 'Password must be at least 8 characters long, include an uppercase, a lowercase, and a number'
+              }
 
               return errors;
             }}

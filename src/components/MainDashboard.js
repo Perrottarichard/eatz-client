@@ -6,7 +6,6 @@ import Grid from '@material-ui/core/Grid';
 import GeoDataList from './GeoDataList';
 import GeoDisplay from './GeoDisplay';
 import Favorites from './Favorites';
-// import Promos from './Promos';
 import UserAddressesModal from './UserAddressesModal';
 
 
@@ -28,14 +27,17 @@ const MainDashboard = () => {
   const dispatch = useDispatch()
   const isMountedRef = useRef(null)
   const [openOnClick, setOpenOnClick] = useState(false)
+  // const isLocationEnabled = useSelector(state => state.placesReducer.geoActive)
 
   useEffect(() => {
     isMountedRef.current = true
     navigator.geolocation.getCurrentPosition((position) => {
+      console.log(position)
       dispatch(geoActive(true))
     }, (error) => {
       console.log(error)
       dispatch(geoActive(false))
+      window.alert('We can`t get your location. Please make sure location services are allowed in your browser, then reload the page')
     })
     return () => isMountedRef.current = false
   }, [dispatch])
