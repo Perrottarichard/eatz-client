@@ -7,6 +7,7 @@ import { Alert } from '@material-ui/lab'
 import { formatPrice } from './MainOrderHistory'
 import { withStyles } from '@material-ui/core/styles'
 import { initPromos } from '../reducers/placesReducer'
+import PeekPromo from './PeekPromo'
 
 const CssTextField = withStyles({
   root: {
@@ -177,6 +178,9 @@ const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice, activeCartB
                 {notifyPromo.message}
               </Alert>
             </Snackbar>
+          </div>
+          <div style={{ backgroundColor: '#ff2f0a', marginTop: 'auto', height: 28, borderBottomRightRadius: 5, borderBottomLeftRadius: 5, color: 'white', fontSize: 12 }}>
+            <PeekPromo />
           </div>
         </div>
       </div>

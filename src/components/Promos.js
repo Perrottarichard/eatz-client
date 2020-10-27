@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import Grow from '@material-ui/core/Grow';
 
 
+
 const Promos = () => {
 
   const promos = useSelector(state => state.placesReducer.promos ? state.placesReducer.promos : null)
@@ -29,14 +30,14 @@ const Promos = () => {
   return (
     <div className='sticky-head'>
       <div style={{ width: "100%", height: 20 }}></div>
-      <div className='outerDashDiv'>
+      <div className='outerDashDiv' >
         <Button className='btn' onClick={() => scroll(-400)}>
           <ChevronLeft style={{ fontSize: 50 }} />
         </Button>
         <div className='dashDiv' ref={scrollRef} >
           {promos ? promos.map(p =>
             <Grow key={p._id} in={promos !== undefined}>
-              <Card>
+              <Card elevation={7}>
                 <CardContent>
                   <Typography variant='body2'>
                     {p.description}

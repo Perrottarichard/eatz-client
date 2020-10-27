@@ -53,7 +53,7 @@ const AccountAddresses = ({ user }) => {
             <AddBox style={{ fontSize: 30, marginRight: 10 }} />Add
       </IconButton>
         </div>
-        <UserAddressesModal user={user} titleMessage={`Be sure to use a descriptive name`} openOnClick={openOnClick} setOpenOnClick={setOpenOnClick} />
+        <UserAddressesModal user={user} titleMessage={``} openOnClick={openOnClick} setOpenOnClick={setOpenOnClick} />
         <EditAddressesModal user={user} titleMessage={``} editOnClick={editOnClick} setEditOnClick={setEditOnClick} />
       </div>
     </div>

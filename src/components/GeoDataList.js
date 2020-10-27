@@ -33,7 +33,7 @@ export const calcDistance = (lat1, lat2, lng1, lng2) => {
   return c * radiusOfEarth
 }
 
-const GeoDataList = () => {
+const GeoDataList = ({ scrollRef }) => {
   const user = useSelector(state => state.activeUser.user)
   const geoData = useSelector(state => (state.placesReducer.nearbyPlaces && user.favoriteRestaurants) ? state.placesReducer.nearbyPlaces.filter(p => !user.favoriteRestaurants.includes(p.place_id)) : null)
   const homeGPS = useSelector(state => state.placesReducer.homeGPS)
@@ -42,7 +42,7 @@ const GeoDataList = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const isMountedRef = useRef(null)
-  const scrollRef = useRef(null);
+
 
   useEffect(() => {
     isMountedRef.current = true

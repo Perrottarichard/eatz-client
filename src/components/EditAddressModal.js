@@ -179,10 +179,10 @@ const EditAddressesModal = ({ user, titleMessage, editOnClick, setEditOnClick })
                     />
                     <div style={{ display: 'block', width: '100%', marginTop: 20 }}>
                       <DialogActions>
-                        <Button onClick={handleModalClose} color="primary">
+                        <Button onClick={handleModalClose} color="default">
                           Cancel
                     </Button>
-                        <Button type='submit' color="primary">
+                        <Button type='submit' variant='contained' style={{ backgroundColor: '#ff2f0a', color: 'white' }}>
                           Submit
                     </Button>
                       </DialogActions>

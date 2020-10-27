@@ -7,6 +7,7 @@ import GeoDataList from './GeoDataList';
 import GeoDisplay from './GeoDisplay';
 import Favorites from './Favorites';
 import UserAddressesModal from './UserAddressesModal';
+import RequestPartnerForm from './RequestPartnerForm';
 
 
 
@@ -27,7 +28,8 @@ const MainDashboard = () => {
   const dispatch = useDispatch()
   const isMountedRef = useRef(null)
   const [openOnClick, setOpenOnClick] = useState(false)
-  // const isLocationEnabled = useSelector(state => state.placesReducer.geoActive)
+  const scrollRef = useRef(null);
+  const [showFormLink, setShowFormLink] = useState(false)
 
   useEffect(() => {
     isMountedRef.current = true
@@ -42,12 +44,20 @@ const MainDashboard = () => {
     return () => isMountedRef.current = false
   }, [dispatch])
 
+  setInterval(() => {
+    if (scrollRef.current && scrollRef.current.scrollLeft > 800) {
+      setShowFormLink(true)
+    }
+  }, 5000);
 
   return (
     <React.Fragment>
       <Grid container direction='row' justify='space-evenly' spacing={2}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <GeoDataList />
+          <GeoDataList scrollRef={scrollRef} />
+          {showFormLink ?
+            <RequestPartnerForm />
+            : <div id='RequestPartnerFormSpacer' style={{ height: 20 }}></div>}
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6}>
           <Favorites />
