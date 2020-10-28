@@ -7,7 +7,8 @@ const initialState = {
   menu: undefined,
   promos: undefined,
   loading: false,
-  geoActive: false
+  geoActive: false,
+  notify: { open: false, severity: '', message: '' }
 }
 
 const placesReducer = (state = initialState, action) => {
@@ -32,6 +33,8 @@ const placesReducer = (state = initialState, action) => {
       return { ...state, menu: action.data }
     case 'INIT_PROMOS':
       return { ...state, promos: action.data }
+    case 'NOTIFY':
+      return { ...state, notify: action.data }
     default:
       return state
   }
@@ -83,9 +86,17 @@ export const requestAddRestaurant = (name, city, country) => {
         data: null
       })
       dispatch(clearLoading())
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'success', message: 'Submitted' }
+      })
     } catch (error) {
       console.log(error)
       dispatch(clearLoading())
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'error', message: 'Something went wrong...' }
+      })
     }
   }
 }

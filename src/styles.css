@@ -283,7 +283,7 @@ circle {
   height: auto;
   width: 100%;
   align-items: center;
-  margin-top: 0px;
+  margin-top: 20px;
 }
 
 .accountDetailsCard {
@@ -300,4 +300,17 @@ circle {
   display: flex;
   flex-basis: 100%;
   justify-content: center;
+}
+.account-sticky-head {
+  height: auto;
+  color: white;
+  padding: 0px;
+
+}
+.svg-inline--fa {
+  display: inline-block;
+  font-size: 2rem;
+  height: 1em;
+  overflow: visible;
+  vertical-align: -0.125em;
 }

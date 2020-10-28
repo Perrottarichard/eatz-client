@@ -21,12 +21,12 @@ const AccountAddresses = ({ user }) => {
     })
   }
   return (
-    <div className='sticky-head'>
+    <div className='account-sticky-head'>
       <Typography variant='body1' style={{ textAlign: 'center', fontSize: 20, marginTop: 20 }}><strong>Addresses</strong></Typography>
       <div className='accountDetailsDiv'>
         {addresses ? addresses.map((a, i) =>
           <Card key={a._id} className='accountDetailsCard' >
-            <CardContent style={{ paddingBottom: 0 }} >
+            <CardContent style={{ paddingBottom: 0, margin: 'auto' }} >
               <Typography variant='body1' color="textPrimary">
                 {a.locationName}
               </Typography>
@@ -49,8 +49,8 @@ const AccountAddresses = ({ user }) => {
         )
           : null}
         <div className='accountAddDiv'>
-          <IconButton aria-label="add an address" style={{ fontSize: 16, color: 'white' }} onClick={() => setOpenOnClick(true)}>
-            <AddBox style={{ fontSize: 30, marginRight: 10 }} />Add
+          <IconButton aria-label="add an address" style={{ fontSize: 16, color: 'darkgray' }} onClick={() => setOpenOnClick(true)}>
+            <AddBox style={{ fontSize: 30, marginRight: 10, color: 'darkgray' }} />Add Address
       </IconButton>
         </div>
         <UserAddressesModal user={user} titleMessage={``} openOnClick={openOnClick} setOpenOnClick={setOpenOnClick} />

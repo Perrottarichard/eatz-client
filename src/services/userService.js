@@ -1,12 +1,12 @@
 import axios from 'axios'
 
 //development
-// const baseUrl = 'http://localhost:3001/api'
-// const authUrl = 'http://localhost:3001'
+const baseUrl = 'http://localhost:3001/api'
+const authUrl = 'http://localhost:3001'
 
 //production
-const baseUrl = 'https://pizzapizzadelivery.herokuapp.com/api'
-const authUrl = 'https://pizzapizzadelivery.herokuapp.com'
+// const baseUrl = 'https://pizzapizzadelivery.herokuapp.com/api'
+// const authUrl = 'https://pizzapizzadelivery.herokuapp.com'
 
 const localSignIn = async (userObj) => {
   const response = await axios.post(`${authUrl}/auth/local/signin`, userObj, {
@@ -188,6 +188,28 @@ const editExistingAddress = async (user_id, indexToEdit, addressObject) => {
   })
   return response.data
 }
+const addNewPaymentInfo = async (user_id, infoObject) => {
+  const response = await axios.put(`${baseUrl}/account/addNewPaymentInfo`, { user_id: user_id, infoObject: infoObject }, {
+    withCredentials: true,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true
+    },
+  })
+  return response.data
+}
+const editExistingPayment = async (user_id, indexToEdit, infoObject) => {
+  const response = await axios.put(`${baseUrl}/account/editPayment`, { user_id: user_id, indexToEdit: indexToEdit, infoObject: infoObject }, {
+    withCredentials: true,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true
+    },
+  })
+  return response.data
+}
 
 export default {
   localSignIn,
@@ -204,5 +226,7 @@ export default {
   clearCart,
   addNewOrder,
   addNewAddress,
-  editExistingAddress
+  editExistingAddress,
+  addNewPaymentInfo,
+  editExistingPayment
 }

@@ -45,6 +45,10 @@ const activeUserReducer = (state = initialState, action) => {
       return { ...state, user: action.data }
     case 'EDIT_ADDRESS':
       return { ...state, user: action.data }
+    case 'ADD_PAYMENT_INFO':
+      return { ...state, user: action.data }
+    case 'EDIT_PAYMENT_INFO':
+      return { ...state, user: action.data }
     case 'NOTIFY':
       return { ...state, notify: action.data }
     default:
@@ -376,6 +380,49 @@ export const editAddress = (user_id, indexToEdit, addressObject) => {
       let res = await userService.editExistingAddress(user_id, indexToEdit, addressObject)
       dispatch({
         type: 'EDIT_ADDRESS',
+        data: res
+      })
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'success', message: 'Updated' }
+      })
+    } catch (error) {
+      console.log(error)
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'error', message: 'Something went wrong' }
+      })
+    }
+  }
+}
+
+export const addPaymentInfo = (user_id, infoObject) => {
+  return async dispatch => {
+    dispatch(setLoading())
+    try {
+      let res = await userService.addNewPaymentInfo(user_id, infoObject)
+      dispatch({
+        type: 'ADD_PAYMENT_INFO',
+        data: res
+      })
+      dispatch(clearLoading())
+    } catch (error) {
+      console.log(error)
+      dispatch({
+        type: 'NOTIFY',
+        data: { open: true, severity: 'error', message: 'Something went wrong' }
+      })
+      dispatch(clearLoading())
+    }
+  }
+}
+
+export const editPaymentInfo = (user_id, indexToEdit, infoObject) => {
+  return async dispatch => {
+    try {
+      let res = await userService.editExistingPayment(user_id, indexToEdit, infoObject)
+      dispatch({
+        type: 'EDIT_PAYMENT_INFO',
         data: res
       })
       dispatch({

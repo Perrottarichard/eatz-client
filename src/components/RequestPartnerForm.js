@@ -46,7 +46,7 @@ const RequestPartnerForm = () => {
     setCountry(e.target.value)
   }
   return (
-    <div style={{ textAlign: 'right', marginRight: 18 }}>
+    <div style={{ textAlign: 'right', marginRight: 20 }}>
       <Button onClick={handleClickOpen} style={{ textTransform: 'none', color: 'gray', fontSize: 10, padding: 0 }}>
         Don't see your favorite restaurant?
       </Button>
