@@ -155,8 +155,8 @@ const clearCart = async (user_id) => {
   })
   return response.data
 }
-const addNewOrder = async (user_id) => {
-  const response = await axios.put(`${baseUrl}/account/addNewOrder`, { user_id: user_id }, {
+const addNewOrder = async (user_id, cardTipAmount, paymentChoice) => {
+  const response = await axios.put(`${baseUrl}/account/addNewOrder`, { user_id: user_id, creditCardTip: cardTipAmount, cardId: paymentChoice }, {
     withCredentials: true,
     headers: {
       Accept: "application/json",

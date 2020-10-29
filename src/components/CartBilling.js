@@ -73,7 +73,7 @@ const CartBilling = ({ pizza, bevs, user, totalPrice, setTotalPrice, activeCartB
     let diff = (totalPrice - newTotal).toFixed(2)
     dispatch(setActiveCartBilling(user._id, totalPrice, newTotal, diff, codeEntered))
   }
-  const [openNotify, setOpenNotify] = React.useState(false);
+  const [openNotify, setOpenNotify] = useState(false);
 
   const handleClose = () => {
     setOpenNotify(false);

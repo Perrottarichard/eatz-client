@@ -3,8 +3,6 @@ import { Card, CardContent, Typography, IconButton, CardActions } from '@materia
 import { AddBox, Edit } from '@material-ui/icons';
 import AddPaymentModal from './AddPaymentModal';
 import EditPaymentModal from './EditPaymentModal';
-import { faCcMastercard, faCcVisa } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 const AccountCards = ({ user }) => {

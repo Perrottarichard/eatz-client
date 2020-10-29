@@ -330,11 +330,11 @@ export const resetCart = (user_id) => {
     }
   }
 }
-export const addOrder = (user_id) => {
+export const addOrder = (user_id, cardTipAmount, paymentChoice) => {
   return async dispatch => {
     dispatch(setLoading())
     try {
-      let res = await userService.addNewOrder(user_id)
+      let res = await userService.addNewOrder(user_id, cardTipAmount, paymentChoice)
       dispatch({
         type: 'ADD_ORDER',
         data: res
