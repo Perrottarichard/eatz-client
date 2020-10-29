@@ -66,6 +66,7 @@ const CartRestaurant = ({ place, setTotalPrice, setCodeEntered }) => {
     handleModalOrderClose()
     setCodeEntered('')
     setTotalPrice(0)
+    history.push('/dashboard/orders')
   }
   const handleTipChange = (e) => {
     setCardTip(e.target.value)
