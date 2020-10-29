@@ -52,7 +52,7 @@ export const formatPrice = (number) => {
   if (split[split.length - 1].length === 1) {
     split[split.length - 1] = split[split.length - 1] + '0'
   }
-  return split.join('.')
+  return Number(split.join('.')).toFixed(2)
 }
 
 
@@ -145,7 +145,7 @@ const MainOrderHistory = () => {
                       )}
                     </CardContent>
                     <div style={{ textAlign: 'center', height: '50px', lineHeight: 4, backgroundColor: '#ff2f0a', color: 'white' }}>
-                      {o.activeCartBilling ? `Total: $${formatPrice((o.activeCartBilling.afterPromoPrice + o.creditCardTip)).toFixed(2)} ` : `Total: $${formatPrice(o.cart.reduce((a, b) => a + b.totalPrice, o.creditCardTip))}`}
+                      {o.activeCartBilling ? `Total: $${formatPrice((o.activeCartBilling.afterPromoPrice + o.creditCardTip))} ` : `Total: $${formatPrice(o.cart.reduce((a, b) => a + b.totalPrice, o.creditCardTip))}`}
                     </div>
                   </Card>
                 </Grid>
