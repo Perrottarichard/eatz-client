@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -10,11 +10,14 @@ import { addPaymentInfo } from '../reducers/activeUserReducer'
 import { faCcAmex, faCcDiscover, faCcMastercard, faCcVisa } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+
 const AddPaymentModal = ({ user, titleMessage, openPaymentOnClick, setOpenPaymentOnClick }) => {
 
   const dispatch = useDispatch()
-
   const [paymentModalOpen, setPaymentModalOpen] = useState(false);
+
+  //used to compare with creditCardNumber count to determine if user is entering or removing digits
+  const digCount = useRef(null)
 
   useEffect(() => {
     if (openPaymentOnClick) {
@@ -26,12 +29,21 @@ const AddPaymentModal = ({ user, titleMessage, openPaymentOnClick, setOpenPaymen
     setPaymentModalOpen(false)
     setOpenPaymentOnClick(false)
   }
+
   const formatNumber = (number) => {
     //the numbers in this array represent the indexes at which to add a dash(-)
     let dashify = [4, 9, 14]
-    if (dashify.includes(number.length)) {
+
+    //compare with digCount.current to determine whether user is adding or backspacing
+    let newCount = number.length
+
+    //if user is adding digits, want to append a dash in the correct index
+    if (dashify.includes(number.length) && newCount > digCount.current) {
       number = number + '-'
     }
+
+    //set updated digCount
+    digCount.current = number.length
     return number
   }
 
