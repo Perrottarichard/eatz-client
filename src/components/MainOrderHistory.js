@@ -145,7 +145,7 @@ const MainOrderHistory = () => {
                       )}
                     </CardContent>
                     <div style={{ textAlign: 'center', height: '50px', lineHeight: 4, backgroundColor: '#ff2f0a', color: 'white' }}>
-                      {o.activeCartBilling ? `Total: $${formatPrice(o.activeCartBilling.afterPromoPrice + o.creditCardTip)} (inc. tax and tip)` : `Total: $${formatPrice(o.cart.reduce((a, b) => a + b.totalPrice, o.creditCardTip))} (inc. tax and tip)`}
+                      {o.activeCartBilling ? `Total: $${formatPrice(o.activeCartBilling.afterPromoPrice + o.creditCardTip)} ${o.creditCardTip > 0 ? '(inc. tax and tip)' : '(inc. tax)'}` : `Total: $${formatPrice(o.cart.reduce((a, b) => a + b.totalPrice, o.creditCardTip))} (inc. tax and tip)`}
                     </div>
                   </Card>
                 </Grid>
