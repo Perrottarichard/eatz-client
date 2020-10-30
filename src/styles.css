@@ -23,7 +23,7 @@
   width: 100%;
   justify-content: center;
 }
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 600px) {
   .outerDashDiv .btn {
     display: none;
   }
@@ -137,7 +137,11 @@ border-radius: 0px;
   color: white;
 }
 
-
+@media only screen and (max-width: 600px) {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -256,21 +260,6 @@ border-radius: 0px;
 }
 .pizzaMenuContainer .MuiCircularProgress-svg {
   color: black !important;
-}
-.pizzaMenuContainer .MuiStepLabel-label-completed {
-  color: gray;
-}
-.pizzaMenuContainer .MuiStepLabel-label.MuiStepLabel-active {
-  color: black;
-}
-circle {
-  color:  #ff2f0a;
-}
-.pizzaMenuContainer .MuiSvgIcon-root .MuiStepIcon-root .MuiStepIcon-completed {
-  color: #ff2f0a;
-}
-.MuiStepIcon-root.MuiStepIcon-completed {
- color: gray !important;
 }
 
 .accountDetailsDiv {

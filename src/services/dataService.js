@@ -1,10 +1,10 @@
 import axios from 'axios'
 
 //development
-// const baseUrl = 'http://localhost:3001/api'
+const baseUrl = 'http://localhost:3001/api'
 
 //production
-const baseUrl = 'https://pizzapizzadelivery.herokuapp.com/api'
+// const baseUrl = 'https://pizzapizzadelivery.herokuapp.com/api'
 
 export const getByCoordinates = async (lat, lon) => {
   console.log('getbycoord running')
@@ -29,11 +29,11 @@ export const getTextSearch = async (search) => {
   return response.data
 }
 
-export const postRequestAddRestaurant = async (name, city, country) => {
+export const postRequestAddRestaurant = async (name, lat, lon) => {
   const response = await axios.post(`${baseUrl}/requestNewRestaurant`, {
     name: name,
-    city: city,
-    country: country
+    lat: lat,
+    lon: lon
   })
   return response.data
 

@@ -76,11 +76,11 @@ export const setHomeGPS = (lat, lon) => {
     data: { lat: lat, lon: lon }
   }
 }
-export const requestAddRestaurant = (name, city, country) => {
+export const requestAddRestaurant = (name, lat, lon) => {
   return async dispatch => {
     dispatch(setLoading())
     try {
-      await postRequestAddRestaurant(name, city, country)
+      await postRequestAddRestaurant(name, lat, lon)
       dispatch({
         type: 'REQUEST_ADD_RESTAURANT',
         data: null
