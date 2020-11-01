@@ -119,7 +119,8 @@ background-color: #ff2f0a;
 margin: 0px;
 color: white;
 border-radius: 0px;
-height: 100px;
+margin-top: auto;
+margin-bottom: auto;
 }
 
 .dashDiv .MuiIconButton-root{
