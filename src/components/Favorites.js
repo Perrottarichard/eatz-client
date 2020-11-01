@@ -125,7 +125,7 @@ const Favorites = () => {
                     </Typography>
                   }
                   <Rating style={{ marginBottom: 10 }} name="read-only" value={place.rating} readOnly size='small' precision={0.5} />
-                  <Button className='detailsBtn' fullWidth size='small' onClick={() => handleClick(place.place_id)}>Order
+                  <Button className='detailsBtn' fullWidth={true} size='small' onClick={() => handleClick(place.place_id)}>Order
             </Button>
                 </CardActions>
               </Card>
