@@ -51,8 +51,10 @@ export const formatPrice = (number) => {
   let split = number.toString().split(/\./)
   if (split[split.length - 1].length === 1) {
     split[split.length - 1] = split[split.length - 1] + '0'
+  } else if (split[split.length - 1].length > 2) {
+    split[split.length - 1] = split[split.length - 1].slice(0, 2)
   }
-  return +split.join('.').toFixed(2)
+  return split.join('.')
 }
 
 
