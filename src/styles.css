@@ -69,7 +69,7 @@
   background: #555;
 }
 .sticky-head {
-  height: 240px;
+  height: auto;
   color: white;
   padding: 0px;
 }
