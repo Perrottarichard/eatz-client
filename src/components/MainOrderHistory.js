@@ -52,7 +52,7 @@ export const formatPrice = (number) => {
   if (split[split.length - 1].length === 1) {
     split[split.length - 1] = split[split.length - 1] + '0'
   }
-  return split.join('.').toFixed(2)
+  return +split.join('.').toFixed(2)
 }
 
 
