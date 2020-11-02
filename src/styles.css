@@ -92,9 +92,7 @@ margin-right: 12px;
 justify-content: center;
 }
 .dashDiv .MuiCardHeader-root {
-  flex-basis: 100%;
   margin: auto;
- 
   padding: 8px;
 }
 .dashDiv .MuiCardHeader-title {
