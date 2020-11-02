@@ -52,7 +52,7 @@ export const formatPrice = (number) => {
   if (split[split.length - 1].length === 1) {
     split[split.length - 1] = split[split.length - 1] + '0'
   }
-  return Number(split.join('.')).toFixed(2)
+  return split.join('.').toFixed(2)
 }
 
 
@@ -96,14 +96,10 @@ const MainOrderHistory = () => {
     <React.Fragment>
       <Grid container spacing={2}>
         {/* <Grid item xs={12} sm={6} md={8} lg={8}>
-          <Paper className={fixedHeightPaper}>
 
-          </Paper>
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={4}>
-          <Paper className={fixedHeightPaper}>
 
-          </Paper>
         </Grid> */}
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Grid container spacing={2}>
