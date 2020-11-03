@@ -21,6 +21,7 @@ https://github.com/Perrottarichard/pizzapizza-server
 | Material-UI, CSS | styling/icons |
 
 ## Client Features
+* Fully responsive UI using CSS Grid and Flexbox
 * Google OAUTH2.0 user authentication
 * Local email/password authentication
 * browse nearby pizza delivery restaurants
