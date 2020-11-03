@@ -1,68 +1,65 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# PizzaPizza (client)
 
-## Available Scripts
+This demo project is an online pizza ordering and delivery app. It uses the Google Places API and the Javascript Geolocation API to provide pizza delivery restaurants near the user's current location.  User's can then browse the nearby restaurants and place an order.
 
-In the project directory, you can run:
+This project is the client side of a full-stack web app.
 
-### `npm start`
+The project is hosted at:
+https://pizzapizzadelivery.herokuapp.com
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+View the server repository here: 
+https://github.com/Perrottarichard/pizzapizza-server
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Core Technologies
+| Technology  | For |
+| ------------| -------|
+| React | UI building|
+| Redux | state management |
+| React Redux | React bindings for Redux |
+| React Router | routing |
+| Axios | client-server communication/CRUD operations | 
+| Material-UI, CSS | styling/icons |
 
-### `npm test`
+## Client Features
+* Google OAUTH2.0 user authentication
+* Local email/password authentication
+* browse nearby pizza delivery restaurants
+* browse locations on embedded Google Map
+* distance between restaurant and user's current location, price-level, rating, and open/close status shown for each restaurant
+* browse restaurant reviews
+* place an order
+* automatic email confirmation upon registration and order placement
+* view past orders
+* active orders show live progress and status (preparing, out-for-delivery, delivered)
+* add/remove favorite restaurants
+* apply promotional codes to receive discounts
+* add/edit delivery addresses
+* add/edit credit/debit cards
+* pay with cash or credit/debit card
+* add a tip for the driver to the credit card (optional)
+* submit restaurant recommendation if not shown in results
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## UI (desktop)
+![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/homedesktop.PNG)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Contact
+![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/contactdesktop.PNG)
 
-### `npm run eject`
+### Forum post
+![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/forumpost.PNG)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Sign In
+![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/logindesktop.PNG)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Register
+![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/registerdesktop.PNG)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### View single post
+![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/singlepostdesktop.PNG)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+### Admin Dashboard
+![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/admindash.PNG)
+![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/admindash2.PNG)
