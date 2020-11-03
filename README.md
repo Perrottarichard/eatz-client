@@ -25,6 +25,7 @@ https://github.com/Perrottarichard/pizzapizza-server
 * Google OAUTH2.0 user authentication
 * Local email/password authentication
 * browse nearby pizza delivery restaurants
+* sidebar navigation
 * browse locations on embedded Google Map
 * distance between restaurant and user's current location, price-level, rating, and open/close status shown for each restaurant
 * browse restaurant reviews
@@ -39,6 +40,7 @@ https://github.com/Perrottarichard/pizzapizza-server
 * pay with cash or credit/debit card
 * add a tip for the driver to the credit card (optional)
 * submit restaurant recommendation if not shown in results
+* notifications on user actions (add favorites, submit forms, place order, etc...)
 
 
 
