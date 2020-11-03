@@ -46,23 +46,26 @@ https://github.com/Perrottarichard/pizzapizza-server
 
 
 ## UI (desktop)
-![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/homedesktop.PNG)
+### Login
+![Alt text](https://raw.github.com/perrottarichard/pizzapizza-client/master/uiscreenshots/PPLogin.png)
 
-### Contact
-![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/contactdesktop.PNG)
+### Places
+![Alt text](https://raw.github.com/perrottarichard/pizzapizza-client/master/uiscreenshots/PPplaces.png)
 
-### Forum post
-![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/forumpost.PNG)
+### Cart/Order Placement
+![Alt text](https://raw.github.com/perrottarichard/pizzapizza-client/master/uiscreenshots/PPCart.png)
 
-### Sign In
-![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/logindesktop.PNG)
+### Order History
+![Alt text](https://raw.github.com/perrottarichard/pizzapizza-client/master/uiscreenshots/PPOrders.png)
 
-### Register
-![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/registerdesktop.PNG)
+### Account Info
+![Alt text](https://raw.github.com/perrottarichard/pizzapizza-client/master/uiscreenshots/PPAccount.png)
 
-### View single post
-![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/singlepostdesktop.PNG)
+### Restaurant Details/Menu
+![Alt text](https://raw.github.com/perrottarichard/pizzapizza-client/master/uiscreenshots/PPmenu.png)
 
-### Admin Dashboard
-![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/admindash.PNG)
-![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/admindash2.PNG)
+### Promotions
+![Alt text](https://raw.github.com/perrottarichard/pizzapizza-client/master/uiscreenshots/PPpromos.png)
+
+### Reviews
+![Alt text](https://raw.github.com/perrottarichard/pizzapizza-client/master/uiscreenshots/PPreviews.png)
